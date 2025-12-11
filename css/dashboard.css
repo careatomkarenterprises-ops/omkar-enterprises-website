@@ -1,0 +1,167 @@
+
+/* Dashboard Specific Styles */
+
+.dashboard-overlay {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0,0,0,0.5);
+    z-index: 999;
+}
+
+.dashboard-overlay.open {
+    display: block;
+}
+
+/* Mobile Responsive */
+@media (max-width: 768px) {
+    .dashboard-sidebar {
+        position: fixed;
+        left: 0;
+        top: 0;
+        bottom: 0;
+        z-index: 1002;
+        transform: translateX(-100%);
+        transition: transform 0.3s ease;
+        box-shadow: 5px 0 15px rgba(0,0,0,0.1);
+    }
+    
+    .dashboard-sidebar.open {
+        transform: translateX(0);
+    }
+    
+    .sidebar-toggle {
+        display: block !important;
+    }
+    
+    .dashboard-main {
+        padding: 20px 15px;
+    }
+    
+    .quick-stats {
+        grid-template-columns: repeat(2, 1fr) !important;
+    }
+    
+    .features-grid {
+        grid-template-columns: repeat(2, 1fr) !important;
+    }
+    
+    .section-header {
+        flex-direction: column;
+        gap: 15px;
+        align-items: flex-start;
+    }
+    
+    .header-actions {
+        width: 100%;
+        display: flex;
+        gap: 10px;
+    }
+    
+    .dashboard-messages {
+        width: calc(100% - 30px);
+        right: 15px;
+        bottom: 15px;
+    }
+}
+
+@media (max-width: 480px) {
+    .quick-stats {
+        grid-template-columns: 1fr !important;
+    }
+    
+    .features-grid {
+        grid-template-columns: 1fr !important;
+    }
+    
+    .metrics-grid {
+        grid-template-columns: 1fr !important;
+    }
+    
+    .investment-details {
+        grid-template-columns: 1fr !important;
+    }
+    
+    .documents-grid {
+        grid-template-columns: 1fr !important;
+    }
+    
+    .transaction-summary {
+        grid-template-columns: repeat(2, 1fr) !important;
+    }
+    
+    .detail-grid {
+        grid-template-columns: 1fr !important;
+    }
+    
+    .comparison {
+        grid-template-columns: 1fr !important;
+    }
+    
+    .user-name {
+        display: none;
+    }
+    
+    .dashboard-logo .logo-text {
+        display: none;
+    }
+}
+
+/* Print Styles */
+@media print {
+    .dashboard-nav,
+    .dashboard-sidebar,
+    .dashboard-footer,
+    .dashboard-messages,
+    .header-actions,
+    .doc-actions,
+    .payment-actions,
+    .activity-amount button,
+    .notifications,
+    .user-profile {
+        display: none !important;
+    }
+    
+    .dashboard-container {
+        display: block;
+    }
+    
+    .dashboard-main {
+        padding: 0;
+        width: 100%;
+    }
+    
+    .dashboard-section {
+        display: block !important;
+        break-inside: avoid;
+    }
+    
+    body {
+        background: white !important;
+        color: black !important;
+    }
+    
+    .stat-card,
+    .detail-card,
+    .metric-card,
+    .document-card,
+    .activity-item,
+    .payment-item {
+        border: 1px solid #000 !important;
+        break-inside: avoid;
+    }
+    
+    .welcome-banner {
+        background: white !important;
+        color: black !important;
+        border: 2px solid #000;
+    }
+    
+    a {
+        color: black !important;
+        text-decoration: none;
+    }
+}
