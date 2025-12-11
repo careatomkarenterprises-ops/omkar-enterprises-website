@@ -1,0 +1,3169 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard | Omkar Enterprises Investor Portal</title>
+    <meta name="description" content="Omkar Enterprises investor dashboard - Track your investment, view statements, and access documents.">
+    
+    <!-- Favicon -->
+    <link rel="icon" type="image/x-icon" href="assets/icons/favicon.ico">
+    <link rel="apple-touch-icon" href="assets/icons/apple-touch-icon.png">
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- Chart.js -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    
+    <!-- Styles -->
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/responsive.css">
+    <link rel="stylesheet" href="css/dashboard.css">
+</head>
+<body class="dashboard-page">
+    <!-- Top Navigation -->
+    <nav class="dashboard-nav">
+        <div class="container">
+            <div class="nav-left">
+                <button class="sidebar-toggle" id="sidebarToggle">
+                    <i class="fas fa-bars"></i>
+                </button>
+                <a href="index.html" class="dashboard-logo">
+                    <span class="logo-icon">OE</span>
+                    <span class="logo-text">Investor Portal</span>
+                </a>
+            </div>
+            
+            <div class="nav-right">
+                <div class="notifications">
+                    <button class="notif-btn" id="notifBtn">
+                        <i class="fas fa-bell"></i>
+                        <span class="notif-count">3</span>
+                    </button>
+                    <div class="notif-dropdown" id="notifDropdown">
+                        <div class="notif-header">
+                            <h4>Notifications</h4>
+                            <button class="mark-all-read">Mark all as read</button>
+                        </div>
+                        <div class="notif-list">
+                            <div class="notif-item unread">
+                                <div class="notif-icon">
+                                    <i class="fas fa-rupee-sign"></i>
+                                </div>
+                                <div class="notif-content">
+                                    <p><strong>Interest Credited</strong> - ₹25,000 for April 2025</p>
+                                    <span class="notif-time">2 hours ago</span>
+                                </div>
+                            </div>
+                            <div class="notif-item unread">
+                                <div class="notif-icon">
+                                    <i class="fas fa-file-alt"></i>
+                                </div>
+                                <div class="notif-content">
+                                    <p><strong>Quarterly Statement</strong> - Q1 2025 available for download</p>
+                                    <span class="notif-time">1 day ago</span>
+                                </div>
+                            </div>
+                            <div class="notif-item">
+                                <div class="notif-icon">
+                                    <i class="fas fa-calendar-check"></i>
+                                </div>
+                                <div class="notif-content">
+                                    <p><strong>Upcoming Payment</strong> - Next interest on May 1, 2025</p>
+                                    <span class="notif-time">3 days ago</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="user-profile">
+                    <button class="profile-btn" id="profileBtn">
+                        <div class="avatar">
+                            <i class="fas fa-user"></i>
+                        </div>
+                        <span class="user-name">Rajesh Kumar</span>
+                        <i class="fas fa-chevron-down"></i>
+                    </button>
+                    <div class="profile-dropdown" id="profileDropdown">
+                        <div class="profile-header">
+                            <div class="avatar large">
+                                <i class="fas fa-user"></i>
+                            </div>
+                            <div class="user-info">
+                                <h4>Rajesh Kumar</h4>
+                                <p>Investor ID: OE-INV-12345</p>
+                                <p class="user-email">rajesh.kumar@email.com</p>
+                            </div>
+                        </div>
+                        <div class="profile-links">
+                            <a href="#profile" class="dropdown-link">
+                                <i class="fas fa-user-cog"></i> My Profile
+                            </a>
+                            <a href="#settings" class="dropdown-link">
+                                <i class="fas fa-cog"></i> Account Settings
+                            </a>
+                            <a href="#security" class="dropdown-link">
+                                <i class="fas fa-shield-alt"></i> Security
+                            </a>
+                            <div class="dropdown-divider"></div>
+                            <button class="dropdown-link logout-btn">
+                                <i class="fas fa-sign-out-alt"></i> Sign Out
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Dashboard Layout -->
+    <div class="dashboard-container">
+        <!-- Sidebar -->
+        <aside class="dashboard-sidebar" id="dashboardSidebar">
+            <div class="sidebar-header">
+                <div class="investor-info">
+                    <div class="investor-id">
+                        <i class="fas fa-id-card"></i>
+                        <span>OE-INV-12345</span>
+                    </div>
+                    <div class="investor-tier">
+                        <i class="fas fa-crown"></i>
+                        <span>Growth Tier</span>
+                    </div>
+                </div>
+            </div>
+            
+            <nav class="sidebar-nav">
+                <ul>
+                    <li>
+                        <a href="#overview" class="nav-link active">
+                            <i class="fas fa-tachometer-alt"></i>
+                            <span>Dashboard Overview</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#investment" class="nav-link">
+                            <i class="fas fa-chart-line"></i>
+                            <span>Investment Summary</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#transactions" class="nav-link">
+                            <i class="fas fa-exchange-alt"></i>
+                            <span>Transaction History</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#documents" class="nav-link">
+                            <i class="fas fa-file-contract"></i>
+                            <span>Documents & Agreements</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#statements" class="nav-link">
+                            <i class="fas fa-file-invoice-dollar"></i>
+                            <span>Account Statements</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#tax" class="nav-link">
+                            <i class="fas fa-percentage"></i>
+                            <span>Tax Information</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#communication" class="nav-link">
+                            <i class="fas fa-comments"></i>
+                            <span>Communication Center</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#support" class="nav-link">
+                            <i class="fas fa-headset"></i>
+                            <span>Support & Help</span>
+                        </a>
+                    </li>
+                </ul>
+            </nav>
+            
+            <div class="sidebar-footer">
+                <div class="security-status">
+                    <i class="fas fa-shield-check"></i>
+                    <div>
+                        <p><strong>Session Secure</strong></p>
+                        <small>Logged in from Mumbai, IN</small>
+                    </div>
+                </div>
+                <button class="btn-logout">
+                    <i class="fas fa-sign-out-alt"></i> Sign Out
+                </button>
+            </div>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="dashboard-main" id="dashboardMain">
+            <!-- Overview Section -->
+            <section class="dashboard-section active" id="overview">
+                <div class="section-header">
+                    <h1><i class="fas fa-tachometer-alt"></i> Dashboard Overview</h1>
+                    <div class="header-actions">
+                        <button class="btn btn-primary">
+                            <i class="fas fa-download"></i> Export Report
+                        </button>
+                        <button class="btn btn-outline">
+                            <i class="fas fa-print"></i> Print Summary
+                        </button>
+                    </div>
+                </div>
+                
+                <!-- Welcome Banner -->
+                <div class="welcome-banner">
+                    <div class="banner-content">
+                        <h2>Welcome back, Rajesh! 👋</h2>
+                        <p>Your investment journey at a glance. Last updated: April 15, 2025 14:30 IST</p>
+                    </div>
+                    <div class="banner-actions">
+                        <button class="btn btn-light">
+                            <i class="fas fa-question-circle"></i> Need Help?
+                        </button>
+                    </div>
+                </div>
+                
+                <!-- Quick Stats -->
+                <div class="quick-stats">
+                    <div class="stat-card">
+                        <div class="stat-icon primary">
+                            <i class="fas fa-rupee-sign"></i>
+                        </div>
+                        <div class="stat-content">
+                            <h3>₹10,00,000</h3>
+                            <p>Total Investment</p>
+                            <div class="stat-trend positive">
+                                <i class="fas fa-arrow-up"></i>
+                                <span>Active</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="stat-card">
+                        <div class="stat-icon success">
+                            <i class="fas fa-money-bill-wave"></i>
+                        </div>
+                        <div class="stat-content">
+                            <h3>₹2,25,000</h3>
+                            <p>Interest Earned (YTD)</p>
+                            <div class="stat-trend positive">
+                                <i class="fas fa-arrow-up"></i>
+                                <span>+₹25,000 this month</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="stat-card">
+                        <div class="stat-icon warning">
+                            <i class="fas fa-calendar-alt"></i>
+                        </div>
+                        <div class="stat-content">
+                            <h3>187 Days</h3>
+                            <p>Time Elapsed</p>
+                            <div class="stat-trend">
+                                <span>Started: Oct 15, 2024</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="stat-card">
+                        <div class="stat-icon info">
+                            <i class="fas fa-percentage"></i>
+                        </div>
+                        <div class="stat-content">
+                            <h3>2.7% Monthly</h3>
+                            <p>Current Rate</p>
+                            <div class="stat-trend">
+                                <span>Growth Tier Rate</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Investment Timeline -->
+                <div class="timeline-section">
+                    <h3><i class="fas fa-road"></i> Investment Journey Timeline</h3>
+                    <div class="timeline">
+                        <div class="timeline-item completed">
+                            <div class="timeline-marker">
+                                <i class="fas fa-check-circle"></i>
+                            </div>
+                            <div class="timeline-content">
+                                <h4>Agreement Signed</h4>
+                                <p>October 15, 2024</p>
+                                <small>Loan agreement executed with all terms</small>
+                            </div>
+                        </div>
+                        
+                        <div class="timeline-item completed">
+                            <div class="timeline-marker">
+                                <i class="fas fa-check-circle"></i>
+                            </div>
+                            <div class="timeline-content">
+                                <h4>Funds Transferred</h4>
+                                <p>October 16, 2024</p>
+                                <small>₹10,00,000 invested via NEFT</small>
+                            </div>
+                        </div>
+                        
+                        <div class="timeline-item completed">
+                            <div class="timeline-marker">
+                                <i class="fas fa-check-circle"></i>
+                            </div>
+                            <div class="timeline-content">
+                                <h4>PDC Received</h4>
+                                <p>October 17, 2024</p>
+                                <small>13 post-dated cheques collected</small>
+                            </div>
+                        </div>
+                        
+                        <div class="timeline-item active">
+                            <div class="timeline-marker">
+                                <i class="fas fa-circle"></i>
+                            </div>
+                            <div class="timeline-content">
+                                <h4>Monthly Payments</h4>
+                                <p>November 2024 - Present</p>
+                                <small>6 payments received, 7 remaining</small>
+                                <div class="progress">
+                                    <div class="progress-bar" style="width: 46%"></div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="timeline-item upcoming">
+                            <div class="timeline-marker">
+                                <i class="fas fa-clock"></i>
+                            </div>
+                            <div class="timeline-content">
+                                <h4>Principal Return</h4>
+                                <p>November 15, 2025</p>
+                                <small>Final PDC for ₹10,00,000</small>
+                            </div>
+                        </div>
+                        
+                        <div class="timeline-item future">
+                            <div class="timeline-marker">
+                                <i class="fas fa-redo"></i>
+                            </div>
+                            <div class="timeline-content">
+                                <h4>Reinvestment Option</h4>
+                                <p>After November 2025</p>
+                                <small>Option for next 13-month cycle</small>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Recent Activity -->
+                <div class="recent-activity">
+                    <div class="activity-header">
+                        <h3><i class="fas fa-history"></i> Recent Activity</h3>
+                        <a href="#all-activity" class="view-all">View All</a>
+                    </div>
+                    <div class="activity-list">
+                        <div class="activity-item">
+                            <div class="activity-icon success">
+                                <i class="fas fa-rupee-sign"></i>
+                            </div>
+                            <div class="activity-content">
+                                <h4>Interest Payment Received</h4>
+                                <p>₹25,000 credited for March 2025</p>
+                                <span class="activity-time">April 1, 2025 | 10:30 AM</span>
+                            </div>
+                            <div class="activity-amount">
+                                <span class="amount positive">+₹25,000</span>
+                            </div>
+                        </div>
+                        
+                        <div class="activity-item">
+                            <div class="activity-icon info">
+                                <i class="fas fa-file-alt"></i>
+                            </div>
+                            <div class="activity-content">
+                                <h4>Quarterly Statement Generated</h4>
+                                <p>Q1 2025 statement available for download</p>
+                                <span class="activity-time">April 5, 2025 | 2:15 PM</span>
+                            </div>
+                            <div class="activity-amount">
+                                <button class="btn btn-sm btn-outline">Download</button>
+                            </div>
+                        </div>
+                        
+                        <div class="activity-item">
+                            <div class="activity-icon warning">
+                                <i class="fas fa-calendar-check"></i>
+                            </div>
+                            <div class="activity-content">
+                                <h4>Upcoming Payment Reminder</h4>
+                                <p>Next interest payment due May 1, 2025</p>
+                                <span class="activity-time">April 10, 2025 | 9:00 AM</span>
+                            </div>
+                            <div class="activity-amount">
+                                <span class="amount">₹25,000</span>
+                            </div>
+                        </div>
+                        
+                        <div class="activity-item">
+                            <div class="activity-icon primary">
+                                <i class="fas fa-user-check"></i>
+                            </div>
+                            <div class="activity-content">
+                                <h4>Profile Updated</h4>
+                                <p>Bank details verified and updated</p>
+                                <span class="activity-time">April 12, 2025 | 11:45 AM</span>
+                            </div>
+                            <div class="activity-amount">
+                                <span class="badge">Verified</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Performance Chart -->
+                <div class="performance-chart">
+                    <div class="chart-header">
+                        <h3><i class="fas fa-chart-line"></i> Investment Performance</h3>
+                        <div class="chart-filters">
+                            <select class="filter-select">
+                                <option value="6m">Last 6 Months</option>
+                                <option value="1y" selected>Last 1 Year</option>
+                                <option value="all">All Time</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="chart-container">
+                        <canvas id="performanceChart"></canvas>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Investment Summary Section -->
+            <section class="dashboard-section" id="investment">
+                <div class="section-header">
+                    <h1><i class="fas fa-chart-line"></i> Investment Summary</h1>
+                    <div class="header-actions">
+                        <button class="btn btn-primary">
+                            <i class="fas fa-calculator"></i> Calculate Returns
+                        </button>
+                    </div>
+                </div>
+                
+                <!-- Investment Details -->
+                <div class="investment-details">
+                    <div class="detail-card">
+                        <div class="detail-header">
+                            <h3><i class="fas fa-info-circle"></i> Basic Information</h3>
+                        </div>
+                        <div class="detail-grid">
+                            <div class="detail-item">
+                                <span class="label">Investor ID</span>
+                                <span class="value">OE-INV-12345</span>
+                            </div>
+                            <div class="detail-item">
+                                <span class="label">Agreement Date</span>
+                                <span class="value">October 15, 2024</span>
+                            </div>
+                            <div class="detail-item">
+                                <span class="label">Investment Tier</span>
+                                <span class="value badge-tier">Growth Tier</span>
+                            </div>
+                            <div class="detail-item">
+                                <span class="label">Principal Amount</span>
+                                <span class="value">₹10,00,000</span>
+                            </div>
+                            <div class="detail-item">
+                                <span class="label">Interest Rate</span>
+                                <span class="value">2.7% Monthly (32.4% Annual)</span>
+                            </div>
+                            <div class="detail-item">
+                                <span class="label">Investment Term</span>
+                                <span class="value">13 Months</span>
+                            </div>
+                            <div class="detail-item">
+                                <span class="label">Start Date</span>
+                                <span class="value">October 15, 2024</span>
+                            </div>
+                            <div class="detail-item">
+                                <span class="label">Maturity Date</span>
+                                <span class="value">November 15, 2025</span>
+                            </div>
+                            <div class="detail-item">
+                                <span class="label">Payment Frequency</span>
+                                <span class="value">Monthly (1st of each month)</span>
+                            </div>
+                            <div class="detail-item">
+                                <span class="label">Status</span>
+                                <span class="value badge-active">Active</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Returns Calculator -->
+                    <div class="calculator-card">
+                        <div class="calculator-header">
+                            <h3><i class="fas fa-calculator"></i> Returns Calculator</h3>
+                        </div>
+                        <div class="calculator-body">
+                            <div class="calc-inputs">
+                                <div class="input-group">
+                                    <label>Principal Amount</label>
+                                    <div class="input-with-symbol">
+                                        <span class="symbol">₹</span>
+                                        <input type="number" id="calcPrincipal" value="1000000" min="100000" max="10000000" step="100000">
+                                    </div>
+                                </div>
+                                
+                                <div class="input-group">
+                                    <label>Monthly Interest Rate</label>
+                                    <div class="input-with-symbol">
+                                        <input type="number" id="calcRate" value="2.7" min="1" max="5" step="0.1">
+                                        <span class="symbol">%</span>
+                                    </div>
+                                </div>
+                                
+                                <div class="input-group">
+                                    <label>Investment Period</label>
+                                    <div class="input-with-symbol">
+                                        <input type="number" id="calcPeriod" value="13" min="8" max="36" step="1">
+                                        <span class="symbol">Months</span>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="calc-results">
+                                <div class="result-item">
+                                    <span class="label">Monthly Interest</span>
+                                    <span class="value" id="monthlyInterest">₹27,000</span>
+                                </div>
+                                <div class="result-item">
+                                    <span class="label">Total Interest</span>
+                                    <span class="value" id="totalInterest">₹3,51,000</span>
+                                </div>
+                                <div class="result-item total">
+                                    <span class="label">Maturity Amount</span>
+                                    <span class="value" id="maturityAmount">₹13,51,000</span>
+                                </div>
+                                <div class="result-item">
+                                    <span class="label">Annualized Return</span>
+                                    <span class="value" id="annualReturn">35.1%</span>
+                                </div>
+                            </div>
+                            
+                            <button class="btn btn-primary btn-block" id="updateCalc">
+                                <i class="fas fa-sync-alt"></i> Update Calculation
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Performance Metrics -->
+                <div class="metrics-grid">
+                    <div class="metric-card">
+                        <div class="metric-header">
+                            <h4><i class="fas fa-bullseye"></i> Target Returns</h4>
+                        </div>
+                        <div class="metric-body">
+                            <div class="metric-value">₹3,51,000</div>
+                            <div class="metric-label">Total Expected Interest</div>
+                            <div class="metric-progress">
+                                <div class="progress">
+                                    <div class="progress-bar" style="width: 46%"></div>
+                                </div>
+                                <div class="progress-label">
+                                    <span>₹1,62,000 Earned</span>
+                                    <span>46% Complete</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="metric-card">
+                        <div class="metric-header">
+                            <h4><i class="fas fa-calendar-check"></i> Payment Schedule</h4>
+                        </div>
+                        <div class="metric-body">
+                            <div class="metric-value">6/13</div>
+                            <div class="metric-label">Payments Received</div>
+                            <div class="payment-schedule">
+                                <div class="schedule-item completed">
+                                    <span>Nov 2024</span>
+                                    <span>✓</span>
+                                </div>
+                                <div class="schedule-item completed">
+                                    <span>Dec 2024</span>
+                                    <span>✓</span>
+                                </div>
+                                <div class="schedule-item completed">
+                                    <span>Jan 2025</span>
+                                    <span>✓</span>
+                                </div>
+                                <div class="schedule-item completed">
+                                    <span>Feb 2025</span>
+                                    <span>✓</span>
+                                </div>
+                                <div class="schedule-item completed">
+                                    <span>Mar 2025</span>
+                                    <span>✓</span>
+                                </div>
+                                <div class="schedule-item completed">
+                                    <span>Apr 2025</span>
+                                    <span>✓</span>
+                                </div>
+                                <div class="schedule-item upcoming">
+                                    <span>May 2025</span>
+                                    <span>→</span>
+                                </div>
+                                <div class="schedule-item">
+                                    <span>Jun 2025</span>
+                                    <span>•</span>
+                                </div>
+                                <div class="schedule-item">
+                                    <span>Jul 2025</span>
+                                    <span>•</span>
+                                </div>
+                                <div class="schedule-item">
+                                    <span>Aug 2025</span>
+                                    <span>•</span>
+                                </div>
+                                <div class="schedule-item">
+                                    <span>Sep 2025</span>
+                                    <span>•</span>
+                                </div>
+                                <div class="schedule-item">
+                                    <span>Oct 2025</span>
+                                    <span>•</span>
+                                </div>
+                                <div class="schedule-item principal">
+                                    <span>Nov 2025</span>
+                                    <span>₹</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="metric-card">
+                        <div class="metric-header">
+                            <h4><i class="fas fa-percentage"></i> Rate Comparison</h4>
+                        </div>
+                        <div class="metric-body">
+                            <div class="rate-comparison">
+                                <div class="rate-item current">
+                                    <span class="rate-label">Your Rate</span>
+                                    <span class="rate-value">2.7%</span>
+                                    <span class="rate-annual">(32.4% p.a.)</span>
+                                </div>
+                                <div class="rate-item">
+                                    <span class="rate-label">Foundation Tier</span>
+                                    <span class="rate-value">2.5%</span>
+                                    <span class="rate-annual">(30% p.a.)</span>
+                                </div>
+                                <div class="rate-item">
+                                    <span class="rate-label">Premier Tier</span>
+                                    <span class="rate-value">2.9%</span>
+                                    <span class="rate-annual">(34.8% p.a.)</span>
+                                </div>
+                            </div>
+                            <div class="upgrade-notice">
+                                <p><i class="fas fa-info-circle"></i> Upgrade to Premier Tier at renewal for higher returns</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Early Withdrawal Calculator -->
+                <div class="withdrawal-calc">
+                    <div class="calc-header">
+                        <h3><i class="fas fa-exclamation-triangle"></i> Early Withdrawal Simulation</h3>
+                        <p>Understand the impact of withdrawing before maturity</p>
+                    </div>
+                    <div class="calc-body">
+                        <div class="withdrawal-inputs">
+                            <div class="input-group">
+                                <label>Months Elapsed</label>
+                                <input type="range" id="withdrawalMonths" min="8" max="12" value="10" step="1">
+                                <div class="range-value">
+                                    <span id="monthsValue">10 Months</span>
+                                    <small>(Min: 8 months, Max: 12 months)</small>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="withdrawal-results">
+                            <div class="comparison">
+                                <div class="scenario">
+                                    <h5>If Continue to Maturity</h5>
+                                    <div class="amount">₹1,35,000</div>
+                                    <small>Interest for remaining 3 months</small>
+                                </div>
+                                
+                                <div class="scenario penalty">
+                                    <h5>If Withdraw Now</h5>
+                                    <div class="amount">₹81,000</div>
+                                    <small>Interest at 1.5% monthly rate</small>
+                                    <div class="penalty-amount">
+                                        <i class="fas fa-minus-circle"></i> ₹54,000 penalty
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="withdrawal-warning">
+                                <p><i class="fas fa-exclamation-circle"></i> <strong>Important:</strong> Early withdrawal subject to 90-day processing time and mutual agreement. No withdrawal allowed in first 8 months.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Transaction History Section -->
+            <section class="dashboard-section" id="transactions">
+                <div class="section-header">
+                    <h1><i class="fas fa-exchange-alt"></i> Transaction History</h1>
+                    <div class="header-actions">
+                        <div class="date-filter">
+                            <select class="filter-select">
+                                <option value="all">All Time</option>
+                                <option value="3m">Last 3 Months</option>
+                                <option value="6m" selected>Last 6 Months</option>
+                                <option value="1y">Last 1 Year</option>
+                            </select>
+                        </div>
+                        <button class="btn btn-primary">
+                            <i class="fas fa-file-export"></i> Export CSV
+                        </button>
+                    </div>
+                </div>
+                
+                <!-- Transaction Summary -->
+                <div class="transaction-summary">
+                    <div class="summary-card">
+                        <div class="summary-icon success">
+                            <i class="fas fa-arrow-down"></i>
+                        </div>
+                        <div class="summary-content">
+                            <h3>₹1,50,000</h3>
+                            <p>Total Received</p>
+                        </div>
+                    </div>
+                    
+                    <div class="summary-card">
+                        <div class="summary-icon primary">
+                            <i class="fas fa-calendar-alt"></i>
+                        </div>
+                        <div class="summary-content">
+                            <h3>6</h3>
+                            <p>Payments Received</p>
+                        </div>
+                    </div>
+                    
+                    <div class="summary-card">
+                        <div class="summary-icon warning">
+                            <i class="fas fa-clock"></i>
+                        </div>
+                        <div class="summary-content">
+                            <h3>7</h3>
+                            <p>Payments Pending</p>
+                        </div>
+                    </div>
+                    
+                    <div class="summary-card">
+                        <div class="summary-icon info">
+                            <i class="fas fa-percentage"></i>
+                        </div>
+                        <div class="summary-content">
+                            <h3>100%</h3>
+                            <p>On-Time Payments</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Transaction Table -->
+                <div class="transaction-table">
+                    <div class="table-responsive">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>Date</th>
+                                    <th>Description</th>
+                                    <th>Type</th>
+                                    <th>Reference</th>
+                                    <th>Amount</th>
+                                    <th>Status</th>
+                                    <th>Action</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>Apr 1, 2025</td>
+                                    <td>
+                                        <strong>Interest Payment - Mar 2025</strong>
+                                        <small>PDC cleared via HDFC Bank</small>
+                                    </td>
+                                    <td><span class="badge income">Interest</span></td>
+                                    <td>PDC-2025-03</td>
+                                    <td class="amount positive">+₹25,000</td>
+                                    <td><span class="badge success">Completed</span></td>
+                                    <td>
+                                        <button class="btn-icon">
+                                            <i class="fas fa-receipt"></i>
+                                        </button>
+                                    </td>
+                                </tr>
+                                
+                                <tr>
+                                    <td>Mar 1, 2025</td>
+                                    <td>
+                                        <strong>Interest Payment - Feb 2025</strong>
+                                        <small>PDC cleared via HDFC Bank</small>
+                                    </td>
+                                    <td><span class="badge income">Interest</span></td>
+                                    <td>PDC-2025-02</td>
+                                    <td class="amount positive">+₹25,000</td>
+                                    <td><span class="badge success">Completed</span></td>
+                                    <td>
+                                        <button class="btn-icon">
+                                            <i class="fas fa-receipt"></i>
+                                        </button>
+                                    </td>
+                                </tr>
+                                
+                                <tr>
+                                    <td>Feb 1, 2025</td>
+                                    <td>
+                                        <strong>Interest Payment - Jan 2025</strong>
+                                        <small>PDC cleared via HDFC Bank</small>
+                                    </td>
+                                    <td><span class="badge income">Interest</span></td>
+                                    <td>PDC-2025-01</td>
+                                    <td class="amount positive">+₹25,000</td>
+                                    <td><span class="badge success">Completed</span></td>
+                                    <td>
+                                        <button class="btn-icon">
+                                            <i class="fas fa-receipt"></i>
+                                        </button>
+                                    </td>
+                                </tr>
+                                
+                                <tr>
+                                    <td>Jan 1, 2025</td>
+                                    <td>
+                                        <strong>Interest Payment - Dec 2024</strong>
+                                        <small>PDC cleared via HDFC Bank</small>
+                                    </td>
+                                    <td><span class="badge income">Interest</span></td>
+                                    <td>PDC-2024-12</td>
+                                    <td class="amount positive">+₹25,000</td>
+                                    <td><span class="badge success">Completed</span></td>
+                                    <td>
+                                        <button class="btn-icon">
+                                            <i class="fas fa-receipt"></i>
+                                        </button>
+                                    </td>
+                                </tr>
+                                
+                                <tr>
+                                    <td>Dec 1, 2024</td>
+                                    <td>
+                                        <strong>Interest Payment - Nov 2024</strong>
+                                        <small>PDC cleared via HDFC Bank</small>
+                                    </td>
+                                    <td><span class="badge income">Interest</span></td>
+                                    <td>PDC-2024-11</td>
+                                    <td class="amount positive">+₹25,000</td>
+                                    <td><span class="badge success">Completed</span></td>
+                                    <td>
+                                        <button class="btn-icon">
+                                            <i class="fas fa-receipt"></i>
+                                        </button>
+                                    </td>
+                                </tr>
+                                
+                                <tr>
+                                    <td>Nov 1, 2024</td>
+                                    <td>
+                                        <strong>Interest Payment - Oct 2024</strong>
+                                        <small>PDC cleared via HDFC Bank</small>
+                                    </td>
+                                    <td><span class="badge income">Interest</span></td>
+                                    <td>PDC-2024-10</td>
+                                    <td class="amount positive">+₹25,000</td>
+                                    <td><span class="badge success">Completed</span></td>
+                                    <td>
+                                        <button class="btn-icon">
+                                            <i class="fas fa-receipt"></i>
+                                        </button>
+                                    </td>
+                                </tr>
+                                
+                                <tr>
+                                    <td>Oct 16, 2024</td>
+                                    <td>
+                                        <strong>Initial Investment</strong>
+                                        <small>NEFT transfer to Omkar Enterprises</small>
+                                    </td>
+                                    <td><span class="badge investment">Investment</span></td>
+                                    <td>NEFT-784512369</td>
+                                    <td class="amount negative">-₹10,00,000</td>
+                                    <td><span class="badge success">Completed</span></td>
+                                    <td>
+                                        <button class="btn-icon">
+                                            <i class="fas fa-receipt"></i>
+                                        </button>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                
+                <!-- Upcoming Payments -->
+                <div class="upcoming-payments">
+                    <div class="payments-header">
+                        <h3><i class="fas fa-calendar-check"></i> Upcoming Payments</h3>
+                    </div>
+                    <div class="payments-list">
+                        <div class="payment-item upcoming">
+                            <div class="payment-date">
+                                <div class="month">May</div>
+                                <div class="day">01</div>
+                            </div>
+                            <div class="payment-details">
+                                <h4>Interest Payment - April 2025</h4>
+                                <p>PDC to be deposited on May 1, 2025</p>
+                            </div>
+                            <div class="payment-amount">
+                                <span class="amount">₹25,000</span>
+                            </div>
+                            <div class="payment-actions">
+                                <button class="btn btn-sm btn-outline">
+                                    <i class="fas fa-bell"></i> Set Reminder
+                                </button>
+                            </div>
+                        </div>
+                        
+                        <div class="payment-item">
+                            <div class="payment-date">
+                                <div class="month">Jun</div>
+                                <div class="day">01</div>
+                            </div>
+                            <div class="payment-details">
+                                <h4>Interest Payment - May 2025</h4>
+                                <p>PDC to be deposited on June 1, 2025</p>
+                            </div>
+                            <div class="payment-amount">
+                                <span class="amount">₹25,000</span>
+                            </div>
+                        </div>
+                        
+                        <div class="payment-item">
+                            <div class="payment-date">
+                                <div class="month">Jul</div>
+                                <div class="day">01</div>
+                            </div>
+                            <div class="payment-details">
+                                <h4>Interest Payment - June 2025</h4>
+                                <p>PDC to be deposited on July 1, 2025</p>
+                            </div>
+                            <div class="payment-amount">
+                                <span class="amount">₹25,000</span>
+                            </div>
+                        </div>
+                        
+                        <div class="payment-item principal">
+                            <div class="payment-date">
+                                <div class="month">Nov</div>
+                                <div class="day">15</div>
+                            </div>
+                            <div class="payment-details">
+                                <h4>Principal Return</h4>
+                                <p>Final PDC for principal amount</p>
+                            </div>
+                            <div class="payment-amount">
+                                <span class="amount principal">₹10,00,000</span>
+                            </div>
+                            <div class="payment-actions">
+                                <button class="btn btn-sm btn-primary">
+                                    <i class="fas fa-redo"></i> Renew Option
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Documents Section -->
+            <section class="dashboard-section" id="documents">
+                <div class="section-header">
+                    <h1><i class="fas fa-file-contract"></i> Documents & Agreements</h1>
+                    <div class="header-actions">
+                        <button class="btn btn-primary">
+                            <i class="fas fa-upload"></i> Upload Document
+                        </button>
+                    </div>
+                </div>
+                
+                <!-- Document Categories -->
+                <div class="document-categories">
+                    <div class="category-nav">
+                        <button class="cat-btn active" data-category="agreements">
+                            <i class="fas fa-file-signature"></i> Agreements
+                        </button>
+                        <button class="cat-btn" data-category="kyc">
+                            <i class="fas fa-id-card"></i> KYC Documents
+                        </button>
+                        <button class="cat-btn" data-category="statements">
+                            <i class="fas fa-file-invoice"></i> Statements
+                        </button>
+                        <button class="cat-btn" data-category="tax">
+                            <i class="fas fa-percentage"></i> Tax Documents
+                        </button>
+                        <button class="cat-btn" data-category="communications">
+                            <i class="fas fa-envelope"></i> Communications
+                        </button>
+                    </div>
+                </div>
+                
+                <!-- Agreements -->
+                <div class="document-category active" id="agreements">
+                    <div class="documents-grid">
+                        <div class="document-card important">
+                            <div class="doc-icon">
+                                <i class="fas fa-file-contract"></i>
+                            </div>
+                            <div class="doc-content">
+                                <h4>Loan Agreement</h4>
+                                <p>Signed agreement dated October 15, 2024</p>
+                                <div class="doc-meta">
+                                    <span><i class="fas fa-calendar"></i> Oct 15, 2024</span>
+                                    <span><i class="fas fa-file-pdf"></i> PDF, 2.4 MB</span>
+                                </div>
+                            </div>
+                            <div class="doc-actions">
+                                <button class="btn-icon" title="View">
+                                    <i class="fas fa-eye"></i>
+                                </button>
+                                <button class="btn-icon" title="Download">
+                                    <i class="fas fa-download"></i>
+                                </button>
+                                <button class="btn-icon" title="Print">
+                                    <i class="fas fa-print"></i>
+                                </button>
+                            </div>
+                        </div>
+                        
+                        <div class="document-card">
+                            <div class="doc-icon">
+                                <i class="fas fa-handshake"></i>
+                            </div>
+                            <div class="doc-content">
+                                <h4>Addendum - Contact Update</h4>
+                                <p>Contact information update dated Jan 10, 2025</p>
+                                <div class="doc-meta">
+                                    <span><i class="fas fa-calendar"></i> Jan 10, 2025</span>
+                                    <span><i class="fas fa-file-pdf"></i> PDF, 1.2 MB</span>
+                                </div>
+                            </div>
+                            <div class="doc-actions">
+                                <button class="btn-icon" title="Download">
+                                    <i class="fas fa-download"></i>
+                                </button>
+                            </div>
+                        </div>
+                        
+                        <div class="document-card">
+                            <div class="doc-icon">
+                                <i class="fas fa-receipt"></i>
+                            </div>
+                            <div class="doc-content">
+                                <h4>PDC Receipt</h4>
+                                <p>Receipt for 13 post-dated cheques</p>
+                                <div class="doc-meta">
+                                    <span><i class="fas fa-calendar"></i> Oct 17, 2024</span>
+                                    <span><i class="fas fa-file-pdf"></i> PDF, 0.8 MB</span>
+                                </div>
+                            </div>
+                            <div class="doc-actions">
+                                <button class="btn-icon" title="View">
+                                    <i class="fas fa-eye"></i>
+                                </button>
+                                <button class="btn-icon" title="Download">
+                                    <i class="fas fa-download"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- KYC Documents -->
+                <div class="document-category" id="kyc">
+                    <div class="documents-grid">
+                        <div class="document-card">
+                            <div class="doc-icon">
+                                <i class="fas fa-id-card"></i>
+                            </div>
+                            <div class="doc-content">
+                                <h4>PAN Card</h4>
+                                <p>Permanent Account Number copy</p>
+                                <div class="doc-meta">
+                                    <span><i class="fas fa-calendar"></i> Oct 10, 2024</span>
+                                    <span><i class="fas fa-file-pdf"></i> PDF, 1.1 MB</span>
+                                </div>
+                            </div>
+                            <div class="doc-actions">
+                                <button class="btn-icon" title="View">
+                                    <i class="fas fa-eye"></i>
+                                </button>
+                            </div>
+                        </div>
+                        
+                        <div class="document-card">
+                            <div class="doc-icon">
+                                <i class="fas fa-address-card"></i>
+                            </div>
+                            <div class="doc-content">
+                                <h4>Aadhaar Card</h4>
+                                <p>Masked Aadhaar copy for verification</p>
+                                <div class="doc-meta">
+                                    <span><i class="fas fa-calendar"></i> Oct 10, 2024</span>
+                                    <span><i class="fas fa-file-pdf"></i> PDF, 1.3 MB</span>
+                                </div>
+                            </div>
+                            <div class="doc-actions">
+                                <button class="btn-icon" title="View">
+                                    <i class="fas fa-eye"></i>
+                                </button>
+                            </div>
+                        </div>
+                        
+                        <div class="document-card">
+                            <div class="doc-icon">
+                                <i class="fas fa-file-invoice-dollar"></i>
+                            </div>
+                            <div class="doc-content">
+                                <h4>Bank Statement</h4>
+                                <p>6-month bank statement for source verification</p>
+                                <div class="doc-meta">
+                                    <span><i class="fas fa-calendar"></i> Oct 10, 2024</span>
+                                    <span><i class="fas fa-file-pdf"></i> PDF, 3.2 MB</span>
+                                </div>
+                            </div>
+                            <div class="doc-actions">
+                                <button class="btn-icon" title="View">
+                                    <i class="fas fa-eye"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Document Upload -->
+                <div class="document-upload">
+                    <div class="upload-header">
+                        <h3><i class="fas fa-cloud-upload-alt"></i> Upload New Document</h3>
+                    </div>
+                    <div class="upload-area" id="uploadArea">
+                        <div class="upload-content">
+                            <i class="fas fa-cloud-upload-alt"></i>
+                            <h4>Drag & Drop or Click to Upload</h4>
+                            <p>Supported formats: PDF, JPG, PNG (Max 10MB each)</p>
+                            <button class="btn btn-outline" id="browseFiles">
+                                <i class="fas fa-folder-open"></i> Browse Files
+                            </button>
+                        </div>
+                        <input type="file" id="fileInput" multiple accept=".pdf,.jpg,.jpeg,.png" style="display: none;">
+                    </div>
+                    <div class="upload-list" id="uploadList"></div>
+                </div>
+            </section>
+
+            <!-- Messages Section -->
+            <div class="dashboard-messages">
+                <div class="messages-header">
+                    <h3><i class="fas fa-comments"></i> Quick Messages</h3>
+                    <button class="btn-icon" id="closeMessages">
+                        <i class="fas fa-times"></i>
+                    </button>
+                </div>
+                <div class="messages-list">
+                    <div class="message-item">
+                        <div class="message-icon info">
+                            <i class="fas fa-info-circle"></i>
+                        </div>
+                        <div class="message-content">
+                            <p><strong>Tax Season Reminder</strong></p>
+                            <p>Form 16A for FY 2024-25 will be available by June 15, 2025</p>
+                        </div>
+                    </div>
+                    <div class="message-item">
+                        <div class="message-icon success">
+                            <i class="fas fa-check-circle"></i>
+                        </div>
+                        <div class="message-content">
+                            <p><strong>Profile Updated</strong></p>
+                            <p>Your contact details were updated successfully</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <!-- Footer -->
+    <footer class="dashboard-footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-info">
+                    <p><i class="fas fa-shield-alt"></i> <strong>Secure Session:</strong> Your connection is encrypted | <strong>Last Login:</strong> Apr 14, 2025 16:45 IST</p>
+                    <p><i class="fas fa-clock"></i> <strong>Session Timeout:</strong> 14 minutes remaining | <strong>IP Address:</strong> 103.76.xx.xxx</p>
+                </div>
+                <div class="footer-links">
+                    <a href="#"><i class="fas fa-question-circle"></i> Help</a>
+                    <a href="#"><i class="fas fa-file-alt"></i> Privacy</a>
+                    <a href="#"><i class="fas fa-cog"></i> Settings</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Scripts -->
+    <script src="js/main.js"></script>
+    <script src="js/investor-portal.js"></script>
+    <script src="js/dashboard.js"></script>
+    
+    <script>
+        // Initialize Performance Chart
+        document.addEventListener('DOMContentLoaded', function() {
+            const ctx = document.getElementById('performanceChart').getContext('2d');
+            const performanceChart = new Chart(ctx, {
+                type: 'line',
+                data: {
+                    labels: ['Oct', 'Nov', 'Dec', 'Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov'],
+                    datasets: [{
+                        label: 'Cumulative Returns',
+                        data: [0, 25000, 50000, 75000, 100000, 125000, 150000, 175000, 200000, 225000, 250000, 275000, 300000, 325000],
+                        borderColor: '#28a745',
+                        backgroundColor: 'rgba(40, 167, 69, 0.1)',
+                        borderWidth: 3,
+                        fill: true,
+                        tension: 0.4
+                    }, {
+                        label: 'Monthly Interest',
+                        data: [0, 25000, 25000, 25000, 25000, 25000, 25000, 25000, 25000, 25000, 25000, 25000, 25000, 25000],
+                        borderColor: '#007bff',
+                        backgroundColor: 'rgba(0, 123, 255, 0.1)',
+                        borderWidth: 2,
+                        borderDash: [5, 5],
+                        fill: false
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    plugins: {
+                        legend: {
+                            position: 'top',
+                        },
+                        tooltip: {
+                            mode: 'index',
+                            intersect: false,
+                            callbacks: {
+                                label: function(context) {
+                                    return context.dataset.label + ': ₹' + context.parsed.y.toLocaleString('en-IN');
+                                }
+                            }
+                        }
+                    },
+                    scales: {
+                        y: {
+                            beginAtZero: true,
+                            ticks: {
+                                callback: function(value) {
+                                    return '₹' + value.toLocaleString('en-IN');
+                                }
+                            }
+                        }
+                    }
+                }
+            });
+            
+            // Update calculator on input change
+            function updateCalculator() {
+                const principal = parseFloat(document.getElementById('calcPrincipal').value);
+                const rate = parseFloat(document.getElementById('calcRate').value);
+                const period = parseInt(document.getElementById('calcPeriod').value);
+                
+                const monthlyInterest = (principal * rate / 100);
+                const totalInterest = monthlyInterest * period;
+                const maturityAmount = principal + totalInterest;
+                const annualReturn = (rate * 12);
+                
+                document.getElementById('monthlyInterest').textContent = '₹' + monthlyInterest.toLocaleString('en-IN', {maximumFractionDigits: 0});
+                document.getElementById('totalInterest').textContent = '₹' + totalInterest.toLocaleString('en-IN', {maximumFractionDigits: 0});
+                document.getElementById('maturityAmount').textContent = '₹' + maturityAmount.toLocaleString('en-IN', {maximumFractionDigits: 0});
+                document.getElementById('annualReturn').textContent = annualReturn.toFixed(1) + '%';
+            }
+            
+            document.getElementById('updateCalc').addEventListener('click', updateCalculator);
+            
+            // Initialize calculator
+            updateCalculator();
+            
+            // Update withdrawal simulation
+            const withdrawalSlider = document.getElementById('withdrawalMonths');
+            const monthsValue = document.getElementById('monthsValue');
+            
+            withdrawalSlider.addEventListener('input', function() {
+                const months = parseInt(this.value);
+                monthsValue.textContent = months + ' Months';
+                
+                // Update simulation values (simplified)
+                const principal = 1000000;
+                const remainingMonths = 13 - months;
+                const normalInterest = 27000 * remainingMonths;
+                const penaltyInterest = 15000 * remainingMonths;
+                const penaltyAmount = normalInterest - penaltyInterest;
+                
+                // Update UI elements would go here
+            });
+        });
+    </script>
+    
+    <!-- Dashboard Styles -->
+    <style>
+        .dashboard-page {
+            background: #f8f9fa;
+        }
+        
+        .dashboard-nav {
+            background: white;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            padding: 15px 0;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+        
+        .dashboard-nav .container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .nav-left {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+        
+        .sidebar-toggle {
+            background: none;
+            border: none;
+            font-size: 1.2rem;
+            color: var(--charcoal);
+            cursor: pointer;
+            padding: 5px;
+        }
+        
+        .dashboard-logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            text-decoration: none;
+        }
+        
+        .dashboard-logo .logo-icon {
+            background: var(--primary-blue);
+            color: white;
+            width: 40px;
+            height: 40px;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+        }
+        
+        .dashboard-logo .logo-text {
+            color: var(--charcoal);
+            font-weight: 600;
+            font-size: 1.2rem;
+        }
+        
+        .nav-right {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+        
+        .notifications {
+            position: relative;
+        }
+        
+        .notif-btn {
+            background: none;
+            border: none;
+            font-size: 1.2rem;
+            color: var(--charcoal);
+            cursor: pointer;
+            position: relative;
+            padding: 8px;
+        }
+        
+        .notif-count {
+            position: absolute;
+            top: -5px;
+            right: -5px;
+            background: var(--danger);
+            color: white;
+            font-size: 0.7rem;
+            width: 18px;
+            height: 18px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .notif-dropdown {
+            position: absolute;
+            top: 100%;
+            right: 0;
+            width: 350px;
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            display: none;
+            z-index: 1001;
+        }
+        
+        .notifications:hover .notif-dropdown {
+            display: block;
+        }
+        
+        .notif-header {
+            padding: 20px;
+            border-bottom: 1px solid #eee;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .notif-header h4 {
+            margin: 0;
+            color: var(--charcoal);
+        }
+        
+        .mark-all-read {
+            background: none;
+            border: none;
+            color: var(--primary-blue);
+            cursor: pointer;
+            font-size: 0.9rem;
+        }
+        
+        .notif-list {
+            max-height: 400px;
+            overflow-y: auto;
+        }
+        
+        .notif-item {
+            padding: 15px 20px;
+            border-bottom: 1px solid #f8f9fa;
+            display: flex;
+            align-items: flex-start;
+            gap: 15px;
+        }
+        
+        .notif-item.unread {
+            background: #f0f7ff;
+        }
+        
+        .notif-icon {
+            width: 30px;
+            height: 30px;
+            background: var(--primary-blue);
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+        }
+        
+        .notif-content {
+            flex: 1;
+        }
+        
+        .notif-content p {
+            margin: 0;
+            font-size: 0.9rem;
+        }
+        
+        .notif-time {
+            font-size: 0.8rem;
+            color: #666;
+            display: block;
+            margin-top: 5px;
+        }
+        
+        .user-profile {
+            position: relative;
+        }
+        
+        .profile-btn {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            background: none;
+            border: none;
+            cursor: pointer;
+            padding: 8px 12px;
+            border-radius: 8px;
+            transition: background 0.3s ease;
+        }
+        
+        .profile-btn:hover {
+            background: #f8f9fa;
+        }
+        
+        .avatar {
+            width: 35px;
+            height: 35px;
+            background: var(--primary-blue);
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .avatar.large {
+            width: 50px;
+            height: 50px;
+            font-size: 1.2rem;
+        }
+        
+        .user-name {
+            font-weight: 500;
+            color: var(--charcoal);
+        }
+        
+        .profile-dropdown {
+            position: absolute;
+            top: 100%;
+            right: 0;
+            width: 300px;
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            display: none;
+            z-index: 1001;
+        }
+        
+        .user-profile:hover .profile-dropdown {
+            display: block;
+        }
+        
+        .profile-header {
+            padding: 20px;
+            border-bottom: 1px solid #eee;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+        
+        .user-info h4 {
+            margin: 0 0 5px 0;
+            color: var(--charcoal);
+        }
+        
+        .user-info p {
+            margin: 0;
+            font-size: 0.9rem;
+            color: #666;
+        }
+        
+        .user-email {
+            color: var(--primary-blue) !important;
+            font-size: 0.85rem !important;
+        }
+        
+        .profile-links {
+            padding: 10px 0;
+        }
+        
+        .dropdown-link {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 12px 20px;
+            text-decoration: none;
+            color: var(--charcoal);
+            transition: background 0.3s ease;
+        }
+        
+        .dropdown-link:hover {
+            background: #f8f9fa;
+        }
+        
+        .dropdown-link i {
+            color: var(--gold);
+            width: 20px;
+        }
+        
+        .dropdown-divider {
+            height: 1px;
+            background: #eee;
+            margin: 10px 0;
+        }
+        
+        .logout-btn {
+            width: 100%;
+            background: none;
+            border: none;
+            text-align: left;
+            cursor: pointer;
+        }
+        
+        .dashboard-container {
+            display: flex;
+            min-height: calc(100vh - 140px);
+        }
+        
+        .dashboard-sidebar {
+            width: 280px;
+            background: white;
+            border-right: 1px solid #e9ecef;
+            display: flex;
+            flex-direction: column;
+            transition: transform 0.3s ease;
+        }
+        
+        .sidebar-header {
+            padding: 30px 20px;
+            border-bottom: 1px solid #e9ecef;
+        }
+        
+        .investor-info {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+        
+        .investor-id, .investor-tier {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 10px 15px;
+            background: #f8f9fa;
+            border-radius: 8px;
+            font-size: 0.9rem;
+        }
+        
+        .investor-id i, .investor-tier i {
+            color: var(--gold);
+        }
+        
+        .investor-tier {
+            background: #fff3cd;
+            color: #856404;
+        }
+        
+        .sidebar-nav {
+            flex: 1;
+            padding: 20px 0;
+            overflow-y: auto;
+        }
+        
+        .sidebar-nav ul {
+            list-style: none;
+            padding-left: 0;
+            margin: 0;
+        }
+        
+        .sidebar-nav li {
+            margin-bottom: 5px;
+        }
+        
+        .nav-link {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            padding: 15px 25px;
+            text-decoration: none;
+            color: var(--charcoal);
+            transition: all 0.3s ease;
+            border-left: 3px solid transparent;
+        }
+        
+        .nav-link:hover {
+            background: #f8f9fa;
+            color: var(--primary-blue);
+        }
+        
+        .nav-link.active {
+            background: #f0f7ff;
+            color: var(--primary-blue);
+            border-left-color: var(--gold);
+            font-weight: 600;
+        }
+        
+        .nav-link i {
+            width: 20px;
+            color: inherit;
+        }
+        
+        .sidebar-footer {
+            padding: 20px;
+            border-top: 1px solid #e9ecef;
+        }
+        
+        .security-status {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 15px;
+            background: #d4edda;
+            border-radius: 8px;
+            margin-bottom: 15px;
+        }
+        
+        .security-status i {
+            color: #28a745;
+            font-size: 1.2rem;
+        }
+        
+        .security-status p {
+            margin: 0;
+            font-size: 0.9rem;
+        }
+        
+        .security-status small {
+            color: #666;
+            font-size: 0.8rem;
+        }
+        
+        .btn-logout {
+            width: 100%;
+            padding: 12px;
+            background: var(--danger);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            transition: background 0.3s ease;
+        }
+        
+        .btn-logout:hover {
+            background: #c82333;
+        }
+        
+        .dashboard-main {
+            flex: 1;
+            padding: 30px;
+            overflow-y: auto;
+        }
+        
+        .dashboard-section {
+            display: none;
+        }
+        
+        .dashboard-section.active {
+            display: block;
+            animation: fadeIn 0.3s ease;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        
+        .section-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 30px;
+        }
+        
+        .section-header h1 {
+            color: var(--charcoal);
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin: 0;
+        }
+        
+        .header-actions {
+            display: flex;
+            gap: 10px;
+        }
+        
+        .welcome-banner {
+            background: linear-gradient(135deg, var(--primary-blue), #003366);
+            color: white;
+            padding: 30px;
+            border-radius: 15px;
+            margin-bottom: 30px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .banner-content h2 {
+            color: white;
+            margin-bottom: 10px;
+        }
+        
+        .quick-stats {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+        
+        .stat-card {
+            background: white;
+            padding: 25px;
+            border-radius: 10px;
+            border: 1px solid #e9ecef;
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+        
+        .stat-icon {
+            width: 60px;
+            height: 60px;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+        }
+        
+        .stat-icon.primary {
+            background: rgba(0, 123, 255, 0.1);
+            color: #007bff;
+        }
+        
+        .stat-icon.success {
+            background: rgba(40, 167, 69, 0.1);
+            color: #28a745;
+        }
+        
+        .stat-icon.warning {
+            background: rgba(255, 193, 7, 0.1);
+            color: #ffc107;
+        }
+        
+        .stat-icon.info {
+            background: rgba(23, 162, 184, 0.1);
+            color: #17a2b8;
+        }
+        
+        .stat-content h3 {
+            margin: 0 0 5px 0;
+            font-size: 1.8rem;
+            color: var(--charcoal);
+        }
+        
+        .stat-content p {
+            margin: 0 0 10px 0;
+            color: #666;
+        }
+        
+        .stat-trend {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            font-size: 0.85rem;
+        }
+        
+        .stat-trend.positive {
+            color: #28a745;
+        }
+        
+        .timeline-section {
+            background: white;
+            padding: 30px;
+            border-radius: 15px;
+            margin-bottom: 30px;
+        }
+        
+        .timeline-section h3 {
+            color: var(--charcoal);
+            margin-bottom: 25px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .timeline {
+            position: relative;
+            padding-left: 30px;
+        }
+        
+        .timeline:before {
+            content: '';
+            position: absolute;
+            left: 10px;
+            top: 0;
+            bottom: 0;
+            width: 2px;
+            background: var(--gold);
+        }
+        
+        .timeline-item {
+            position: relative;
+            margin-bottom: 30px;
+        }
+        
+        .timeline-item:last-child {
+            margin-bottom: 0;
+        }
+        
+        .timeline-marker {
+            position: absolute;
+            left: -30px;
+            top: 0;
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 2;
+        }
+        
+        .timeline-item.completed .timeline-marker {
+            background: #28a745;
+            color: white;
+        }
+        
+        .timeline-item.active .timeline-marker {
+            background: var(--gold);
+            color: white;
+        }
+        
+        .timeline-item.upcoming .timeline-marker {
+            background: #6c757d;
+            color: white;
+        }
+        
+        .timeline-item.future .timeline-marker {
+            background: #e9ecef;
+            color: #666;
+        }
+        
+        .timeline-content {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 10px;
+            border-left: 4px solid;
+        }
+        
+        .timeline-item.completed .timeline-content {
+            border-left-color: #28a745;
+        }
+        
+        .timeline-item.active .timeline-content {
+            border-left-color: var(--gold);
+        }
+        
+        .timeline-item.upcoming .timeline-content {
+            border-left-color: #6c757d;
+        }
+        
+        .timeline-item.future .timeline-content {
+            border-left-color: #e9ecef;
+        }
+        
+        .timeline-content h4 {
+            margin: 0 0 5px 0;
+            color: var(--charcoal);
+        }
+        
+        .timeline-content p {
+            margin: 0 0 5px 0;
+            color: #666;
+            font-size: 0.9rem;
+        }
+        
+        .timeline-content small {
+            color: #999;
+            font-size: 0.85rem;
+        }
+        
+        .progress {
+            height: 8px;
+            background: #e9ecef;
+            border-radius: 4px;
+            overflow: hidden;
+            margin-top: 10px;
+        }
+        
+        .progress-bar {
+            height: 100%;
+            background: var(--gold);
+            transition: width 0.3s ease;
+        }
+        
+        .recent-activity {
+            background: white;
+            padding: 30px;
+            border-radius: 15px;
+            margin-bottom: 30px;
+        }
+        
+        .activity-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 25px;
+        }
+        
+        .activity-header h3 {
+            color: var(--charcoal);
+            margin: 0;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .view-all {
+            color: var(--primary-blue);
+            text-decoration: none;
+            font-weight: 500;
+        }
+        
+        .activity-list {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+        
+        .activity-item {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            padding: 20px;
+            border: 1px solid #e9ecef;
+            border-radius: 10px;
+            transition: all 0.3s ease;
+        }
+        
+        .activity-item:hover {
+            border-color: var(--gold);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+        }
+        
+        .activity-icon {
+            width: 50px;
+            height: 50px;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2rem;
+            flex-shrink: 0;
+        }
+        
+        .activity-icon.success {
+            background: rgba(40, 167, 69, 0.1);
+            color: #28a745;
+        }
+        
+        .activity-icon.info {
+            background: rgba(23, 162, 184, 0.1);
+            color: #17a2b8;
+        }
+        
+        .activity-icon.warning {
+            background: rgba(255, 193, 7, 0.1);
+            color: #ffc107;
+        }
+        
+        .activity-icon.primary {
+            background: rgba(0, 123, 255, 0.1);
+            color: #007bff;
+        }
+        
+        .activity-content {
+            flex: 1;
+        }
+        
+        .activity-content h4 {
+            margin: 0 0 5px 0;
+            color: var(--charcoal);
+        }
+        
+        .activity-content p {
+            margin: 0 0 5px 0;
+            color: #666;
+            font-size: 0.9rem;
+        }
+        
+        .activity-time {
+            font-size: 0.85rem;
+            color: #999;
+        }
+        
+        .activity-amount .amount {
+            font-weight: 700;
+            font-size: 1.1rem;
+        }
+        
+        .amount.positive {
+            color: #28a745;
+        }
+        
+        .badge {
+            display: inline-block;
+            padding: 5px 10px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 600;
+        }
+        
+        .badge.success {
+            background: #d4edda;
+            color: #155724;
+        }
+        
+        .badge.income {
+            background: #d1ecf1;
+            color: #0c5460;
+        }
+        
+        .badge.investment {
+            background: #fff3cd;
+            color: #856404;
+        }
+        
+        .badge-tier {
+            background: #fff3cd;
+            color: #856404;
+            padding: 8px 15px;
+            border-radius: 8px;
+        }
+        
+        .badge-active {
+            background: #d4edda;
+            color: #155724;
+            padding: 8px 15px;
+            border-radius: 8px;
+        }
+        
+        .performance-chart {
+            background: white;
+            padding: 30px;
+            border-radius: 15px;
+        }
+        
+        .chart-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 25px;
+        }
+        
+        .chart-header h3 {
+            color: var(--charcoal);
+            margin: 0;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .filter-select {
+            padding: 8px 15px;
+            border: 1px solid #e9ecef;
+            border-radius: 5px;
+            background: white;
+            color: var(--charcoal);
+        }
+        
+        .chart-container {
+            height: 300px;
+        }
+        
+        .investment-details {
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+            gap: 30px;
+            margin-bottom: 30px;
+        }
+        
+        .detail-card, .calculator-card {
+            background: white;
+            padding: 30px;
+            border-radius: 15px;
+            border: 1px solid #e9ecef;
+        }
+        
+        .detail-header, .calculator-header {
+            margin-bottom: 25px;
+        }
+        
+        .detail-header h3, .calculator-header h3 {
+            color: var(--charcoal);
+            margin: 0;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .detail-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 20px;
+        }
+        
+        .detail-item {
+            display: flex;
+            flex-direction: column;
+            gap: 5px;
+        }
+        
+        .detail-item .label {
+            font-size: 0.9rem;
+            color: #666;
+        }
+        
+        .detail-item .value {
+            font-weight: 600;
+            color: var(--charcoal);
+        }
+        
+        .calculator-body {
+            display: flex;
+            flex-direction: column;
+            gap: 25px;
+        }
+        
+        .calc-inputs {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+        
+        .input-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 500;
+            color: var(--charcoal);
+        }
+        
+        .input-with-symbol {
+            display: flex;
+            align-items: center;
+            border: 1px solid #e9ecef;
+            border-radius: 8px;
+            overflow: hidden;
+        }
+        
+        .input-with-symbol input {
+            flex: 1;
+            border: none;
+            padding: 12px 15px;
+            font-size: 1rem;
+        }
+        
+        .input-with-symbol .symbol {
+            padding: 0 15px;
+            background: #f8f9fa;
+            color: #666;
+            font-weight: 500;
+        }
+        
+        .calc-results {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 10px;
+        }
+        
+        .result-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 12px 0;
+            border-bottom: 1px solid #e9ecef;
+        }
+        
+        .result-item:last-child {
+            border-bottom: none;
+        }
+        
+        .result-item.total {
+            background: var(--primary-blue);
+            color: white;
+            margin: -20px;
+            margin-top: 20px;
+            padding: 20px;
+            border-radius: 0 0 10px 10px;
+        }
+        
+        .result-item.total .label,
+        .result-item.total .value {
+            color: white;
+            font-weight: 700;
+            font-size: 1.1rem;
+        }
+        
+        .metrics-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+        
+        .metric-card {
+            background: white;
+            padding: 25px;
+            border-radius: 15px;
+            border: 1px solid #e9ecef;
+        }
+        
+        .metric-header {
+            margin-bottom: 20px;
+        }
+        
+        .metric-header h4 {
+            color: var(--charcoal);
+            margin: 0;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .metric-body .metric-value {
+            font-size: 2rem;
+            font-weight: 700;
+            color: var(--charcoal);
+            margin-bottom: 10px;
+        }
+        
+        .metric-body .metric-label {
+            color: #666;
+            margin-bottom: 20px;
+        }
+        
+        .progress-label {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 8px;
+            font-size: 0.85rem;
+            color: #666;
+        }
+        
+        .payment-schedule {
+            display: grid;
+            grid-template-columns: repeat(7, 1fr);
+            gap: 5px;
+            margin-top: 15px;
+        }
+        
+        .schedule-item {
+            text-align: center;
+            padding: 8px;
+            background: #f8f9fa;
+            border-radius: 5px;
+            font-size: 0.8rem;
+        }
+        
+        .schedule-item.completed {
+            background: #d4edda;
+            color: #155724;
+        }
+        
+        .schedule-item.upcoming {
+            background: #fff3cd;
+            color: #856404;
+            font-weight: 600;
+        }
+        
+        .schedule-item.principal {
+            background: #cce5ff;
+            color: #004085;
+            font-weight: 600;
+        }
+        
+        .rate-comparison {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+        
+        .rate-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 12px 15px;
+            background: #f8f9fa;
+            border-radius: 8px;
+        }
+        
+        .rate-item.current {
+            background: #f0f7ff;
+            border: 2px solid var(--primary-blue);
+        }
+        
+        .rate-label {
+            font-weight: 500;
+            color: var(--charcoal);
+        }
+        
+        .rate-value {
+            font-size: 1.2rem;
+            font-weight: 700;
+            color: var(--charcoal);
+        }
+        
+        .rate-annual {
+            font-size: 0.8rem;
+            color: #666;
+        }
+        
+        .upgrade-notice {
+            margin-top: 15px;
+            padding: 10px;
+            background: #fff3cd;
+            border-radius: 5px;
+            font-size: 0.9rem;
+            color: #856404;
+        }
+        
+        .withdrawal-calc {
+            background: white;
+            padding: 30px;
+            border-radius: 15px;
+            border: 1px solid #e9ecef;
+        }
+        
+        .calc-header h3 {
+            color: var(--charcoal);
+            margin: 0 0 10px 0;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .calc-header p {
+            color: #666;
+            margin: 0 0 25px 0;
+        }
+        
+        .withdrawal-inputs {
+            margin-bottom: 25px;
+        }
+        
+        input[type="range"] {
+            width: 100%;
+            height: 8px;
+            background: #e9ecef;
+            border-radius: 4px;
+            outline: none;
+            -webkit-appearance: none;
+        }
+        
+        input[type="range"]::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            width: 20px;
+            height: 20px;
+            background: var(--gold);
+            border-radius: 50%;
+            cursor: pointer;
+        }
+        
+        .range-value {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 10px;
+        }
+        
+        .withdrawal-results .comparison {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 20px;
+            margin-bottom: 20px;
+        }
+        
+        .scenario {
+            text-align: center;
+            padding: 25px;
+            border-radius: 10px;
+            border: 2px solid #e9ecef;
+        }
+        
+        .scenario.penalty {
+            border-color: #ffc107;
+            background: #fff3cd;
+        }
+        
+        .scenario h5 {
+            margin: 0 0 15px 0;
+            color: var(--charcoal);
+        }
+        
+        .scenario .amount {
+            font-size: 2rem;
+            font-weight: 700;
+            color: var(--charcoal);
+            margin-bottom: 10px;
+        }
+        
+        .penalty-amount {
+            margin-top: 15px;
+            color: #dc3545;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 5px;
+        }
+        
+        .withdrawal-warning {
+            padding: 15px;
+            background: #f8d7da;
+            border-radius: 8px;
+            color: #721c24;
+        }
+        
+        .transaction-summary {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+        
+        .summary-card {
+            background: white;
+            padding: 25px;
+            border-radius: 10px;
+            border: 1px solid #e9ecef;
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+        
+        .summary-icon {
+            width: 50px;
+            height: 50px;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2rem;
+        }
+        
+        .summary-icon.success {
+            background: rgba(40, 167, 69, 0.1);
+            color: #28a745;
+        }
+        
+        .summary-icon.primary {
+            background: rgba(0, 123, 255, 0.1);
+            color: #007bff;
+        }
+        
+        .summary-icon.warning {
+            background: rgba(255, 193, 7, 0.1);
+            color: #ffc107;
+        }
+        
+        .summary-icon.info {
+            background: rgba(23, 162, 184, 0.1);
+            color: #17a2b8;
+        }
+        
+        .summary-content h3 {
+            margin: 0 0 5px 0;
+            font-size: 1.8rem;
+            color: var(--charcoal);
+        }
+        
+        .summary-content p {
+            margin: 0;
+            color: #666;
+        }
+        
+        .transaction-table {
+            background: white;
+            border-radius: 15px;
+            overflow: hidden;
+            margin-bottom: 30px;
+            border: 1px solid #e9ecef;
+        }
+        
+        .table-responsive {
+            overflow-x: auto;
+        }
+        
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        
+        th {
+            background: #f8f9fa;
+            padding: 15px;
+            text-align: left;
+            font-weight: 600;
+            color: var(--charcoal);
+            border-bottom: 1px solid #e9ecef;
+        }
+        
+        td {
+            padding: 15px;
+            border-bottom: 1px solid #e9ecef;
+            vertical-align: top;
+        }
+        
+        tr:last-child td {
+            border-bottom: none;
+        }
+        
+        tr:hover {
+            background: #f8f9fa;
+        }
+        
+        .amount.negative {
+            color: #dc3545;
+        }
+        
+        .btn-icon {
+            width: 35px;
+            height: 35px;
+            background: none;
+            border: 1px solid #e9ecef;
+            border-radius: 5px;
+            color: var(--charcoal);
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease;
+        }
+        
+        .btn-icon:hover {
+            background: var(--primary-blue);
+            color: white;
+            border-color: var(--primary-blue);
+        }
+        
+        .btn-sm {
+            padding: 6px 15px;
+            font-size: 0.85rem;
+        }
+        
+        .upcoming-payments {
+            background: white;
+            padding: 30px;
+            border-radius: 15px;
+            border: 1px solid #e9ecef;
+        }
+        
+        .payments-header {
+            margin-bottom: 25px;
+        }
+        
+        .payments-header h3 {
+            color: var(--charcoal);
+            margin: 0;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .payments-list {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+        
+        .payment-item {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            padding: 20px;
+            border: 1px solid #e9ecef;
+            border-radius: 10px;
+        }
+        
+        .payment-item.upcoming {
+            border-color: var(--gold);
+            background: #fff3cd;
+        }
+        
+        .payment-item.principal {
+            border-color: var(--primary-blue);
+            background: #f0f7ff;
+        }
+        
+        .payment-date {
+            text-align: center;
+            background: #f8f9fa;
+            padding: 10px;
+            border-radius: 8px;
+            min-width: 70px;
+        }
+        
+        .payment-date .month {
+            font-weight: 600;
+            color: var(--charcoal);
+        }
+        
+        .payment-date .day {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--primary-blue);
+        }
+        
+        .payment-details {
+            flex: 1;
+        }
+        
+        .payment-details h4 {
+            margin: 0 0 5px 0;
+            color: var(--charcoal);
+        }
+        
+        .payment-details p {
+            margin: 0;
+            color: #666;
+            font-size: 0.9rem;
+        }
+        
+        .payment-amount .amount {
+            font-weight: 700;
+            font-size: 1.2rem;
+            color: var(--charcoal);
+        }
+        
+        .payment-amount .amount.principal {
+            color: var(--primary-blue);
+        }
+        
+        .document-categories {
+            margin-bottom: 30px;
+        }
+        
+        .category-nav {
+            display: flex;
+            gap: 10px;
+            overflow-x: auto;
+            padding-bottom: 10px;
+        }
+        
+        .cat-btn {
+            padding: 12px 25px;
+            background: white;
+            border: 1px solid #e9ecef;
+            border-radius: 8px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            white-space: nowrap;
+            transition: all 0.3s ease;
+        }
+        
+        .cat-btn:hover {
+            border-color: var(--gold);
+        }
+        
+        .cat-btn.active {
+            background: var(--primary-blue);
+            color: white;
+            border-color: var(--primary-blue);
+        }
+        
+        .document-category {
+            display: none;
+        }
+        
+        .document-category.active {
+            display: block;
+        }
+        
+        .documents-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+        
+        .document-card {
+            background: white;
+            padding: 25px;
+            border-radius: 10px;
+            border: 1px solid #e9ecef;
+            display: flex;
+            align-items: flex-start;
+            gap: 20px;
+        }
+        
+        .document-card.important {
+            border-color: var(--gold);
+            border-width: 2px;
+        }
+        
+        .doc-icon {
+            width: 60px;
+            height: 60px;
+            background: #f8f9fa;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            color: var(--primary-blue);
+            flex-shrink: 0;
+        }
+        
+        .doc-content {
+            flex: 1;
+        }
+        
+        .doc-content h4 {
+            margin: 0 0 10px 0;
+            color: var(--charcoal);
+        }
+        
+        .doc-content p {
+            margin: 0 0 15px 0;
+            color: #666;
+            font-size: 0.9rem;
+        }
+        
+        .doc-meta {
+            display: flex;
+            gap: 15px;
+            font-size: 0.85rem;
+            color: #999;
+        }
+        
+        .doc-meta i {
+            margin-right: 5px;
+        }
+        
+        .doc-actions {
+            display: flex;
+            gap: 5px;
+        }
+        
+        .document-upload {
+            background: white;
+            padding: 30px;
+            border-radius: 15px;
+            border: 2px dashed #e9ecef;
+            margin-bottom: 30px;
+        }
+        
+        .upload-header {
+            margin-bottom: 25px;
+        }
+        
+        .upload-header h3 {
+            color: var(--charcoal);
+            margin: 0;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .upload-area {
+            border: 2px dashed #007bff;
+            border-radius: 10px;
+            padding: 40px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .upload-area:hover {
+            border-color: var(--gold);
+            background: #f8f9fa;
+        }
+        
+        .upload-content i {
+            font-size: 3rem;
+            color: #007bff;
+            margin-bottom: 20px;
+        }
+        
+        .upload-content h4 {
+            margin: 0 0 10px 0;
+            color: var(--charcoal);
+        }
+        
+        .upload-content p {
+            margin: 0 0 20px 0;
+            color: #666;
+        }
+        
+        .upload-list {
+            margin-top: 20px;
+        }
+        
+        .dashboard-messages {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            width: 350px;
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            z-index: 1000;
+        }
+        
+        .messages-header {
+            padding: 15px 20px;
+            border-bottom: 1px solid #e9ecef;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .messages-header h3 {
+            margin: 0;
+            color: var(--charcoal);
+            font-size: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .messages-list {
+            max-height: 300px;
+            overflow-y: auto;
+        }
+        
+        .message-item {
+            padding: 15px 20px;
+            border-bottom: 1px solid #f8f9fa;
+            display: flex;
+            align-items: flex-start;
+            gap: 15px;
+        }
+        
+        .message-item:last-child {
+            border-bottom: none;
+        }
+        
+        .message-icon {
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+        }
+        
+        .message-icon.info {
+            background: rgba(23, 162, 184, 0.1);
+            color: #17a2b8;
+        }
+        
+        .message-icon.success {
+            background: rgba(40, 167, 69, 0.1);
+            color: #28a745;
+        }
+        
+        .message-content p {
+            margin: 0;
+            font-size: 0.9rem;
+        }
+        
+        .message-content p:first-child {
+            font-weight: 600;
+            color: var(--charcoal);
+            margin-bottom: 5px;
+        }
+        
+        .dashboard-footer {
+            background: white;
+            padding: 20px 0;
+            border-top: 1px solid #e9ecef;
+        }
+        
+        .footer-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .footer-info {
+            font-size: 0.85rem;
+            color: #666;
+        }
+        
+        .footer-info p {
+            margin: 5px 0;
+        }
+        
+        .footer-info i {
+            margin-right: 8px;
+            color: var(--gold);
+        }
+        
+        .footer-links {
+            display: flex;
+            gap: 20px;
+        }
+        
+        .footer-links a {
+            color: #666;
+            text-decoration: none;
+            font-size: 0.85rem;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+        
+        @media (max-width: 1024px) {
+            .quick-stats,
+            .metrics-grid,
+            .transaction-summary,
+            .documents-grid,
+            .investment-details {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            
+            .comparison {
+                grid-template-columns: 1fr;
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .dashboard-sidebar {
+                position: fixed;
+                left: 0;
+                top: 0;
+                bottom: 0;
+                z-index: 1002;
+                transform: translateX(-100%);
+            }
+            
+            .dashboard-sidebar.open {
+                transform: translateX(0);
+            }
+            
+            .sidebar-overlay {
+                position: fixed;
+                top: 0;
+                left: 0;
+                right: 0;
+                bottom: 0;
+                background: rgba(0,0,0,0.5);
+                z-index: 1001;
+                display: none;
+            }
+            
+            .sidebar-overlay.open {
+                display: block;
+            }
+            
+            .quick-stats,
+            .metrics-grid,
+            .transaction-summary,
+            .documents-grid,
+            .investment-details,
+            .detail-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .section-header {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 15px;
+            }
+            
+            .header-actions {
+                width: 100%;
+                justify-content: flex-end;
+            }
+            
+            .welcome-banner {
+                flex-direction: column;
+                text-align: center;
+                gap: 20px;
+            }
+            
+            .features-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            
+            .dashboard-messages {
+                width: calc(100% - 40px);
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .features-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .nav-right {
+                gap: 10px;
+            }
+            
+            .user-name {
+                display: none;
+            }
+            
+            .notif-dropdown {
+                width: 280px;
+                right: -50px;
+            }
+            
+            .profile-dropdown {
+                width: 280px;
+                right: -50px;
+            }
+        }
+    </style>
+<script>
+// Sample data for demo
+const sampleData = {
+    investor: {
+        name: "Rajesh Kumar",
+        id: "OE-INV-12345",
+        tier: "Growth",
+        email: "rajesh.kumar@example.com",
+        phone: "+91 9876543210",
+        address: "Mumbai, Maharashtra"
+    },
+    investment: {
+        principal: 1000000,
+        rate: 2.7,
+        startDate: "2024-10-15",
+        endDate: "2025-11-15",
+        status: "active"
+    },
+    transactions: [
+        { date: "2025-04-01", type: "interest", amount: 25000 },
+        { date: "2025-03-01", type: "interest", amount: 25000 },
+        // ... more transactions
+    ]
+};
+</script>
+</body>
+</html>
