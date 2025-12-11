@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Thank You | Omkar Enterprises</title>
+    <meta name="description" content="Thank you for your consultation request with Omkar Enterprises">
+    
+    <!-- Favicon -->
+    <link rel="icon" type="image/x-icon" href="assets/icons/favicon.ico">
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        :root {
+            --primary-blue: #001F3F;
+            --gold: #D4AF37;
+            --charcoal: #333333;
+        }
+        
+        body {
+            font-family: 'Inter', sans-serif;
+            background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+        
+        .thank-you-container {
+            background: white;
+            border-radius: 20px;
+            padding: 60px 40px;
+            max-width: 600px;
+            width: 100%;
+            text-align: center;
+            box-shadow: 0 20px 60px rgba(0, 31, 63, 0.1);
+            border: 1px solid rgba(0, 31, 63, 0.1);
+        }
+        
+        .success-icon {
+            width: 100px;
+            height: 100px;
+            background: #28a745;
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 30px;
+            font-size: 3rem;
+            animation: pulse 2s infinite;
+        }
+        
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+            100% { transform: scale(1); }
+        }
+        
+        h1 {
+            font-family: 'Playfair Display', serif;
+            color: var(--primary-blue);
+            margin-bottom: 20px;
+            font-size: 2.5rem;
+        }
+        
+        .message {
+            color: var(--charcoal);
+            font-size: 1.1rem;
+            line-height: 1.6;
+            margin-bottom: 30px;
+            opacity: 0.8;
+        }
+        
+        .next-steps {
+            background: #f0f7ff;
+            padding: 25px;
+            border-radius: 10px;
+            margin: 30px 0;
+            text-align: left;
+        }
+        
+        .next-steps h3 {
+            color: var(--primary-blue);
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .next-steps ul {
+            list-style: none;
+            padding-left: 0;
+        }
+        
+        .next-steps li {
+            margin-bottom: 10px;
+            padding-left: 30px;
+            position: relative;
+        }
+        
+        .next-steps li:before {
+            content: "✓";
+            position: absolute;
+            left: 0;
+            color: var(--gold);
+            font-weight: bold;
+        }
+        
+        .contact-info {
+            background: #fff3cd;
+            padding: 20px;
+            border-radius: 10px;
+            margin: 25px 0;
+            border-left: 4px solid var(--gold);
+        }
+        
+        .btn-return {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            background: var(--primary-blue);
+            color: white;
+            padding: 15px 30px;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: 600;
+            margin-top: 20px;
+            transition: all 0.3s ease;
+        }
+        
+        .btn-return:hover {
+            background: var(--gold);
+            color: var(--primary-blue);
+            transform: translateY(-2px);
+        }
+        
+        .auto-redirect {
+            margin-top: 30px;
+            color: #666;
+            font-size: 0.9rem;
+        }
+        
+        @media (max-width: 768px) {
+            .thank-you-container {
+                padding: 40px 20px;
+            }
+            
+            h1 {
+                font-size: 2rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="thank-you-container">
+        <div class="success-icon">
+            <i class="fas fa-check"></i>
+        </div>
+        
+        <h1>Thank You!</h1>
+        
+        <div class="message">
+            <p>Your consultation request has been received successfully.</p>
+            <p>We will contact you within <strong>24 hours</strong> to schedule your confidential consultation.</p>
+        </div>
+        
+        <div class="next-steps">
+            <h3><i class="fas fa-calendar-check"></i> What Happens Next:</h3>
+            <ul>
+                <li>We'll call/email you to schedule the consultation</li>
+                <li>You'll receive the sample agreement for review</li>
+                <li>Consultation will cover all your questions</li>
+                <li>No obligation to proceed after consultation</li>
+            </ul>
+        </div>
+        
+        <div class="contact-info">
+            <p><i class="fas fa-envelope"></i> <strong>Email:</strong> partners@omkarenterprises.in</p>
+            <p><i class="fas fa-clock"></i> <strong>Response Time:</strong> Within 24 hours</p>
+        </div>
+        
+        <a href="index.html" class="btn-return">
+            <i class="fas fa-home"></i> Return to Homepage
+        </a>
+        
+        <div class="auto-redirect">
+            <p>You will be redirected to homepage in <span id="countdown">10</span> seconds...</p>
+        </div>
+    </div>
+
+    <script>
+        // Countdown timer for redirect
+        let seconds = 10;
+        const countdownElement = document.getElementById('countdown');
+        
+        const countdown = setInterval(() => {
+            seconds--;
+            countdownElement.textContent = seconds;
+            
+            if (seconds <= 0) {
+                clearInterval(countdown);
+                window.location.href = 'index.html';
+            }
+        }, 1000);
+        
+        // Manual redirect override
+        document.querySelector('.btn-return').addEventListener('click', function() {
+            clearInterval(countdown);
+        });
+    </script>
+</body>
+</html>
