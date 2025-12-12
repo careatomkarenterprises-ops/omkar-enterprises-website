@@ -1,76 +1,56 @@
 // Main JavaScript for Omkar Enterprises Website
 
-// DOM Elements
-const hamburger = document.querySelector('.hamburger');
-const navMenu = document.querySelector('.nav-menu');
-const currentYearSpan = document.getElementById('currentYear');
-const faqItems = document.querySelectorAll('.faq-item');
-
 // Mobile Navigation Toggle
-if (hamburger && navMenu) {
-    hamburger.addEventListener('click', function() {
-        navMenu.classList.toggle('active');
-        hamburger.classList.toggle('active');
-        
-        // Prevent body scroll when menu is open
-        if (navMenu.classList.contains('active')) {
-            document.body.style.overflow = 'hidden';
-        } else {
-            document.body.style.overflow = '';
-        }
-    });
-    
-    // Close mobile menu when clicking a link
-    const navLinks = document.querySelectorAll('.nav-menu a');
-    navLinks.forEach(link => {
-        link.addEventListener('click', function() {
-            navMenu.classList.remove('active');
-            hamburger.classList.remove('active');
-            document.body.style.overflow = '';
-        });
-    });
-    
-    // Close menu when clicking outside on mobile
-    document.addEventListener('click', function(event) {
-        if (window.innerWidth <= 768 && 
-            navMenu.classList.contains('active') &&
-            !navMenu.contains(event.target) && 
-            !hamburger.contains(event.target)) {
-            navMenu.classList.remove('active');
-            hamburger.classList.remove('active');
-            document.body.style.overflow = '';
-        }
-    });
-}
-
-// FAQ Accordion
-if (faqItems.length > 0) {
-    faqItems.forEach(item => {
-        const question = item.querySelector('.faq-question');
-        
-        if (question) {
-            question.addEventListener('click', () => {
-                // Close all other items
-                faqItems.forEach(otherItem => {
-                    if (otherItem !== item && otherItem.classList.contains('active')) {
-                        otherItem.classList.remove('active');
-                    }
-                });
-                
-                // Toggle current item
-                item.classList.toggle('active');
-            });
-        }
-    });
-}
-
-// Set current year in footer
-if (currentYearSpan) {
-    currentYearSpan.textContent = new Date().getFullYear();
-}
-
-// Smooth scrolling for anchor links
 document.addEventListener('DOMContentLoaded', function() {
+    const hamburger = document.getElementById('hamburger');
+    const navMenu = document.getElementById('navMenu');
+    const currentYearSpan = document.getElementById('currentYear');
+    
+    // Mobile menu toggle
+    if (hamburger && navMenu) {
+        hamburger.addEventListener('click', function() {
+            navMenu.classList.toggle('active');
+            hamburger.classList.toggle('active');
+            
+            // Prevent body scroll when menu is open
+            if (navMenu.classList.contains('active')) {
+                document.body.style.overflow = 'hidden';
+            } else {
+                document.body.style.overflow = '';
+            }
+        });
+        
+        // Close mobile menu when clicking a link
+        const navLinks = document.querySelectorAll('.nav-menu a');
+        navLinks.forEach(link => {
+            link.addEventListener('click', function() {
+                navMenu.classList.remove('active');
+                hamburger.classList.remove('active');
+                document.body.style.overflow = '';
+            });
+        });
+    }
+    
+    // Set current year in footer
+    if (currentYearSpan) {
+        currentYearSpan.textContent = new Date().getFullYear();
+    }
+    
+    // FAQ Accordion
+    const faqItems = document.querySelectorAll('.faq-item');
+    if (faqItems.length > 0) {
+        faqItems.forEach(item => {
+            const question = item.querySelector('.faq-question');
+            if (question) {
+                question.addEventListener('click', () => {
+                    // Toggle current item
+                    item.classList.toggle('active');
+                });
+            }
+        });
+    }
+    
+    // Smooth scrolling for anchor links
     document.querySelectorAll('a[href^="#"]').forEach(anchor => {
         anchor.addEventListener('click', function(e) {
             const href = this.getAttribute('href');
@@ -82,48 +62,49 @@ document.addEventListener('DOMContentLoaded', function() {
                 const target = document.querySelector(href);
                 
                 window.scrollTo({
-                    top: target.offsetTop - 100,
+                    top: target.offsetTop - 80,
                     behavior: 'smooth'
                 });
                 
                 // Close mobile menu if open
                 if (navMenu && navMenu.classList.contains('active')) {
                     navMenu.classList.remove('active');
-                    if (hamburger) hamburger.classList.remove('active');
+                    hamburger.classList.remove('active');
                     document.body.style.overflow = '';
                 }
             }
         });
     });
-});
-
-// Scroll animations
-const observerOptions = {
-    threshold: 0.1,
-    rootMargin: '0px 0px -50px 0px'
-};
-
-const observer = new IntersectionObserver((entries) => {
-    entries.forEach(entry => {
-        if (entry.isIntersecting) {
-            entry.target.classList.add('visible');
-        }
-    });
-}, observerOptions);
-
-// Observe elements for scroll animations
-document.addEventListener('DOMContentLoaded', function() {
-    document.querySelectorAll('.step-card, .tier-card, .legal-card').forEach(el => {
-        observer.observe(el);
-    });
+    
+    // Calculator functionality (if exists)
+    const investmentSlider = document.getElementById('investmentAmount');
+    if (investmentSlider) {
+        investmentSlider.addEventListener('input', function() {
+            const amount = parseInt(this.value);
+            const monthlyReturn = amount * 0.025;
+            const annualReturn = monthlyReturn * 12;
+            
+            // Format numbers with Indian Rupee format
+            const formatter = new Intl.NumberFormat('en-IN', {
+                style: 'currency',
+                currency: 'INR',
+                minimumFractionDigits: 0,
+                maximumFractionDigits: 0
+            });
+            
+            // Update display
+            document.getElementById('currentAmount').textContent = formatter.format(amount);
+            document.getElementById('monthlyReturn').textContent = formatter.format(monthlyReturn);
+            document.getElementById('annualReturn').textContent = formatter.format(annualReturn);
+            document.getElementById('totalReturn').textContent = formatter.format(annualReturn);
+        });
+    }
 });
 
 // Form Submission Handling
 class FormHandler {
-    constructor(formId, successMessage) {
+    constructor(formId) {
         this.form = document.getElementById(formId);
-        this.successMessage = successMessage || 'Thank you for your submission!';
-        
         if (this.form) {
             this.init();
         }
@@ -138,7 +119,6 @@ class FormHandler {
         
         const submitBtn = this.form.querySelector('button[type="submit"]');
         const originalText = submitBtn.innerHTML;
-        const originalState = submitBtn.disabled;
         
         // Show loading state
         submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Processing...';
@@ -150,34 +130,14 @@ class FormHandler {
                 throw new Error('Please fill all required fields correctly.');
             }
             
-            // Collect form data
-            const formData = new FormData(this.form);
-            const data = Object.fromEntries(formData);
+            // Simulate API call (replace with actual Formspree or backend)
+            await new Promise(resolve => setTimeout(resolve, 1500));
             
-            // Add timestamp and page info
-            data._timestamp = new Date().toISOString();
-            data._page = window.location.href;
-            
-            // Submit to Formspree
-            const response = await fetch(this.form.action, {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                    'Accept': 'application/json'
-                },
-                body: JSON.stringify(data)
-            });
-            
-            if (response.ok) {
-                this.showSuccess();
-            } else {
-                const errorData = await response.json();
-                throw new Error(errorData.error || 'Form submission failed');
-            }
+            this.showSuccess();
         } catch (error) {
             this.showError(error.message);
             submitBtn.innerHTML = originalText;
-            submitBtn.disabled = originalState;
+            submitBtn.disabled = false;
         }
     }
     
@@ -240,7 +200,6 @@ class FormHandler {
         
         this.form.insertBefore(errorDiv, this.form.firstChild);
         
-        // Remove error message after 5 seconds
         setTimeout(() => {
             if (errorDiv.parentNode === this.form) {
                 this.form.removeChild(errorDiv);
@@ -249,12 +208,9 @@ class FormHandler {
     }
 }
 
-// Initialize form handler when DOM is loaded
+// Initialize form handler
 document.addEventListener('DOMContentLoaded', () => {
     if (document.getElementById('contactForm')) {
         new FormHandler('contactForm');
     }
 });
-
-// Export for global use
-window.FormHandler = FormHandler;
