@@ -1,60 +1,50 @@
 // Main JavaScript for Omkar Enterprises Website
 
 // DOM Elements
-const menuToggle = document.getElementById('menuToggle');
-const navMenu = document.getElementById('navMenu');
+const hamburger = document.querySelector('.hamburger');
+const navMenu = document.querySelector('.nav-menu');
 const currentYearSpan = document.getElementById('currentYear');
-
-// Mobile Menu Toggle
-if (menuToggle && navMenu) {
-    menuToggle.addEventListener('click', () => {
-        navMenu.classList.toggle('active');
-        const isActive = navMenu.classList.contains('active');
-        menuToggle.innerHTML = isActive 
-            ? '<i class="fas fa-times"></i>' 
-            : '<i class="fas fa-bars"></i>';
-        
-        // Prevent body scroll when menu is open
-        document.body.style.overflow = isActive ? 'hidden' : '';
-    });
-}
+const faqItems = document.querySelectorAll('.faq-item');
 
 // Mobile Navigation Toggle
-document.addEventListener('DOMContentLoaded', function() {
-    const hamburger = document.querySelector('.hamburger');
-    const navMenu = document.querySelector('.nav-menu');
-    
-    if (hamburger) {
-        hamburger.addEventListener('click', function() {
-            navMenu.classList.toggle('active');
-        });
-    }
+if (hamburger && navMenu) {
+    hamburger.addEventListener('click', function() {
+        navMenu.classList.toggle('active');
+        hamburger.classList.toggle('active');
+        
+        // Prevent body scroll when menu is open
+        if (navMenu.classList.contains('active')) {
+            document.body.style.overflow = 'hidden';
+        } else {
+            document.body.style.overflow = '';
+        }
+    });
     
     // Close mobile menu when clicking a link
     const navLinks = document.querySelectorAll('.nav-menu a');
     navLinks.forEach(link => {
         link.addEventListener('click', function() {
             navMenu.classList.remove('active');
+            hamburger.classList.remove('active');
+            document.body.style.overflow = '';
         });
     });
-});
-
-// Close mobile menu when clicking outside
-document.addEventListener('click', (e) => {
-    if (navMenu && navMenu.classList.contains('active') && 
-        !navMenu.contains(e.target) && 
-        !menuToggle.contains(e.target)) {
-        navMenu.classList.remove('active');
-        menuToggle.innerHTML = '<i class="fas fa-bars"></i>';
-        document.body.style.overflow = '';
-    }
-});
+    
+    // Close menu when clicking outside on mobile
+    document.addEventListener('click', function(event) {
+        if (window.innerWidth <= 768 && 
+            navMenu.classList.contains('active') &&
+            !navMenu.contains(event.target) && 
+            !hamburger.contains(event.target)) {
+            navMenu.classList.remove('active');
+            hamburger.classList.remove('active');
+            document.body.style.overflow = '';
+        }
+    });
+}
 
 // FAQ Accordion
-document.addEventListener('DOMContentLoaded', () => {
-    // FAQ functionality
-    const faqItems = document.querySelectorAll('.faq-item');
-    
+if (faqItems.length > 0) {
     faqItems.forEach(item => {
         const question = item.querySelector('.faq-question');
         
@@ -72,13 +62,15 @@ document.addEventListener('DOMContentLoaded', () => {
             });
         }
     });
-    
-    // Set current year in footer
-    if (currentYearSpan) {
-        currentYearSpan.textContent = new Date().getFullYear();
-    }
-    
-    // Smooth scrolling for anchor links
+}
+
+// Set current year in footer
+if (currentYearSpan) {
+    currentYearSpan.textContent = new Date().getFullYear();
+}
+
+// Smooth scrolling for anchor links
+document.addEventListener('DOMContentLoaded', function() {
     document.querySelectorAll('a[href^="#"]').forEach(anchor => {
         anchor.addEventListener('click', function(e) {
             const href = this.getAttribute('href');
@@ -90,35 +82,37 @@ document.addEventListener('DOMContentLoaded', () => {
                 const target = document.querySelector(href);
                 
                 window.scrollTo({
-                    top: target.offsetTop - 80,
+                    top: target.offsetTop - 100,
                     behavior: 'smooth'
                 });
                 
                 // Close mobile menu if open
                 if (navMenu && navMenu.classList.contains('active')) {
                     navMenu.classList.remove('active');
-                    menuToggle.innerHTML = '<i class="fas fa-bars"></i>';
+                    if (hamburger) hamburger.classList.remove('active');
                     document.body.style.overflow = '';
                 }
             }
         });
     });
-    
-    // Scroll animations
-    const observerOptions = {
-        threshold: 0.1,
-        rootMargin: '0px 0px -50px 0px'
-    };
-    
-    const observer = new IntersectionObserver((entries) => {
-        entries.forEach(entry => {
-            if (entry.isIntersecting) {
-                entry.target.classList.add('visible');
-            }
-        });
-    }, observerOptions);
-    
-    // Observe elements for scroll animations
+});
+
+// Scroll animations
+const observerOptions = {
+    threshold: 0.1,
+    rootMargin: '0px 0px -50px 0px'
+};
+
+const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+        if (entry.isIntersecting) {
+            entry.target.classList.add('visible');
+        }
+    });
+}, observerOptions);
+
+// Observe elements for scroll animations
+document.addEventListener('DOMContentLoaded', function() {
     document.querySelectorAll('.step-card, .tier-card, .legal-card').forEach(el => {
         observer.observe(el);
     });
@@ -263,5 +257,4 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 
 // Export for global use
-
 window.FormHandler = FormHandler;
