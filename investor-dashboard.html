@@ -119,6 +119,28 @@ function setupLogout() {
     resetTimer(); // Start the timer
 }
 </script>
+ <!-- Add this to your dashboard sidebar or navigation -->
+<div class="logout-section" style="margin-top: auto; padding: 20px; border-top: 1px solid #eee;">
+    <button class="logout-btn" style="
+        width: 100%;
+        padding: 12px;
+        background: #dc3545;
+        color: white;
+        border: none;
+        border-radius: 8px;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 10px;
+    ">
+        <i class="fas fa-sign-out-alt"></i> Sign Out
+    </button>
+    <p style="font-size: 0.8rem; color: #666; margin-top: 10px; text-align: center;">
+        Session: <span id="sessionTimer">30:00</span>
+    </p>
+</div>
+    
     <body class="dashboard-page">
     <!-- Top Navigation -->
     <nav class="dashboard-nav">
@@ -3287,5 +3309,6 @@ const sampleData = {
 </body>
 
 </html>
+
 
 
