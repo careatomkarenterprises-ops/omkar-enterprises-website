@@ -45,6 +45,7 @@
             min-height: calc(100vh - 200px);
             display: flex;
             align-items: center;
+            background: linear-gradient(135deg, var(--primary-blue) 0%, #003366 100%);
         }
         
         .login-container {
@@ -82,11 +83,15 @@
             gap: 15px;
         }
         
+        .login-header p {
+            color: rgba(255,255,255,0.8);
+        }
+        
         .login-box {
             background: white;
             border-radius: 15px;
             overflow: hidden;
-            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.2);
             margin-bottom: 40px;
         }
         
@@ -217,7 +222,227 @@
             border-top: 1px solid #eee;
         }
         
-        /* ... (rest of your existing login styles) ... */
+        .login-security p {
+            color: #666;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+        }
+        
+        .security-features {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+        
+        .security-features h3 {
+            color: white;
+            margin-bottom: 30px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 15px;
+        }
+        
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 20px;
+        }
+        
+        .feature {
+            background: rgba(255,255,255,0.1);
+            padding: 25px;
+            border-radius: 10px;
+            border: 1px solid rgba(255,255,255,0.2);
+            color: white;
+        }
+        
+        .feature i {
+            font-size: 2rem;
+            margin-bottom: 15px;
+            color: var(--gold);
+        }
+        
+        .feature h4 {
+            margin-bottom: 10px;
+            font-size: 1.1rem;
+        }
+        
+        .feature p {
+            font-size: 0.9rem;
+            opacity: 0.8;
+        }
+        
+        .demo-access {
+            background: rgba(255,255,255,0.1);
+            padding: 30px;
+            border-radius: 10px;
+            border: 2px solid var(--gold);
+            text-align: center;
+        }
+        
+        .demo-content h4 {
+            color: white;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+        }
+        
+        .demo-content p {
+            color: rgba(255,255,255,0.8);
+            margin-bottom: 20px;
+        }
+        
+        .registration-steps {
+            margin-bottom: 30px;
+        }
+        
+        .step {
+            display: flex;
+            align-items: flex-start;
+            gap: 20px;
+            margin-bottom: 25px;
+        }
+        
+        .step-number {
+            width: 40px;
+            height: 40px;
+            background: var(--primary-blue);
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            flex-shrink: 0;
+        }
+        
+        .step-content h4 {
+            color: var(--primary-blue);
+            margin-bottom: 8px;
+        }
+        
+        .registration-help {
+            background: #f0f7ff;
+            padding: 25px;
+            border-radius: 10px;
+        }
+        
+        .registration-help h4 {
+            color: var(--primary-blue);
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .registration-help ul {
+            list-style: none;
+            padding-left: 0;
+        }
+        
+        .registration-help li {
+            margin-bottom: 8px;
+            padding-left: 25px;
+            position: relative;
+        }
+        
+        .registration-help li:before {
+            content: "•";
+            position: absolute;
+            left: 0;
+            color: var(--gold);
+            font-weight: bold;
+        }
+        
+        /* Demo credentials box */
+        .demo-credentials {
+            background: rgba(255,255,255,0.9);
+            border-radius: 10px;
+            padding: 20px;
+            margin-top: 30px;
+            border: 2px solid var(--gold);
+        }
+        
+        .demo-credentials h4 {
+            text-align: center;
+            color: var(--charcoal);
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+        }
+        
+        .credentials-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 15px;
+        }
+        
+        .credentials-table th {
+            background: #f8f9fa;
+            padding: 10px;
+            text-align: left;
+            font-weight: 600;
+            color: var(--charcoal);
+            border-bottom: 2px solid #e9ecef;
+        }
+        
+        .credentials-table td {
+            padding: 10px;
+            border-bottom: 1px solid #eee;
+        }
+        
+        .credentials-table code {
+            background: #f8f9fa;
+            padding: 3px 6px;
+            border-radius: 4px;
+            font-family: monospace;
+            color: var(--primary-blue);
+        }
+        
+        .badge {
+            display: inline-block;
+            padding: 3px 8px;
+            background: var(--gold);
+            color: var(--primary-blue);
+            border-radius: 4px;
+            font-size: 0.8rem;
+            font-weight: 600;
+        }
+        
+        @media (max-width: 768px) {
+            .features-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            
+            .login-tabs {
+                flex-direction: column;
+            }
+            
+            .tab-content {
+                padding: 30px 20px;
+            }
+            
+            .credentials-table {
+                font-size: 0.9rem;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .features-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .credentials-table {
+                display: block;
+                overflow-x: auto;
+            }
+        }
     </style>
 </head>
     
@@ -266,12 +491,14 @@
                     <!-- Login Form -->
                     <div class="tab-content active" id="login">
                         <form id="loginForm" class="login-form">
+                            <div id="loginMessage"></div>
+                            
                             <div class="form-group">
                                 <label for="investorId">
                                     <i class="fas fa-user"></i> Investor ID
                                 </label>
-                                <input type="text" id="investorId" name="investorId" placeholder="OE-INV-XXXXX" required>
-                                <small class="help-text">Format: OE-INV- followed by your 5-digit ID</small>
+                                <input type="text" id="investorId" name="investorId" placeholder="OE-INV-1001" required>
+                                <small class="help-text">Format: OE-INV- followed by 4 digits</small>
                             </div>
                             
                             <div class="form-group">
@@ -279,23 +506,23 @@
                                     <i class="fas fa-key"></i> Password
                                 </label>
                                 <div class="password-input">
-                                    <input type="password" id="password" name="password" placeholder="Enter your password" required>
+                                    <input type="password" id="password" name="password" placeholder="demo123" required>
                                     <button type="button" class="toggle-password" id="togglePassword">
                                         <i class="fas fa-eye"></i>
                                     </button>
                                 </div>
-                                <small class="help-text">Case-sensitive, 8+ characters with mix of letters & numbers</small>
+                                <small class="help-text">Case-sensitive password</small>
                             </div>
                             
                             <div class="form-group remember-forgot">
                                 <label class="checkbox-label">
-                                    <input type="checkbox" name="remember">
-                                    <span>Remember me on this device</span>
+                                    <input type="checkbox" name="remember" id="rememberMe">
+                                    <span>Remember me</span>
                                 </label>
-                                <a href="#forgot-password" class="forgot-link">Forgot Password?</a>
+                                <a href="#" class="forgot-link" id="forgotPassword">Forgot Password?</a>
                             </div>
                             
-                            <button type="submit" class="btn btn-primary btn-block">
+                            <button type="submit" class="btn btn-primary btn-block" id="loginBtn">
                                 <i class="fas fa-sign-in-alt"></i> Sign In to Dashboard
                             </button>
                             
@@ -345,6 +572,44 @@
                     </div>
                 </div>
                 
+                <!-- Demo Credentials -->
+                <div class="demo-credentials">
+                    <h4><i class="fas fa-key"></i> Demo Credentials (For Testing)</h4>
+                    <table class="credentials-table">
+                        <thead>
+                            <tr>
+                                <th>Investor ID</th>
+                                <th>Password</th>
+                                <th>Name</th>
+                                <th>Tier</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><code>OE-INV-1001</code></td>
+                                <td><code>demo123</code></td>
+                                <td>Rajesh Kumar</td>
+                                <td><span class="badge">Growth</span></td>
+                            </tr>
+                            <tr>
+                                <td><code>OE-INV-1002</code></td>
+                                <td><code>demo456</code></td>
+                                <td>Priya Sharma</td>
+                                <td><span class="badge">Premium</span></td>
+                            </tr>
+                            <tr>
+                                <td><code>OE-INV-1003</code></td>
+                                <td><code>demo789</code></td>
+                                <td>Amit Patel</td>
+                                <td><span class="badge">Emerging</span></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <button class="btn btn-outline" id="fillDemo" style="width: 100%;">
+                        <i class="fas fa-magic"></i> Auto-fill First Demo Credentials
+                    </button>
+                </div>
+                
                 <!-- Security Features -->
                 <div class="security-features">
                     <h3><i class="fas fa-shield-check"></i> Portal Security</h3>
@@ -369,17 +634,6 @@
                             <h4>No Data Storage</h4>
                             <p>We don't store passwords, only encrypted hashes</p>
                         </div>
-                    </div>
-                </div>
-                
-                <!-- Demo Access -->
-                <div class="demo-access">
-                    <div class="demo-content">
-                        <h4><i class="fas fa-eye"></i> Want to See First?</h4>
-                        <p>Take a tour of our investor dashboard features before investing</p>
-                        <button class="btn btn-outline" id="demoTour">
-                            <i class="fas fa-play-circle"></i> View Dashboard Demo
-                        </button>
                     </div>
                 </div>
             </div>
@@ -454,13 +708,13 @@
     <script src="js/main.js"></script>
     <script src="js/investor-portal.js"></script>
     
-    <!-- FIXED LOGIN SCRIPT -->
+    <!-- FIXED LOGIN SCRIPT - NO REDIRECT LOOP -->
     <script>
     document.addEventListener('DOMContentLoaded', function() {
-        console.log("🔐 Investor Portal Login Loaded");
+        console.log("✅ Investor Login Page Loaded");
         
-        // Check if already logged in
-        checkExistingSession();
+        // DO NOT check for existing session on login page
+        // The dashboard will check for session, not the login page
         
         // Initialize UI components
         initLoginUI();
@@ -468,31 +722,6 @@
         // Setup login form
         setupLoginForm();
     });
-    
-    function checkExistingSession() {
-        const session = localStorage.getItem('oe_investor_session');
-        if (session) {
-            try {
-                const userData = JSON.parse(session);
-                const loginTime = new Date(userData.loginTime);
-                const now = new Date();
-                const minutesDiff = (now - loginTime) / (1000 * 60);
-                
-                // If session is less than 30 minutes old, redirect to dashboard
-                if (minutesDiff < 30) {
-                    console.log("✅ Active session found, redirecting to dashboard");
-                    window.location.href = 'investor-dashboard.html';
-                } else {
-                    // Session expired, clear it
-                    localStorage.removeItem('oe_investor_session');
-                    console.log("⚠️ Session expired, please login again");
-                }
-            } catch (error) {
-                console.error("Error checking session:", error);
-                localStorage.removeItem('oe_investor_session');
-            }
-        }
-    }
     
     function initLoginUI() {
         // Toggle password visibility
@@ -530,30 +759,32 @@
             });
         });
         
-        // Demo tour button
-        const demoTour = document.getElementById('demoTour');
-        if (demoTour) {
-            demoTour.addEventListener('click', function() {
-                alert('Dashboard demo would open here.\n\nFor now, use demo credentials:\nOE-INV-1001 / demo123');
+        // Auto-fill demo credentials
+        const fillDemoBtn = document.getElementById('fillDemo');
+        if (fillDemoBtn) {
+            fillDemoBtn.addEventListener('click', function() {
+                document.getElementById('investorId').value = 'OE-INV-1001';
+                document.getElementById('password').value = 'demo123';
+                showMessage("Demo credentials filled. Click 'Sign In to Dashboard' to login.", 'info');
+            });
+        }
+        
+        // Forgot password
+        const forgotLink = document.getElementById('forgotPassword');
+        if (forgotLink) {
+            forgotLink.addEventListener('click', function(e) {
+                e.preventDefault();
+                alert('Password reset would be sent to your registered email.\n\nFor demo: Use OE-INV-1001 / demo123');
             });
         }
     }
     
     function setupLoginForm() {
         const loginForm = document.getElementById('loginForm');
-        if (!loginForm) return;
-        
-        // Add demo credentials button
-        const demoBtn = document.createElement('button');
-        demoBtn.type = 'button';
-        demoBtn.className = 'btn btn-secondary';
-        demoBtn.style.cssText = 'margin-top: 20px; width: 100%; background: #6c757d; color: white; border: none; padding: 12px; border-radius: 8px; cursor: pointer;';
-        demoBtn.innerHTML = '<i class="fas fa-key"></i> Use Demo Credentials (OE-INV-1001)';
-        demoBtn.onclick = function() {
-            document.getElementById('investorId').value = 'OE-INV-1001';
-            document.getElementById('password').value = 'demo123';
-        };
-        loginForm.appendChild(demoBtn);
+        if (!loginForm) {
+            console.error("Login form not found!");
+            return;
+        }
         
         // Handle form submission
         loginForm.addEventListener('submit', function(e) {
@@ -562,23 +793,35 @@
             
             const investorId = document.getElementById('investorId').value.trim();
             const password = document.getElementById('password').value;
+            const loginBtn = document.getElementById('loginBtn');
             
             console.log("🔑 Attempting login with:", investorId);
+            
+            // Clear any previous messages
+            document.getElementById('loginMessage').innerHTML = '';
             
             // Validate credentials
             const result = validateCredentials(investorId, password);
             
             if (result.success) {
                 console.log("✅ Login successful for:", investorId);
-                showLoginSuccess(result.user);
+                showLoginSuccess(result.user, loginBtn);
             } else {
                 console.log("❌ Login failed:", result.error);
-                showLoginError(result.error);
+                showLoginError(result.error, loginBtn);
             }
         });
     }
     
     function validateCredentials(investorId, password) {
+        // Basic validation
+        if (!investorId || !password) {
+            return { 
+                success: false, 
+                error: 'Please enter both Investor ID and password' 
+            };
+        }
+        
         // Validate format
         if (!investorId.match(/^OE-INV-\d{4}$/)) {
             return { 
@@ -597,14 +840,14 @@
         if (!validUsers[investorId]) {
             return { 
                 success: false, 
-                error: 'Investor ID not found. Try: OE-INV-1001, OE-INV-1002, OE-INV-1003' 
+                error: 'Investor ID not found' 
             };
         }
         
         if (validUsers[investorId].password !== password) {
             return { 
                 success: false, 
-                error: 'Incorrect password. Try: demo123 for OE-INV-1001' 
+                error: 'Incorrect password' 
             };
         }
         
@@ -614,115 +857,127 @@
             name: validUsers[investorId].name,
             tier: validUsers[investorId].tier,
             portfolio: validUsers[investorId].portfolio,
-            loginTime: new Date().toISOString(),
-            token: 'tok_' + Math.random().toString(36).substr(2) + Date.now().toString(36)
+            loginTime: new Date().toISOString()
         };
         
         return { success: true, user: user };
     }
     
-    function showLoginSuccess(user) {
-        const submitBtn = document.querySelector('#loginForm button[type="submit"]');
-        const originalText = submitBtn.innerHTML;
+    function showLoginSuccess(user, loginBtn) {
+        const originalText = loginBtn.innerHTML;
+        const originalBg = loginBtn.style.background;
         
-        // Show success state
-        submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Logging in...';
-        submitBtn.disabled = true;
-        submitBtn.style.background = '#28a745';
+        // Show loading state
+        loginBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Logging in...';
+        loginBtn.disabled = true;
+        loginBtn.style.background = '#28a745';
         
         // Save session to localStorage
         localStorage.setItem('oe_investor_session', JSON.stringify(user));
-        console.log("💾 Session saved to localStorage:", user);
-        
-        // Verify it was saved
-        const savedSession = localStorage.getItem('oe_investor_session');
-        console.log("✅ Session verification:", savedSession ? "Saved successfully" : "NOT saved!");
+        console.log("💾 Session saved:", user);
         
         // Show success message
+        showMessage("Login successful! Redirecting to dashboard...", 'success');
+        
+        // Redirect after 1.5 seconds
         setTimeout(() => {
-            submitBtn.innerHTML = '<i class="fas fa-check"></i> Login Successful! Redirecting...';
+            loginBtn.innerHTML = '<i class="fas fa-check"></i> Redirecting...';
             
-            // Wait a bit more to show success, then redirect
             setTimeout(() => {
                 console.log("🚀 Redirecting to dashboard...");
                 window.location.href = 'investor-dashboard.html';
-            }, 1000);
-        }, 1000);
+            }, 500);
+        }, 1500);
     }
     
-    function showLoginError(message) {
-        // Remove existing error
-        const existingError = document.getElementById('loginError');
-        if (existingError) existingError.remove();
+    function showLoginError(message, loginBtn) {
+        // Reset button
+        loginBtn.innerHTML = '<i class="fas fa-sign-in-alt"></i> Sign In to Dashboard';
+        loginBtn.disabled = false;
+        loginBtn.style.background = '';
         
-        // Create error element
-        const errorDiv = document.createElement('div');
-        errorDiv.id = 'loginError';
-        errorDiv.style.cssText = `
-            background: #f8d7da;
-            color: #721c24;
-            padding: 15px;
-            margin: 15px 0;
-            border-radius: 8px;
-            border: 1px solid #f5c6cb;
-            text-align: center;
-            animation: fadeIn 0.3s ease;
+        // Show error message
+        showMessage(
+            `<strong>${message}</strong><br><br>
+            <small>Use demo credentials from the table below:</small>`,
+            'error'
+        );
+    }
+    
+    function showMessage(message, type) {
+        const messageDiv = document.getElementById('loginMessage');
+        
+        const alertClass = type === 'error' ? 'alert-error' : 
+                          type === 'success' ? 'alert-success' : 'alert-info';
+        
+        const icon = type === 'error' ? 'exclamation-triangle' : 
+                    type === 'success' ? 'check-circle' : 'info-circle';
+        
+        messageDiv.innerHTML = `
+            <div class="alert ${alertClass}">
+                <i class="fas fa-${icon}"></i>
+                ${message}
+            </div>
         `;
         
-        errorDiv.innerHTML = `
-            <i class="fas fa-exclamation-triangle"></i> ${message}
-            <br><br>
-            <small>
-                <strong>Demo Credentials:</strong><br>
-                • OE-INV-1001 / demo123<br>
-                • OE-INV-1002 / demo456<br>
-                • OE-INV-1003 / demo789
-            </small>
-        `;
+        // Add animation
+        messageDiv.style.animation = 'fadeIn 0.3s ease';
         
-        // Add animation style
-        if (!document.getElementById('errorAnimation')) {
-            const style = document.createElement('style');
-            style.id = 'errorAnimation';
-            style.textContent = `
-                @keyframes fadeIn {
-                    from { opacity: 0; transform: translateY(-10px); }
-                    to { opacity: 1; transform: translateY(0); }
+        // Auto-hide after 8 seconds (but not for success messages)
+        if (type !== 'success') {
+            setTimeout(() => {
+                if (messageDiv.innerHTML.includes(alertClass)) {
+                    messageDiv.style.opacity = '0';
+                    messageDiv.style.transition = 'opacity 0.5s ease';
+                    setTimeout(() => {
+                        messageDiv.innerHTML = '';
+                        messageDiv.style.opacity = '1';
+                    }, 500);
                 }
-            `;
-            document.head.appendChild(style);
+            }, 8000);
+        }
+    }
+    
+    // Add alert styles
+    const style = document.createElement('style');
+    style.textContent = `
+        .alert {
+            padding: 15px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            animation: fadeIn 0.3s ease;
         }
         
-        // Insert error before form
-        const form = document.getElementById('loginForm');
-        form.parentNode.insertBefore(errorDiv, form);
+        .alert-error {
+            background: #f8d7da;
+            color: #721c24;
+            border: 1px solid #f5c6cb;
+        }
         
-        // Reset submit button
-        const submitBtn = document.querySelector('#loginForm button[type="submit"]');
-        submitBtn.innerHTML = '<i class="fas fa-sign-in-alt"></i> Sign In to Dashboard';
-        submitBtn.disabled = false;
-        submitBtn.style.background = '';
+        .alert-success {
+            background: #d4edda;
+            color: #155724;
+            border: 1px solid #c3e6cb;
+        }
         
-        // Auto-remove error after 10 seconds
-        setTimeout(() => {
-            if (errorDiv.parentNode) {
-                errorDiv.style.opacity = '0';
-                errorDiv.style.transition = 'opacity 0.5s ease';
-                setTimeout(() => errorDiv.remove(), 500);
-            }
-        }, 10000);
-    }
+        .alert-info {
+            background: #d1ecf1;
+            color: #0c5460;
+            border: 1px solid #bee5eb;
+        }
+        
+        .alert i {
+            margin-right: 10px;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(-10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+    `;
+    document.head.appendChild(style);
     
-    // Forgot password link
-    const forgotLink = document.querySelector('.forgot-link');
-    if (forgotLink) {
-        forgotLink.addEventListener('click', function(e) {
-            e.preventDefault();
-            alert('Password reset would be sent to your registered email.\n\nFor demo: Use OE-INV-1001 / demo123');
-        });
-    }
-    
-    console.log("✅ Login system ready. Use:\nOE-INV-1001 / demo123\nOE-INV-1002 / demo456\nOE-INV-1003 / demo789");
+    console.log("✅ Login system ready. Use demo credentials from the table.");
     </script>
 </body>
 </html>
