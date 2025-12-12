@@ -10,34 +10,122 @@
     <link rel="icon" type="image/x-icon" href="assets/icons/favicon.ico">
     <link rel="apple-touch-icon" href="assets/icons/apple-touch-icon.png">
     
-    <!-- Google Fonts -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-    
     <!-- Font Awesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     
-    <!-- Styles -->
-    <link rel="stylesheet" href="css/style.css">
-    <link rel="stylesheet" href="css/responsive.css">
-    
-    <!-- Login Page Specific Styles -->
+    <!-- ALL STYLES EMBEDDED DIRECTLY (No @import issues) -->
     <style>
-        .login-page .navbar {
+        /* Reset and Base Styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        :root {
+            --primary-blue: #1a365d;
+            --gold: #bd9300;
+            --charcoal: #2d3748;
+            --light-blue: #4299e1;
+            --danger: #dc3545;
+            --success: #28a745;
+            --warning: #ffc107;
+            --info: #17a2b8;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: #f8f9fa;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        
+        /* Navigation Styles */
+        .navbar {
             background: white;
             box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            padding: 15px 0;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+        
+        .navbar .container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            text-decoration: none;
+            color: var(--charcoal);
+            font-weight: 700;
+            font-size: 1.2rem;
+        }
+        
+        .logo-icon {
+            width: 40px;
+            height: 40px;
+            background: var(--primary-blue);
+            color: white;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+        }
+        
+        .nav-menu {
+            display: flex;
+            list-style: none;
+            gap: 30px;
+            align-items: center;
+        }
+        
+        .nav-menu a {
+            text-decoration: none;
+            color: var(--charcoal);
+            font-weight: 500;
+            transition: color 0.3s ease;
+        }
+        
+        .nav-menu a:hover {
+            color: var(--gold);
         }
         
         .nav-login {
-            background: var(--primary-blue) !important;
+            background: var(--primary-blue);
             color: white !important;
-            padding: 10px 20px !important;
+            padding: 8px 20px;
             border-radius: 5px;
         }
         
         .nav-login:hover {
             background: var(--gold) !important;
+            color: white !important;
+        }
+        
+        .menu-toggle {
+            display: none;
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            color: var(--charcoal);
+            cursor: pointer;
+        }
+        
+        /* Login Section Styles */
+        .login-page .navbar {
+            background: white;
         }
         
         .login-section {
@@ -51,11 +139,13 @@
         .login-container {
             max-width: 800px;
             margin: 0 auto;
+            width: 100%;
         }
         
         .login-header {
             text-align: center;
             margin-bottom: 40px;
+            color: white;
         }
         
         .login-logo {
@@ -69,22 +159,14 @@
             border: 1px solid rgba(255,255,255,0.2);
         }
         
-        .login-logo .logo-text {
-            color: white;
-            font-size: 1.5rem;
-        }
-        
         .login-header h1 {
-            color: white;
             margin-bottom: 10px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 15px;
+            font-size: 2.5rem;
         }
         
         .login-header p {
             color: rgba(255,255,255,0.8);
+            font-size: 1.1rem;
         }
         
         .login-box {
@@ -92,7 +174,7 @@
             border-radius: 15px;
             overflow: hidden;
             box-shadow: 0 20px 40px rgba(0,0,0,0.2);
-            margin-bottom: 40px;
+            margin-bottom: 30px;
         }
         
         .login-tabs {
@@ -132,17 +214,22 @@
             margin: 0 auto;
         }
         
+        #loginMessage {
+            margin-bottom: 20px;
+        }
+        
         .form-group {
             margin-bottom: 25px;
         }
         
         .form-group label {
-            display: flex;
-            align-items: center;
-            gap: 10px;
+            display: block;
             margin-bottom: 8px;
             font-weight: 600;
             color: var(--charcoal);
+            display: flex;
+            align-items: center;
+            gap: 10px;
         }
         
         .form-group label i {
@@ -177,6 +264,7 @@
             border: none;
             color: #666;
             cursor: pointer;
+            font-size: 1rem;
         }
         
         .help-text {
@@ -190,6 +278,7 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
+            margin-bottom: 20px;
         }
         
         .checkbox-label {
@@ -197,10 +286,8 @@
             align-items: center;
             gap: 8px;
             cursor: pointer;
-        }
-        
-        .checkbox-label input {
-            width: auto;
+            font-size: 0.9rem;
+            color: #666;
         }
         
         .forgot-link {
@@ -209,10 +296,63 @@
             font-size: 0.9rem;
         }
         
+        .forgot-link:hover {
+            text-decoration: underline;
+        }
+        
+        .btn {
+            display: inline-block;
+            padding: 12px 24px;
+            background: var(--primary-blue);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            text-align: center;
+        }
+        
+        .btn:hover {
+            background: var(--gold);
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+        
+        .btn-primary {
+            background: var(--primary-blue);
+        }
+        
+        .btn-primary:hover {
+            background: var(--gold);
+        }
+        
+        .btn-outline {
+            background: transparent;
+            border: 2px solid var(--primary-blue);
+            color: var(--primary-blue);
+        }
+        
+        .btn-outline:hover {
+            background: var(--primary-blue);
+            color: white;
+        }
+        
         .btn-block {
             width: 100%;
             padding: 15px;
             font-size: 1.1rem;
+        }
+        
+        .btn-secondary {
+            background: #6c757d;
+            color: white;
+        }
+        
+        .btn-secondary:hover {
+            background: #5a6268;
         }
         
         .login-security {
@@ -220,82 +360,76 @@
             margin-top: 20px;
             padding-top: 20px;
             border-top: 1px solid #eee;
-        }
-        
-        .login-security p {
             color: #666;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 10px;
-        }
-        
-        .security-features {
-            text-align: center;
-            margin-bottom: 40px;
-        }
-        
-        .security-features h3 {
-            color: white;
-            margin-bottom: 30px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 15px;
-        }
-        
-        .features-grid {
-            display: grid;
-            grid-template-columns: repeat(4, 1fr);
-            gap: 20px;
-        }
-        
-        .feature {
-            background: rgba(255,255,255,0.1);
-            padding: 25px;
-            border-radius: 10px;
-            border: 1px solid rgba(255,255,255,0.2);
-            color: white;
-        }
-        
-        .feature i {
-            font-size: 2rem;
-            margin-bottom: 15px;
-            color: var(--gold);
-        }
-        
-        .feature h4 {
-            margin-bottom: 10px;
-            font-size: 1.1rem;
-        }
-        
-        .feature p {
             font-size: 0.9rem;
-            opacity: 0.8;
         }
         
-        .demo-access {
-            background: rgba(255,255,255,0.1);
-            padding: 30px;
+        .login-security i {
+            color: var(--gold);
+            margin-right: 8px;
+        }
+        
+        /* Demo Credentials */
+        .demo-credentials {
+            background: rgba(255,255,255,0.95);
             border-radius: 10px;
+            padding: 25px;
+            margin-top: 30px;
             border: 2px solid var(--gold);
-            text-align: center;
         }
         
-        .demo-content h4 {
-            color: white;
-            margin-bottom: 15px;
+        .demo-credentials h4 {
+            text-align: center;
+            color: var(--charcoal);
+            margin-bottom: 20px;
+            font-size: 1.2rem;
             display: flex;
             align-items: center;
             justify-content: center;
             gap: 10px;
         }
         
-        .demo-content p {
-            color: rgba(255,255,255,0.8);
+        .credentials-table {
+            width: 100%;
+            border-collapse: collapse;
             margin-bottom: 20px;
+            font-size: 0.9rem;
         }
         
+        .credentials-table th {
+            background: #f8f9fa;
+            padding: 12px;
+            text-align: left;
+            font-weight: 600;
+            color: var(--charcoal);
+            border-bottom: 2px solid #e9ecef;
+        }
+        
+        .credentials-table td {
+            padding: 12px;
+            border-bottom: 1px solid #eee;
+        }
+        
+        .credentials-table code {
+            background: #f8f9fa;
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-family: 'Courier New', monospace;
+            color: var(--primary-blue);
+            font-weight: 600;
+        }
+        
+        .badge {
+            display: inline-block;
+            padding: 4px 10px;
+            background: var(--gold);
+            color: var(--primary-blue);
+            border-radius: 4px;
+            font-size: 0.8rem;
+            font-weight: 600;
+        }
+        
+        /* Registration Steps */
         .registration-steps {
             margin-bottom: 30px;
         }
@@ -325,6 +459,11 @@
             margin-bottom: 8px;
         }
         
+        .step-content p {
+            color: #666;
+            font-size: 0.95rem;
+        }
+        
         .registration-help {
             background: #f0f7ff;
             padding: 25px;
@@ -348,6 +487,7 @@
             margin-bottom: 8px;
             padding-left: 25px;
             position: relative;
+            color: #666;
         }
         
         .registration-help li:before {
@@ -356,68 +496,218 @@
             left: 0;
             color: var(--gold);
             font-weight: bold;
+            font-size: 1.2rem;
         }
         
-        /* Demo credentials box */
-        .demo-credentials {
-            background: rgba(255,255,255,0.9);
-            border-radius: 10px;
-            padding: 20px;
-            margin-top: 30px;
-            border: 2px solid var(--gold);
-        }
-        
-        .demo-credentials h4 {
+        /* Security Features */
+        .security-features {
             text-align: center;
-            color: var(--charcoal);
-            margin-bottom: 15px;
+            margin-bottom: 40px;
+            color: white;
+        }
+        
+        .security-features h3 {
+            margin-bottom: 30px;
+            font-size: 1.8rem;
             display: flex;
             align-items: center;
             justify-content: center;
-            gap: 10px;
+            gap: 15px;
         }
         
-        .credentials-table {
-            width: 100%;
-            border-collapse: collapse;
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 20px;
+        }
+        
+        .feature {
+            background: rgba(255,255,255,0.1);
+            padding: 25px;
+            border-radius: 10px;
+            border: 1px solid rgba(255,255,255,0.2);
+        }
+        
+        .feature i {
+            font-size: 2rem;
             margin-bottom: 15px;
+            color: var(--gold);
         }
         
-        .credentials-table th {
-            background: #f8f9fa;
-            padding: 10px;
-            text-align: left;
-            font-weight: 600;
-            color: var(--charcoal);
-            border-bottom: 2px solid #e9ecef;
+        .feature h4 {
+            margin-bottom: 10px;
+            font-size: 1.1rem;
         }
         
-        .credentials-table td {
-            padding: 10px;
-            border-bottom: 1px solid #eee;
+        .feature p {
+            font-size: 0.9rem;
+            opacity: 0.8;
         }
         
-        .credentials-table code {
-            background: #f8f9fa;
-            padding: 3px 6px;
-            border-radius: 4px;
-            font-family: monospace;
-            color: var(--primary-blue);
+        /* Footer Styles */
+        .footer {
+            background: var(--primary-blue);
+            color: white;
+            padding: 60px 0 20px;
         }
         
-        .badge {
-            display: inline-block;
-            padding: 3px 8px;
-            background: var(--gold);
-            color: var(--primary-blue);
-            border-radius: 4px;
-            font-size: 0.8rem;
-            font-weight: 600;
+        .footer-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 40px;
+        }
+        
+        .footer-section h3 {
+            color: var(--gold);
+            margin-bottom: 20px;
+            font-size: 1.2rem;
+        }
+        
+        .footer-logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 20px;
+            font-weight: 700;
+            font-size: 1.3rem;
+        }
+        
+        .footer-description {
+            margin-bottom: 20px;
+            line-height: 1.6;
+            opacity: 0.9;
+        }
+        
+        .footer-address {
+            font-size: 0.9rem;
+            opacity: 0.8;
+        }
+        
+        .footer-address i {
+            color: var(--gold);
+            margin-right: 10px;
+        }
+        
+        .footer-links {
+            list-style: none;
+            padding-left: 0;
+        }
+        
+        .footer-links li {
+            margin-bottom: 10px;
+        }
+        
+        .footer-links a {
+            color: rgba(255,255,255,0.8);
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+        
+        .footer-links a:hover {
+            color: var(--gold);
+        }
+        
+        .footer-contact p {
+            margin-bottom: 15px;
+            font-size: 0.9rem;
+            opacity: 0.8;
+        }
+        
+        .footer-contact strong {
+            color: var(--gold);
+        }
+        
+        .footer-bottom {
+            margin-top: 40px;
+            padding-top: 20px;
+            border-top: 1px solid rgba(255,255,255,0.1);
+            text-align: center;
+        }
+        
+        .footer-disclaimer {
+            background: rgba(220, 53, 69, 0.1);
+            border: 1px solid rgba(220, 53, 69, 0.3);
+            border-radius: 8px;
+            padding: 20px;
+            margin-bottom: 20px;
+            font-size: 0.85rem;
+            line-height: 1.6;
+        }
+        
+        .footer-copyright {
+            font-size: 0.9rem;
+            opacity: 0.7;
+        }
+        
+        /* Alert Messages */
+        .alert {
+            padding: 15px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            animation: fadeIn 0.3s ease;
+        }
+        
+        .alert-error {
+            background: #f8d7da;
+            color: #721c24;
+            border: 1px solid #f5c6cb;
+        }
+        
+        .alert-success {
+            background: #d4edda;
+            color: #155724;
+            border: 1px solid #c3e6cb;
+        }
+        
+        .alert-info {
+            background: #d1ecf1;
+            color: #0c5460;
+            border: 1px solid #bee5eb;
+        }
+        
+        .alert i {
+            margin-right: 10px;
+        }
+        
+        /* Animations */
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(-10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        /* Responsive Design */
+        @media (max-width: 992px) {
+            .features-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            
+            .footer-container {
+                grid-template-columns: repeat(2, 1fr);
+            }
         }
         
         @media (max-width: 768px) {
-            .features-grid {
-                grid-template-columns: repeat(2, 1fr);
+            .menu-toggle {
+                display: block;
+            }
+            
+            .nav-menu {
+                display: none;
+                position: absolute;
+                top: 100%;
+                left: 0;
+                right: 0;
+                background: white;
+                flex-direction: column;
+                padding: 20px;
+                box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            }
+            
+            .nav-menu.active {
+                display: flex;
             }
             
             .login-tabs {
@@ -429,7 +719,11 @@
             }
             
             .credentials-table {
-                font-size: 0.9rem;
+                font-size: 0.8rem;
+            }
+            
+            .login-header h1 {
+                font-size: 2rem;
             }
         }
         
@@ -438,9 +732,22 @@
                 grid-template-columns: 1fr;
             }
             
+            .footer-container {
+                grid-template-columns: 1fr;
+            }
+            
             .credentials-table {
                 display: block;
                 overflow-x: auto;
+            }
+            
+            .step {
+                flex-direction: column;
+                text-align: center;
+            }
+            
+            .step-number {
+                margin: 0 auto 15px;
             }
         }
     </style>
@@ -451,7 +758,7 @@
     <nav class="navbar">
         <div class="container">
             <a href="index.html" class="logo">
-                <img src="assets/icons/logo.svg" alt="Omkar Enterprises Logo" class="logo-icon" style="height: 40px;">
+                <div class="logo-icon">OE</div>
                 <span class="logo-text">Omkar Enterprises</span>
             </a>
             <button class="menu-toggle" id="menuToggle">
@@ -464,18 +771,18 @@
                 <li><a href="legal-framework.html">Legal Framework</a></li>
                 <li><a href="about.html">About</a></li>
                 <li><a href="faq.html">FAQ</a></li>
-                <li><a href="investor-login.html" class="nav-cta nav-login"><i class="fas fa-lock"></i> Investor Login</a></li>
+                <li><a href="investor-login.html" class="nav-login"><i class="fas fa-lock"></i> Investor Login</a></li>
             </ul>
         </div>
     </nav>
 
     <!-- Login Section -->
-    <section class="section section-dark login-section">
+    <section class="login-section">
         <div class="container">
             <div class="login-container">
                 <div class="login-header">
                     <div class="login-logo">
-                        <img src="assets/icons/logo.svg" alt="Omkar Enterprises Logo" class="logo-icon" style="height: 40px;">
+                        <div class="logo-icon">OE</div>
                         <span class="logo-text">Omkar Enterprises</span>
                     </div>
                     <h1><i class="fas fa-shield-alt"></i> Investor Portal</h1>
@@ -605,7 +912,7 @@
                             </tr>
                         </tbody>
                     </table>
-                    <button class="btn btn-outline" id="fillDemo" style="width: 100%;">
+                    <button class="btn btn-outline" id="fillDemo" style="width: 100%; margin-top: 10px;">
                         <i class="fas fa-magic"></i> Auto-fill First Demo Credentials
                     </button>
                 </div>
@@ -642,88 +949,93 @@
 
     <!-- Footer -->
     <footer class="footer">
-        <div class="footer-container">
-            <div class="footer-section">
-                <div class="footer-logo">
-                    <span class="logo-icon">OE</span>
-                    <span class="logo-text">Omkar Enterprises</span>
+        <div class="container">
+            <div class="footer-container">
+                <div class="footer-section">
+                    <div class="footer-logo">
+                        <span class="logo-icon">OE</span>
+                        <span class="logo-text">Omkar Enterprises</span>
+                    </div>
+                    <p class="footer-description">
+                        Structured Private Lending Partnerships<br>
+                        Transparency Through Contractual Certainty
+                    </p>
+                    <div class="footer-address">
+                        <p><i class="fas fa-map-marker-alt"></i> BK 673, Sai Baba Colony, Opp. Rajram Furniturewala, Ulhasnagar 421003, Thane, Maharashtra</p>
+                    </div>
                 </div>
-                <p class="footer-description">
-                    Structured Private Lending Partnerships<br>
-                    Transparency Through Contractual Certainty
-                </p>
-                <div class="footer-address">
-                    <p><i class="fas fa-map-marker-alt"></i> BK 673, Sai Baba Colony, Opp. Rajram Furniturewala, Ulhasnagar 421003, Thane, Maharashtra</p>
+                
+                <div class="footer-section">
+                    <h3>Important Links</h3>
+                    <ul class="footer-links">
+                        <li><a href="assets/documents/sample-agreement.pdf">Sample Agreement</a></li>
+                        <li><a href="investment-tiers.html">Investment Tiers</a></li>
+                        <li><a href="legal-framework.html">Legal Framework</a></li>
+                        <li><a href="faq.html">FAQ</a></li>
+                        <li><a href="about.html">About Founder</a></li>
+                        <li><a href="onboarding.html">Onboarding Process</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-section">
+                    <h3>Legal</h3>
+                    <ul class="footer-links">
+                        <li><a href="legal/privacy-policy.html">Privacy Policy</a></li>
+                        <li><a href="legal/terms.html">Terms of Use</a></li>
+                        <li><a href="legal/disclaimer.html">Risk Disclaimer</a></li>
+                        <li><a href="legal-framework.html#dispute">Dispute Resolution</a></li>
+                        <li><a href="legal-framework.html#compliance">Compliance Statement</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-section">
+                    <h3>Contact</h3>
+                    <div class="footer-contact">
+                        <p><strong>For New Inquiries:</strong><br>
+                        Consultation Form Only</p>
+                        <p><strong>For Existing Partners:</strong><br>
+                        Email: partners@omkarenterprises.in</p>
+                        <p><strong>Consultation Hours:</strong><br>
+                        Mon-Fri: 10AM - 5PM IST<br>
+                        Sat: 10AM - 1PM IST</p>
+                    </div>
                 </div>
             </div>
             
-            <div class="footer-section">
-                <h3>Important Links</h3>
-                <ul class="footer-links">
-                    <li><a href="assets/documents/sample-agreement.pdf">Sample Agreement</a></li>
-                    <li><a href="investment-tiers.html">Investment Tiers</a></li>
-                    <li><a href="legal-framework.html">Legal Framework</a></li>
-                    <li><a href="faq.html">FAQ</a></li>
-                    <li><a href="about.html">About Founder</a></li>
-                    <li><a href="onboarding.html">Onboarding Process</a></li>
-                </ul>
-            </div>
-            
-            <div class="footer-section">
-                <h3>Legal</h3>
-                <ul class="footer-links">
-                    <li><a href="legal/privacy-policy.html">Privacy Policy</a></li>
-                    <li><a href="legal/terms.html">Terms of Use</a></li>
-                    <li><a href="legal/disclaimer.html">Risk Disclaimer</a></li>
-                    <li><a href="legal-framework.html#dispute">Dispute Resolution</a></li>
-                    <li><a href="legal-framework.html#compliance">Compliance Statement</a></li>
-                </ul>
-            </div>
-            
-            <div class="footer-section">
-                <h3>Contact</h3>
-                <div class="footer-contact">
-                    <p><strong>For New Inquiries:</strong><br>
-                    Consultation Form Only</p>
-                    <p><strong>For Existing Partners:</strong><br>
-                    Email: partners@omkarenterprises.in</p>
-                    <p><strong>Consultation Hours:</strong><br>
-                    Mon-Fri: 10AM - 5PM IST<br>
-                    Sat: 10AM - 1PM IST</p>
+            <div class="footer-bottom">
+                <div class="footer-disclaimer">
+                    <p>⚠️ <strong>IMPORTANT DISCLAIMER:</strong> Omkar Enterprises enters into private loan agreements with individuals. This is NOT a bank deposit, NOT insured, NOT regulated by RBI/SEBI as a deposit-taking entity, and NOT a guaranteed return scheme. Capital is at risk. Returns depend on business performance. Past returns don't indicate future results. Consult your financial and legal advisors before proceeding.</p>
                 </div>
-            </div>
-        </div>
-        
-        <div class="footer-bottom">
-            <div class="footer-disclaimer">
-                <p>⚠️ <strong>IMPORTANT DISCLAIMER:</strong> Omkar Enterprises enters into private loan agreements with individuals. This is NOT a bank deposit, NOT insured, NOT regulated by RBI/SEBI as a deposit-taking entity, and NOT a guaranteed return scheme. Capital is at risk. Returns depend on business performance. Past returns don't indicate future results. Consult your financial and legal advisors before proceeding.</p>
-            </div>
-            <div class="footer-copyright">
-                <p>© <span id="currentYear">2025</span> Omkar Enterprises. All rights reserved.</p>
+                <div class="footer-copyright">
+                    <p>© <span id="currentYear">2025</span> Omkar Enterprises. All rights reserved.</p>
+                </div>
             </div>
         </div>
     </footer>
 
-    <!-- Scripts -->
-    <script src="js/main.js"></script>
-    <script src="js/investor-portal.js"></script>
-    
-    <!-- FIXED LOGIN SCRIPT - NO REDIRECT LOOP -->
+    <!-- WORKING LOGIN SCRIPT -->
     <script>
     document.addEventListener('DOMContentLoaded', function() {
-        console.log("✅ Investor Login Page Loaded");
+        console.log("✅ Investor Login Page Loaded Successfully");
         
-        // DO NOT check for existing session on login page
-        // The dashboard will check for session, not the login page
+        // Set current year in footer
+        document.getElementById('currentYear').textContent = new Date().getFullYear();
         
-        // Initialize UI components
-        initLoginUI();
+        // Mobile menu toggle
+        const menuToggle = document.getElementById('menuToggle');
+        const navMenu = document.getElementById('navMenu');
         
-        // Setup login form
-        setupLoginForm();
+        if (menuToggle && navMenu) {
+            menuToggle.addEventListener('click', function() {
+                navMenu.classList.toggle('active');
+            });
+        }
+        
+        // Initialize login functionality
+        initLoginFunctionality();
     });
     
-    function initLoginUI() {
+    function initLoginFunctionality() {
         // Toggle password visibility
         const toggleBtn = document.getElementById('togglePassword');
         if (toggleBtn) {
@@ -749,9 +1061,11 @@
             btn.addEventListener('click', function() {
                 const tab = this.getAttribute('data-tab');
                 
-                tabBtns.forEach(b => b.classList.remove('active'));
+                // Update active tab
+                document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
                 this.classList.add('active');
                 
+                // Show active content
                 document.querySelectorAll('.tab-content').forEach(content => {
                     content.classList.remove('active');
                 });
@@ -777,59 +1091,58 @@
                 alert('Password reset would be sent to your registered email.\n\nFor demo: Use OE-INV-1001 / demo123');
             });
         }
+        
+        // Handle login form submission
+        const loginForm = document.getElementById('loginForm');
+        if (loginForm) {
+            loginForm.addEventListener('submit', function(e) {
+                e.preventDefault();
+                handleLogin();
+            });
+        }
+        
+        console.log("✅ Login system ready. Use demo credentials from the table.");
     }
     
-    function setupLoginForm() {
-        const loginForm = document.getElementById('loginForm');
-        if (!loginForm) {
-            console.error("Login form not found!");
+    function handleLogin() {
+        const investorId = document.getElementById('investorId').value.trim();
+        const password = document.getElementById('password').value;
+        const loginBtn = document.getElementById('loginBtn');
+        
+        console.log("📝 Attempting login with:", investorId);
+        
+        // Clear any previous messages
+        document.getElementById('loginMessage').innerHTML = '';
+        
+        // Basic validation
+        if (!investorId || !password) {
+            showMessage('Please enter both Investor ID and password', 'error');
             return;
         }
         
-        // Handle form submission
-        loginForm.addEventListener('submit', function(e) {
-            e.preventDefault();
-            console.log("📝 Login form submitted");
+        // Show loading state
+        loginBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Authenticating...';
+        loginBtn.disabled = true;
+        loginBtn.style.background = '#28a745';
+        
+        // Simulate API call delay
+        setTimeout(() => {
+            // Validate against demo credentials
+            const isValid = validateLogin(investorId, password);
             
-            const investorId = document.getElementById('investorId').value.trim();
-            const password = document.getElementById('password').value;
-            const loginBtn = document.getElementById('loginBtn');
-            
-            console.log("🔑 Attempting login with:", investorId);
-            
-            // Clear any previous messages
-            document.getElementById('loginMessage').innerHTML = '';
-            
-            // Validate credentials
-            const result = validateCredentials(investorId, password);
-            
-            if (result.success) {
-                console.log("✅ Login successful for:", investorId);
-                showLoginSuccess(result.user, loginBtn);
+            if (isValid.success) {
+                // Login successful
+                console.log("✅ Login successful!");
+                showLoginSuccess(isValid.user, loginBtn);
             } else {
-                console.log("❌ Login failed:", result.error);
-                showLoginError(result.error, loginBtn);
+                // Login failed
+                console.log("❌ Login failed");
+                showLoginError(isValid.error, loginBtn);
             }
-        });
+        }, 1000);
     }
     
-    function validateCredentials(investorId, password) {
-        // Basic validation
-        if (!investorId || !password) {
-            return { 
-                success: false, 
-                error: 'Please enter both Investor ID and password' 
-            };
-        }
-        
-        // Validate format
-        if (!investorId.match(/^OE-INV-\d{4}$/)) {
-            return { 
-                success: false, 
-                error: 'Invalid Investor ID format. Use: OE-INV-1001' 
-            };
-        }
-        
+    function validateLogin(investorId, password) {
         // Demo credentials
         const validUsers = {
             'OE-INV-1001': { password: 'demo123', name: 'Rajesh Kumar', tier: 'Growth', portfolio: 1000000 },
@@ -837,71 +1150,69 @@
             'OE-INV-1003': { password: 'demo789', name: 'Amit Patel', tier: 'Emerging', portfolio: 250000 }
         };
         
+        // Check if ID format is correct
+        if (!investorId.match(/^OE-INV-\d{4}$/)) {
+            return {
+                success: false,
+                error: 'Invalid Investor ID format. Use: OE-INV-1001'
+            };
+        }
+        
+        // Check if user exists
         if (!validUsers[investorId]) {
-            return { 
-                success: false, 
-                error: 'Investor ID not found' 
+            return {
+                success: false,
+                error: 'Investor ID not found. Try demo credentials from table.'
             };
         }
         
+        // Check password
         if (validUsers[investorId].password !== password) {
-            return { 
-                success: false, 
-                error: 'Incorrect password' 
+            return {
+                success: false,
+                error: 'Incorrect password. Try: demo123 for OE-INV-1001'
             };
         }
         
-        // Success - create user session
-        const user = {
-            id: investorId,
-            name: validUsers[investorId].name,
-            tier: validUsers[investorId].tier,
-            portfolio: validUsers[investorId].portfolio,
-            loginTime: new Date().toISOString()
+        // Success - return user data
+        return {
+            success: true,
+            user: {
+                id: investorId,
+                name: validUsers[investorId].name,
+                tier: validUsers[investorId].tier,
+                portfolio: validUsers[investorId].portfolio,
+                loginTime: new Date().toISOString()
+            }
         };
-        
-        return { success: true, user: user };
     }
     
     function showLoginSuccess(user, loginBtn) {
-        const originalText = loginBtn.innerHTML;
-        const originalBg = loginBtn.style.background;
-        
-        // Show loading state
-        loginBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Logging in...';
-        loginBtn.disabled = true;
-        loginBtn.style.background = '#28a745';
-        
-        // Save session to localStorage
+        // Save user session to localStorage
         localStorage.setItem('oe_investor_session', JSON.stringify(user));
         console.log("💾 Session saved:", user);
         
-        // Show success message
-        showMessage("Login successful! Redirecting to dashboard...", 'success');
+        // Update button to show success
+        loginBtn.innerHTML = '<i class="fas fa-check"></i> Login Successful!';
         
-        // Redirect after 1.5 seconds
+        // Show success message
+        showMessage(`Welcome back, ${user.name}! Redirecting to dashboard...`, 'success');
+        
+        // Redirect to dashboard after 1.5 seconds
         setTimeout(() => {
-            loginBtn.innerHTML = '<i class="fas fa-check"></i> Redirecting...';
-            
-            setTimeout(() => {
-                console.log("🚀 Redirecting to dashboard...");
-                window.location.href = 'investor-dashboard.html';
-            }, 500);
+            console.log("🚀 Redirecting to dashboard...");
+            window.location.href = 'investor-dashboard.html';
         }, 1500);
     }
     
-    function showLoginError(message, loginBtn) {
+    function showLoginError(error, loginBtn) {
         // Reset button
         loginBtn.innerHTML = '<i class="fas fa-sign-in-alt"></i> Sign In to Dashboard';
         loginBtn.disabled = false;
         loginBtn.style.background = '';
         
         // Show error message
-        showMessage(
-            `<strong>${message}</strong><br><br>
-            <small>Use demo credentials from the table below:</small>`,
-            'error'
-        );
+        showMessage(error, 'error');
     }
     
     function showMessage(message, type) {
@@ -920,13 +1231,10 @@
             </div>
         `;
         
-        // Add animation
-        messageDiv.style.animation = 'fadeIn 0.3s ease';
-        
-        // Auto-hide after 8 seconds (but not for success messages)
-        if (type !== 'success') {
+        // Auto-hide error messages after 8 seconds
+        if (type === 'error') {
             setTimeout(() => {
-                if (messageDiv.innerHTML.includes(alertClass)) {
+                if (messageDiv.innerHTML.includes('alert-error')) {
                     messageDiv.style.opacity = '0';
                     messageDiv.style.transition = 'opacity 0.5s ease';
                     setTimeout(() => {
@@ -937,47 +1245,6 @@
             }, 8000);
         }
     }
-    
-    // Add alert styles
-    const style = document.createElement('style');
-    style.textContent = `
-        .alert {
-            padding: 15px;
-            border-radius: 8px;
-            margin-bottom: 20px;
-            animation: fadeIn 0.3s ease;
-        }
-        
-        .alert-error {
-            background: #f8d7da;
-            color: #721c24;
-            border: 1px solid #f5c6cb;
-        }
-        
-        .alert-success {
-            background: #d4edda;
-            color: #155724;
-            border: 1px solid #c3e6cb;
-        }
-        
-        .alert-info {
-            background: #d1ecf1;
-            color: #0c5460;
-            border: 1px solid #bee5eb;
-        }
-        
-        .alert i {
-            margin-right: 10px;
-        }
-        
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(-10px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-    `;
-    document.head.appendChild(style);
-    
-    console.log("✅ Login system ready. Use demo credentials from the table.");
     </script>
 </body>
 </html>
