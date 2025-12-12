@@ -26,7 +26,34 @@
     <link rel="stylesheet" href="css/responsive.css">
     <link rel="stylesheet" href="css/dashboard.css">
 </head>
+
+    <body class="dashboard-page">
+    <!-- SIMPLE DASHBOARD AUTH CHECK -->
+    <script>
+    // Simple session check
+    console.log("🔐 Checking dashboard access...");
     
+    const session = localStorage.getItem('oe_investor_session');
+    
+    if (!session) {
+        console.log("❌ No session found, redirecting to login");
+        alert('Please login first!');
+        window.location.href = 'investor-login.html';
+    } else {
+        console.log("✅ Session found, loading dashboard");
+        // Parse user data for later use
+        try {
+            const userData = JSON.parse(session);
+            window.currentUser = userData;
+            console.log("👤 User:", userData.name, "| ID:", userData.id);
+        } catch (e) {
+            console.error("Error parsing session:", e);
+        }
+    }
+    </script>
+    
+    <!-- Rest of your dashboard HTML remains the same -->
+    <!-- ... -->
 <body class="dashboard-page">
     <!-- DASHBOARD SESSION CHECK -->
     <script>
@@ -3428,3 +3455,4 @@
     </style>
 </body>
 </html>
+
