@@ -26,7 +26,100 @@
     <link rel="stylesheet" href="css/responsive.css">
     <link rel="stylesheet" href="css/dashboard.css">
 </head>
-<body class="dashboard-page">
+<!-- Add this script to investor-dashboard.html -->
+<script>
+// Check authentication before showing dashboard
+document.addEventListener('DOMContentLoaded', function() {
+    const session = localStorage.getItem('oe_investor_session');
+    
+    if (!session) {
+        // Not logged in, redirect to login
+        window.location.href = 'investor-login.html?redirect=' + encodeURIComponent(window.location.pathname);
+        return;
+    }
+    
+    try {
+        const userData = JSON.parse(session);
+        const loginTime = new Date(userData.loginTime);
+        const now = new Date();
+        
+        // Check if session expired (30 minutes)
+        if ((now - loginTime) > (30 * 60 * 1000)) {
+            localStorage.removeItem('oe_investor_session');
+            window.location.href = 'investor-login.html?session=expired';
+            return;
+        }
+        
+        // Update user info in dashboard
+        updateUserInfo(userData);
+        
+        // Setup logout functionality
+        setupLogout();
+        
+    } catch (error) {
+        console.error('Session error:', error);
+        localStorage.removeItem('oe_investor_session');
+        window.location.href = 'investor-login.html';
+    }
+});
+
+function updateUserInfo(userData) {
+    // Update welcome message
+    const welcomeElements = document.querySelectorAll('.user-name, .welcome-user');
+    welcomeElements.forEach(el => {
+        if (el.classList.contains('user-name')) {
+            el.textContent = userData.name || 'Investor';
+        }
+        if (el.classList.contains('welcome-user')) {
+            el.textContent = `Welcome back, ${userData.name || 'Investor'}!`;
+        }
+    });
+    
+    // Update investor ID
+    const idElements = document.querySelectorAll('.investor-id');
+    idElements.forEach(el => {
+        if (el.querySelector('span')) {
+            el.querySelector('span').textContent = userData.id || 'OE-INV-XXXX';
+        }
+    });
+}
+
+function setupLogout() {
+    const logoutButtons = document.querySelectorAll('.logout-btn, .btn-logout');
+    
+    logoutButtons.forEach(btn => {
+        btn.addEventListener('click', function(e) {
+            e.preventDefault();
+            
+            if (confirm('Are you sure you want to log out?')) {
+                localStorage.removeItem('oe_investor_session');
+                window.location.href = 'investor-login.html?logout=success';
+            }
+        });
+    });
+    
+    // Auto-logout after 30 minutes of inactivity
+    let inactivityTimer;
+    
+    function resetTimer() {
+        clearTimeout(inactivityTimer);
+        inactivityTimer = setTimeout(() => {
+            if (confirm('Your session has expired due to inactivity. Log out?')) {
+                localStorage.removeItem('oe_investor_session');
+                window.location.href = 'investor-login.html?session=expired';
+            }
+        }, 30 * 60 * 1000); // 30 minutes
+    }
+    
+    // Reset on user activity
+    ['click', 'keypress', 'mousemove', 'scroll'].forEach(event => {
+        document.addEventListener(event, resetTimer);
+    });
+    
+    resetTimer(); // Start the timer
+}
+</script>
+    <body class="dashboard-page">
     <!-- Top Navigation -->
     <nav class="dashboard-nav">
         <div class="container">
@@ -3194,4 +3287,5 @@ const sampleData = {
 </body>
 
 </html>
+
 
