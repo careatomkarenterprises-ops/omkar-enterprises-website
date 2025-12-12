@@ -35,6 +35,110 @@ h1, h2, h3, h4, h5, h6 {
     margin: 0 auto;
     padding: 0 20px;
 }
+/* ===========================================
+   FIXED NAVIGATION - ADD TO YOUR EXISTING CSS
+   =========================================== */
+
+/* Keep your existing navbar styles but add these fixes */
+
+.navbar {
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+}
+
+/* Mobile menu hamburger */
+.hamburger {
+    display: none;
+    flex-direction: column;
+    cursor: pointer;
+    background: none;
+    border: none;
+    padding: 5px;
+}
+
+.hamburger span {
+    width: 25px;
+    height: 3px;
+    background-color: white;
+    margin: 3px 0;
+    transition: 0.3s;
+    display: block;
+}
+
+/* Mobile menu styles */
+@media (max-width: 768px) {
+    /* Show hamburger on mobile */
+    .hamburger {
+        display: flex;
+        z-index: 1001;
+    }
+    
+    /* Hide regular menu on mobile */
+    .nav-menu {
+        display: none;
+        position: fixed;
+        left: -100%;
+        top: 0;
+        flex-direction: column;
+        background-color: var(--primary-blue);
+        width: 80%;
+        height: 100vh;
+        padding: 6rem 2rem 2rem;
+        gap: 1rem;
+        z-index: 1000;
+        box-shadow: 5px 0 15px rgba(0, 0, 0, 0.2);
+        transition: 0.3s ease-in-out;
+        margin: 0;
+    }
+    
+    /* Show menu when active */
+    .nav-menu.active {
+        display: flex;
+        left: 0;
+    }
+    
+    /* Style mobile menu items */
+    .nav-menu li {
+        width: 100%;
+    }
+    
+    .nav-menu li a {
+        padding: 1rem;
+        display: block;
+        width: 100%;
+        border-radius: 5px;
+        color: white;
+        text-align: left;
+    }
+    
+    /* Mobile menu CTA button */
+    .nav-menu .nav-cta {
+        margin-top: 20px;
+        width: 100%;
+        justify-content: center;
+    }
+    
+    /* Hamburger animation */
+    .hamburger.active span:nth-child(1) {
+        transform: rotate(45deg) translate(5px, 6px);
+    }
+    
+    .hamburger.active span:nth-child(2) {
+        opacity: 0;
+    }
+    
+    .hamburger.active span:nth-child(3) {
+        transform: rotate(-45deg) translate(7px, -8px);
+    }
+}
+
+/* Desktop styles - ensure menu is visible */
+@media (min-width: 769px) {
+    .nav-menu {
+        display: flex !important;
+    }
+}
 
 /* ===========================================
    NAVIGATION BAR - FIXED VERSION
@@ -922,3 +1026,4 @@ input[type="range"]::-webkit-slider-thumb {
 }
 
 @import url('dashboard.css');
+
