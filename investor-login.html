@@ -22,198 +22,6 @@
     <link rel="stylesheet" href="css/style.css">
     <link rel="stylesheet" href="css/responsive.css">
 </head>
-<!-- Add this script to investor-login.html -->
-<script>
-// Import auth system (make sure auth.js is loaded first)
-document.addEventListener('DOMContentLoaded', function() {
-    const loginForm = document.getElementById('loginForm');
-    const errorDiv = document.getElementById('loginError');
-    
-    if (!loginForm) return;
-    
-    // Create error display if it doesn't exist
-    if (!errorDiv) {
-        const div = document.createElement('div');
-        div.id = 'loginError';
-        div.style.display = 'none';
-        div.style.color = 'red';
-        div.style.margin = '15px 0';
-        loginForm.parentNode.insertBefore(div, loginForm);
-    }
-    
-    // Form submission handler
-    loginForm.addEventListener('submit', function(e) {
-        e.preventDefault();
-        
-        const investorId = document.getElementById('investorId').value.trim();
-        const password = document.getElementById('password').value;
-        const rememberMe = document.getElementById('rememberMe')?.checked || false;
-        
-        // Basic validation
-        if (!investorId || !password) {
-            showError('Please enter both Investor ID and password');
-            return;
-        }
-        
-        if (!investorId.match(/^OE-INV-\d{4}$/)) {
-            showError('Invalid Investor ID format. Use: OE-INV-1001');
-            return;
-        }
-        
-        // Show loading state
-        const submitBtn = loginForm.querySelector('button[type="submit"]');
-        const originalText = submitBtn.innerHTML;
-        submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Signing in...';
-        submitBtn.disabled = true;
-        
-        // Simulate API call (replace with real API later)
-        setTimeout(() => {
-            // Check against demo credentials
-            const investors = {
-                'OE-INV-1001': 'demo123',
-                'OE-INV-1002': 'demo456',
-                'OE-INV-1003': 'demo789'
-            };
-            
-            if (investors[investorId] && investors[investorId] === password) {
-                // Successful login
-                localStorage.setItem('oe_investor_session', JSON.stringify({
-                    id: investorId,
-                    name: getInvestorName(investorId),
-                    loginTime: new Date().toISOString()
-                }));
-                
-                // Redirect to dashboard
-                window.location.href = 'investor-dashboard.html';
-            } else {
-                // Failed login
-                showError('Invalid Investor ID or password. Try: OE-INV-1001 / demo123');
-                submitBtn.innerHTML = originalText;
-                submitBtn.disabled = false;
-            }
-        }, 1000);
-    });
-    
-    function showError(message) {
-        const errorDiv = document.getElementById('loginError');
-        errorDiv.innerHTML = `<i class="fas fa-exclamation-circle"></i> ${message}`;
-        errorDiv.style.display = 'block';
-        
-        // Auto-hide after 5 seconds
-        setTimeout(() => {
-            errorDiv.style.display = 'none';
-        }, 5000);
-    }
-    
-    function getInvestorName(id) {
-        const names = {
-            'OE-INV-1001': 'Rajesh Kumar',
-            'OE-INV-1002': 'Priya Sharma',
-            'OE-INV-1003': 'Amit Patel'
-        };
-        return names[id] || 'Investor';
-    }
-    
-    // Demo credentials auto-fill for testing
-    const demoBtn = document.createElement('button');
-    demoBtn.type = 'button';
-    demoBtn.innerHTML = '<i class="fas fa-magic"></i> Fill Demo Credentials';
-    demoBtn.style.cssText = `
-        background: #6c757d;
-        color: white;
-        border: none;
-        padding: 8px 15px;
-        border-radius: 5px;
-        margin-top: 15px;
-        cursor: pointer;
-        font-size: 0.9rem;
-    `;
-    demoBtn.onclick = function() {
-        document.getElementById('investorId').value = 'OE-INV-1001';
-        document.getElementById('password').value = 'demo123';
-    };
-    
-    loginForm.appendChild(demoBtn);
-});
-</script>
-<!-- SIMPLE LOGIN SCRIPT - PASTE BEFORE </body> -->
-<script>
-// Simple working login
-console.log("Login script loaded");
-
-document.getElementById('loginForm').addEventListener('submit', function(e) {
-    e.preventDefault();
-    
-    const investorId = document.getElementById('investorId').value;
-    const password = document.getElementById('password').value;
-    
-    console.log("Checking:", investorId, password);
-    
-    // Demo credentials - EXACT MATCH
-    const validUsers = {
-        'OE-INV-1001': 'demo123',
-        'OE-INV-1002': 'demo456', 
-        'OE-INV-1003': 'demo789'
-    };
-    
-    if (validUsers[investorId] === password) {
-        console.log("SUCCESS! Redirecting...");
-        
-        // Save user info
-        const userNames = {
-            'OE-INV-1001': 'Rajesh Kumar',
-            'OE-INV-1002': 'Priya Sharma',
-            'OE-INV-1003': 'Amit Patel'
-        };
-        
-        localStorage.setItem('oe_investor_session', JSON.stringify({
-            id: investorId,
-            name: userNames[investorId],
-            time: new Date().toISOString()
-        }));
-        
-        // Redirect immediately
-        window.location.href = 'investor-dashboard.html';
-        
-    } else {
-        console.log("FAILED");
-        // Show error with exact test credentials
-        document.getElementById('loginForm').innerHTML += `
-            <div style="
-                background: #fff3cd;
-                border: 1px solid #ffc107;
-                color: #856404;
-                padding: 15px;
-                margin-top: 20px;
-                border-radius: 5px;
-            ">
-                <strong>Use these test credentials:</strong><br>
-                <table style="width:100%; margin-top:10px;">
-                    <tr><td><strong>Investor ID:</strong></td><td>OE-INV-1001</td></tr>
-                    <tr><td><strong>Password:</strong></td><td>demo123</td></tr>
-                </table>
-                <button onclick="fillTest()" style="
-                    background: #007bff;
-                    color: white;
-                    border: none;
-                    padding: 8px 15px;
-                    margin-top: 10px;
-                    border-radius: 4px;
-                    cursor: pointer;
-                ">
-                    Auto-Fill & Login
-                </button>
-            </div>
-        `;
-    }
-});
-
-function fillTest() {
-    document.getElementById('investorId').value = 'OE-INV-1001';
-    document.getElementById('password').value = 'demo123';
-    document.getElementById('loginForm').dispatchEvent(new Event('submit'));
-}
-</script>
     
 <body class="login-page">
     <!-- Navigation -->
@@ -380,69 +188,69 @@ function fillTest() {
         </div>
     </section>
 
-<!-- Footer -->
-<footer class="footer">
-    <div class="footer-container">
-        <div class="footer-section">
-            <div class="footer-logo">
-                <span class="logo-icon">OE</span>
-                <span class="logo-text">Omkar Enterprises</span>
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-container">
+            <div class="footer-section">
+                <div class="footer-logo">
+                    <span class="logo-icon">OE</span>
+                    <span class="logo-text">Omkar Enterprises</span>
+                </div>
+                <p class="footer-description">
+                    Structured Private Lending Partnerships<br>
+                    Transparency Through Contractual Certainty
+                </p>
+                <div class="footer-address">
+                    <p><i class="fas fa-map-marker-alt"></i> BK 673, Sai Baba Colony, Opp. Rajram Furniturewala, Ulhasnagar 421003, Thane, Maharashtra</p>
+                </div>
             </div>
-            <p class="footer-description">
-                Structured Private Lending Partnerships<br>
-                Transparency Through Contractual Certainty
-            </p>
-            <div class="footer-address">
-                <p><i class="fas fa-map-marker-alt"></i> BK 673, Sai Baba Colony, Opp. Rajram Furniturewala, Ulhasnagar 421003, Thane, Maharashtra</p>
+            
+            <div class="footer-section">
+                <h3>Important Links</h3>
+                <ul class="footer-links">
+                    <li><a href="assets/documents/sample-agreement.pdf">Sample Agreement</a></li>
+                    <li><a href="investment-tiers.html">Investment Tiers</a></li>
+                    <li><a href="legal-framework.html">Legal Framework</a></li>
+                    <li><a href="faq.html">FAQ</a></li>
+                    <li><a href="about.html">About Founder</a></li>
+                    <li><a href="onboarding.html">Onboarding Process</a></li>
+                </ul>
+            </div>
+            
+            <div class="footer-section">
+                <h3>Legal</h3>
+                <ul class="footer-links">
+                    <li><a href="legal/privacy-policy.html">Privacy Policy</a></li>
+                    <li><a href="legal/terms.html">Terms of Use</a></li>
+                    <li><a href="legal/disclaimer.html">Risk Disclaimer</a></li>
+                    <li><a href="legal-framework.html#dispute">Dispute Resolution</a></li>
+                    <li><a href="legal-framework.html#compliance">Compliance Statement</a></li>
+                </ul>
+            </div>
+            
+            <div class="footer-section">
+                <h3>Contact</h3>
+                <div class="footer-contact">
+                    <p><strong>For New Inquiries:</strong><br>
+                    Consultation Form Only</p>
+                    <p><strong>For Existing Partners:</strong><br>
+                    Email: partners@omkarenterprises.in</p>
+                    <p><strong>Consultation Hours:</strong><br>
+                    Mon-Fri: 10AM - 5PM IST<br>
+                    Sat: 10AM - 1PM IST</p>
+                </div>
             </div>
         </div>
         
-        <div class="footer-section">
-            <h3>Important Links</h3>
-            <ul class="footer-links">
-                <li><a href="assets/documents/sample-agreement.pdf">Sample Agreement</a></li>
-                <li><a href="investment-tiers.html">Investment Tiers</a></li>
-                <li><a href="legal-framework.html">Legal Framework</a></li>
-                <li><a href="faq.html">FAQ</a></li>
-                <li><a href="about.html">About Founder</a></li>
-                <li><a href="onboarding.html">Onboarding Process</a></li>
-            </ul>
-        </div>
-        
-        <div class="footer-section">
-            <h3>Legal</h3>
-            <ul class="footer-links">
-                <li><a href="legal/privacy-policy.html">Privacy Policy</a></li>
-                <li><a href="legal/terms.html">Terms of Use</a></li>
-                <li><a href="legal/disclaimer.html">Risk Disclaimer</a></li>
-                <li><a href="legal-framework.html#dispute">Dispute Resolution</a></li>
-                <li><a href="legal-framework.html#compliance">Compliance Statement</a></li>
-            </ul>
-        </div>
-        
-        <div class="footer-section">
-            <h3>Contact</h3>
-            <div class="footer-contact">
-                <p><strong>For New Inquiries:</strong><br>
-                Consultation Form Only</p>
-                <p><strong>For Existing Partners:</strong><br>
-                Email: partners@omkarenterprises.in</p>
-                <p><strong>Consultation Hours:</strong><br>
-                Mon-Fri: 10AM - 5PM IST<br>
-                Sat: 10AM - 1PM IST</p>
+        <div class="footer-bottom">
+            <div class="footer-disclaimer">
+                <p>⚠️ <strong>IMPORTANT DISCLAIMER:</strong> Omkar Enterprises enters into private loan agreements with individuals. This is NOT a bank deposit, NOT insured, NOT regulated by RBI/SEBI as a deposit-taking entity, and NOT a guaranteed return scheme. Capital is at risk. Returns depend on business performance. Past returns don't indicate future results. Consult your financial and legal advisors before proceeding.</p>
+            </div>
+            <div class="footer-copyright">
+                <p>© <span id="currentYear">2025</span> Omkar Enterprises. All rights reserved.</p>
             </div>
         </div>
-    </div>
-    
-    <div class="footer-bottom">
-        <div class="footer-disclaimer">
-            <p>⚠️ <strong>IMPORTANT DISCLAIMER:</strong> Omkar Enterprises enters into private loan agreements with individuals. This is NOT a bank deposit, NOT insured, NOT regulated by RBI/SEBI as a deposit-taking entity, and NOT a guaranteed return scheme. Capital is at risk. Returns depend on business performance. Past returns don't indicate future results. Consult your financial and legal advisors before proceeding.</p>
-        </div>
-        <div class="footer-copyright">
-            <p>© <span id="currentYear">2025</span> Omkar Enterprises. All rights reserved.</p>
-        </div>
-    </div>
-</footer>
+    </footer>
 
     <!-- Scripts -->
     <script src="js/main.js"></script>
@@ -818,30 +626,239 @@ function fillTest() {
         }
     </style>
 
-<script>
-// Simple login for testing
-document.getElementById('loginForm').addEventListener('submit', function(e) {
-    e.preventDefault();
-    
-    const investorId = document.getElementById('investorId').value;
-    const password = document.getElementById('password').value;
-    
-    // Simple validation
-    if (investorId === 'OE-INV-12345' && password === 'demo1234') {
-        // Success - redirect to dashboard
-        localStorage.setItem('investorName', 'Rajesh Kumar');
-        localStorage.setItem('investorTier', 'Growth');
-        localStorage.setItem('investorAmount', '₹10,00,000');
-        window.location.href = 'investor-dashboard.html';
-    } else {
-        alert('Invalid credentials. Try:\nInvestor ID: OE-INV-12345\nPassword: demo1234');
+    <!-- SINGLE WORKING LOGIN SCRIPT -->
+    <script>
+    // Simple working login - ONE SCRIPT ONLY
+    console.log("Investor Portal Login Loaded");
+
+    // Toggle password visibility
+    document.addEventListener('DOMContentLoaded', function() {
+        const toggleBtn = document.getElementById('togglePassword');
+        if (toggleBtn) {
+            toggleBtn.addEventListener('click', function() {
+                const passwordInput = document.getElementById('password');
+                const icon = this.querySelector('i');
+                
+                if (passwordInput.type === 'password') {
+                    passwordInput.type = 'text';
+                    icon.classList.remove('fa-eye');
+                    icon.classList.add('fa-eye-slash');
+                } else {
+                    passwordInput.type = 'password';
+                    icon.classList.remove('fa-eye-slash');
+                    icon.classList.add('fa-eye');
+                }
+            });
+        }
+        
+        // Tab switching
+        const tabBtns = document.querySelectorAll('.tab-btn');
+        tabBtns.forEach(btn => {
+            btn.addEventListener('click', function() {
+                const tab = this.getAttribute('data-tab');
+                
+                // Update active tab button
+                tabBtns.forEach(b => b.classList.remove('active'));
+                this.classList.add('active');
+                
+                // Show active content
+                document.querySelectorAll('.tab-content').forEach(content => {
+                    content.classList.remove('active');
+                });
+                document.getElementById(tab).classList.add('active');
+            });
+        });
+        
+        // Demo tour button
+        const demoTour = document.getElementById('demoTour');
+        if (demoTour) {
+            demoTour.addEventListener('click', function() {
+                alert('Dashboard demo would open here.\n\nFor now, use:\nInvestor ID: OE-INV-1001\nPassword: demo123');
+            });
+        }
+        
+        // Auto-fill demo credentials button
+        const demoBtn = document.createElement('button');
+        demoBtn.type = 'button';
+        demoBtn.className = 'btn';
+        demoBtn.style.cssText = 'margin-top: 15px; width: 100%; background: #6c757d; color: white; border: none; padding: 12px; border-radius: 8px; cursor: pointer;';
+        demoBtn.innerHTML = '<i class="fas fa-key"></i> Auto-Fill Demo Credentials';
+        demoBtn.onclick = function() {
+            document.getElementById('investorId').value = 'OE-INV-1001';
+            document.getElementById('password').value = 'demo123';
+            document.querySelector('.btn-primary').focus();
+        };
+        
+        // Add after submit button
+        const submitBtn = document.querySelector('.btn-primary');
+        if (submitBtn) {
+            submitBtn.parentNode.insertBefore(demoBtn, submitBtn.nextSibling);
+        }
+        
+        // Forgot password link
+        const forgotLink = document.querySelector('.forgot-link');
+        if (forgotLink) {
+            forgotLink.addEventListener('click', function(e) {
+                e.preventDefault();
+                alert('Password reset email would be sent to your registered email address.\n\nFor demo: Use credentials:\nOE-INV-1001 / demo123');
+            });
+        }
+    });
+
+    // MAIN LOGIN FUNCTION
+    const loginForm = document.getElementById('loginForm');
+    if (loginForm) {
+        loginForm.addEventListener('submit', function(e) {
+            e.preventDefault();
+            e.stopPropagation();
+            
+            console.log("Login form submitted");
+            
+            const investorId = document.getElementById('investorId').value.trim();
+            const password = document.getElementById('password').value;
+            
+            console.log("Attempting login with:", investorId);
+            
+            // VALID CREDENTIALS - Use exactly these:
+            const validCredentials = {
+                'OE-INV-1001': 'demo123',
+                'OE-INV-1002': 'demo456',
+                'OE-INV-1003': 'demo789'
+            };
+            
+            const investorNames = {
+                'OE-INV-1001': 'Rajesh Kumar',
+                'OE-INV-1002': 'Priya Sharma', 
+                'OE-INV-1003': 'Amit Patel'
+            };
+            
+            // Validate format
+            if (!investorId.match(/^OE-INV-\d{4}$/)) {
+                showError('Invalid Investor ID format. Use: OE-INV-1001');
+                return;
+            }
+            
+            // Check credentials
+            if (validCredentials[investorId] && validCredentials[investorId] === password) {
+                console.log("✅ Login successful!");
+                
+                // Create session data
+                const sessionData = {
+                    id: investorId,
+                    name: investorNames[investorId],
+                    tier: investorId === 'OE-INV-1002' ? 'Premium' : 
+                          investorId === 'OE-INV-1003' ? 'Emerging' : 'Growth',
+                    portfolio: investorId === 'OE-INV-1001' ? 1000000 :
+                              investorId === 'OE-INV-1002' ? 5000000 : 250000,
+                    loginTime: new Date().toISOString()
+                };
+                
+                // Save to localStorage
+                localStorage.setItem('oe_investor_session', JSON.stringify(sessionData));
+                console.log("Session saved:", sessionData);
+                
+                // Show success message
+                const submitBtn = loginForm.querySelector('button[type="submit"]');
+                const originalHTML = submitBtn.innerHTML;
+                const originalBg = submitBtn.style.background;
+                
+                submitBtn.innerHTML = '<i class="fas fa-check"></i> Login Successful! Redirecting...';
+                submitBtn.style.background = '#28a745';
+                submitBtn.disabled = true;
+                
+                // Clear any error messages
+                const errorDiv = document.getElementById('loginError');
+                if (errorDiv) errorDiv.remove();
+                
+                // Redirect after 1 second
+                setTimeout(() => {
+                    window.location.href = 'investor-dashboard.html';
+                }, 1000);
+                
+            } else {
+                console.log("❌ Login failed");
+                showError(
+                    `Invalid Investor ID or password.<br><br>
+                    <strong>Demo Credentials:</strong><br>
+                    • OE-INV-1001 / demo123<br>
+                    • OE-INV-1002 / demo456<br>
+                    • OE-INV-1003 / demo789`,
+                    true
+                );
+            }
+        });
     }
-});
-</script>
+
+    function showError(message, isHTML = false) {
+        // Remove existing error
+        const existingError = document.getElementById('loginError');
+        if (existingError) existingError.remove();
+        
+        // Create error div
+        const errorDiv = document.createElement('div');
+        errorDiv.id = 'loginError';
+        errorDiv.style.cssText = `
+            background: #f8d7da;
+            color: #721c24;
+            padding: 15px;
+            margin: 15px 0;
+            border-radius: 8px;
+            border: 1px solid #f5c6cb;
+            text-align: center;
+            animation: fadeIn 0.3s ease;
+        `;
+        
+        if (isHTML) {
+            errorDiv.innerHTML = `<i class="fas fa-exclamation-triangle"></i> ${message}`;
+        } else {
+            errorDiv.innerHTML = `<i class="fas fa-exclamation-triangle"></i> ${message}`;
+        }
+        
+        // Add to form
+        const form = document.getElementById('loginForm');
+        if (form) {
+            form.insertBefore(errorDiv, form.firstChild);
+            
+            // Auto-remove after 10 seconds
+            setTimeout(() => {
+                if (errorDiv.parentNode) {
+                    errorDiv.style.opacity = '0';
+                    errorDiv.style.transition = 'opacity 0.5s ease';
+                    setTimeout(() => errorDiv.remove(), 500);
+                }
+            }, 10000);
+        }
+    }
+
+    // Add some CSS for animation
+    const style = document.createElement('style');
+    style.textContent = `
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(-10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        .btn-success {
+            background: #28a745 !important;
+        }
+        
+        #loginError {
+            font-size: 0.9rem;
+            line-height: 1.5;
+        }
+        
+        #loginError strong {
+            color: #721c24;
+        }
+        
+        #loginError i {
+            margin-right: 8px;
+            font-size: 1.2rem;
+        }
+    `;
+    document.head.appendChild(style);
+
+    console.log("✅ Login system ready. Use OE-INV-1001 / demo123");
+    </script>
 </body>
-
 </html>
-
-
-
-
