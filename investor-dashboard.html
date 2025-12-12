@@ -26,122 +26,51 @@
     <link rel="stylesheet" href="css/responsive.css">
     <link rel="stylesheet" href="css/dashboard.css">
 </head>
-<!-- Add this script to investor-dashboard.html -->
-<script>
-// Check authentication before showing dashboard
-document.addEventListener('DOMContentLoaded', function() {
-    const session = localStorage.getItem('oe_investor_session');
     
-    if (!session) {
-        // Not logged in, redirect to login
-        window.location.href = 'investor-login.html?redirect=' + encodeURIComponent(window.location.pathname);
-        return;
-    }
-    
-    try {
-        const userData = JSON.parse(session);
-        const loginTime = new Date(userData.loginTime);
-        const now = new Date();
+<body class="dashboard-page">
+    <!-- DASHBOARD SESSION CHECK -->
+    <script>
+    // Check authentication before showing dashboard
+    (function() {
+        console.log("Checking dashboard authentication...");
         
-        // Check if session expired (30 minutes)
-        if ((now - loginTime) > (30 * 60 * 1000)) {
-            localStorage.removeItem('oe_investor_session');
-            window.location.href = 'investor-login.html?session=expired';
+        const session = localStorage.getItem('oe_investor_session');
+        
+        if (!session) {
+            console.log("No session found, redirecting to login");
+            alert("⚠️ Please login first!");
+            window.location.href = 'investor-login.html';
             return;
         }
         
-        // Update user info in dashboard
-        updateUserInfo(userData);
-        
-        // Setup logout functionality
-        setupLogout();
-        
-    } catch (error) {
-        console.error('Session error:', error);
-        localStorage.removeItem('oe_investor_session');
-        window.location.href = 'investor-login.html';
-    }
-});
-
-function updateUserInfo(userData) {
-    // Update welcome message
-    const welcomeElements = document.querySelectorAll('.user-name, .welcome-user');
-    welcomeElements.forEach(el => {
-        if (el.classList.contains('user-name')) {
-            el.textContent = userData.name || 'Investor';
-        }
-        if (el.classList.contains('welcome-user')) {
-            el.textContent = `Welcome back, ${userData.name || 'Investor'}!`;
-        }
-    });
-    
-    // Update investor ID
-    const idElements = document.querySelectorAll('.investor-id');
-    idElements.forEach(el => {
-        if (el.querySelector('span')) {
-            el.querySelector('span').textContent = userData.id || 'OE-INV-XXXX';
-        }
-    });
-}
-
-function setupLogout() {
-    const logoutButtons = document.querySelectorAll('.logout-btn, .btn-logout');
-    
-    logoutButtons.forEach(btn => {
-        btn.addEventListener('click', function(e) {
-            e.preventDefault();
+        try {
+            const userData = JSON.parse(session);
+            console.log("✅ User authenticated:", userData);
             
-            if (confirm('Are you sure you want to log out?')) {
+            // Store user data for later use
+            window.currentUser = userData;
+            
+            // Check if session expired (30 minutes)
+            const loginTime = new Date(userData.loginTime);
+            const now = new Date();
+            const timeDiff = now - loginTime;
+            const minutesDiff = timeDiff / (1000 * 60);
+            
+            if (minutesDiff > 30) {
                 localStorage.removeItem('oe_investor_session');
-                window.location.href = 'investor-login.html?logout=success';
+                alert("Session expired. Please login again.");
+                window.location.href = 'investor-login.html';
+                return;
             }
-        });
-    });
+            
+        } catch (error) {
+            console.error("❌ Session error:", error);
+            localStorage.removeItem('oe_investor_session');
+            window.location.href = 'investor-login.html';
+        }
+    })();
+    </script>
     
-    // Auto-logout after 30 minutes of inactivity
-    let inactivityTimer;
-    
-    function resetTimer() {
-        clearTimeout(inactivityTimer);
-        inactivityTimer = setTimeout(() => {
-            if (confirm('Your session has expired due to inactivity. Log out?')) {
-                localStorage.removeItem('oe_investor_session');
-                window.location.href = 'investor-login.html?session=expired';
-            }
-        }, 30 * 60 * 1000); // 30 minutes
-    }
-    
-    // Reset on user activity
-    ['click', 'keypress', 'mousemove', 'scroll'].forEach(event => {
-        document.addEventListener(event, resetTimer);
-    });
-    
-    resetTimer(); // Start the timer
-}
-</script>
- <!-- Add this to your dashboard sidebar or navigation -->
-<div class="logout-section" style="margin-top: auto; padding: 20px; border-top: 1px solid #eee;">
-    <button class="logout-btn" style="
-        width: 100%;
-        padding: 12px;
-        background: #dc3545;
-        color: white;
-        border: none;
-        border-radius: 8px;
-        cursor: pointer;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        gap: 10px;
-    ">
-        <i class="fas fa-sign-out-alt"></i> Sign Out
-    </button>
-    <p style="font-size: 0.8rem; color: #666; margin-top: 10px; text-align: center;">
-        Session: <span id="sessionTimer">30:00</span>
-    </p>
-</div>
-    
-    <body class="dashboard-page">
     <!-- Top Navigation -->
     <nav class="dashboard-nav">
         <div class="container">
@@ -203,7 +132,7 @@ function setupLogout() {
                         <div class="avatar">
                             <i class="fas fa-user"></i>
                         </div>
-                        <span class="user-name">Rajesh Kumar</span>
+                        <span class="user-name">Loading...</span>
                         <i class="fas fa-chevron-down"></i>
                     </button>
                     <div class="profile-dropdown" id="profileDropdown">
@@ -212,9 +141,9 @@ function setupLogout() {
                                 <i class="fas fa-user"></i>
                             </div>
                             <div class="user-info">
-                                <h4>Rajesh Kumar</h4>
-                                <p>Investor ID: OE-INV-12345</p>
-                                <p class="user-email">rajesh.kumar@email.com</p>
+                                <h4 id="profileName">Loading...</h4>
+                                <p id="profileId">Investor ID: Loading...</p>
+                                <p class="user-email" id="profileEmail">email@example.com</p>
                             </div>
                         </div>
                         <div class="profile-links">
@@ -228,7 +157,7 @@ function setupLogout() {
                                 <i class="fas fa-shield-alt"></i> Security
                             </a>
                             <div class="dropdown-divider"></div>
-                            <button class="dropdown-link logout-btn">
+                            <button class="dropdown-link logout-btn" id="topLogoutBtn">
                                 <i class="fas fa-sign-out-alt"></i> Sign Out
                             </button>
                         </div>
@@ -246,11 +175,11 @@ function setupLogout() {
                 <div class="investor-info">
                     <div class="investor-id">
                         <i class="fas fa-id-card"></i>
-                        <span>OE-INV-12345</span>
+                        <span id="sidebarInvestorId">Loading...</span>
                     </div>
                     <div class="investor-tier">
                         <i class="fas fa-crown"></i>
-                        <span>Growth Tier</span>
+                        <span id="sidebarTier">Loading...</span>
                     </div>
                 </div>
             </div>
@@ -258,49 +187,49 @@ function setupLogout() {
             <nav class="sidebar-nav">
                 <ul>
                     <li>
-                        <a href="#overview" class="nav-link active">
+                        <a href="#overview" class="nav-link active" data-section="overview">
                             <i class="fas fa-tachometer-alt"></i>
                             <span>Dashboard Overview</span>
                         </a>
                     </li>
                     <li>
-                        <a href="#investment" class="nav-link">
+                        <a href="#investment" class="nav-link" data-section="investment">
                             <i class="fas fa-chart-line"></i>
                             <span>Investment Summary</span>
                         </a>
                     </li>
                     <li>
-                        <a href="#transactions" class="nav-link">
+                        <a href="#transactions" class="nav-link" data-section="transactions">
                             <i class="fas fa-exchange-alt"></i>
                             <span>Transaction History</span>
                         </a>
                     </li>
                     <li>
-                        <a href="#documents" class="nav-link">
+                        <a href="#documents" class="nav-link" data-section="documents">
                             <i class="fas fa-file-contract"></i>
                             <span>Documents & Agreements</span>
                         </a>
                     </li>
                     <li>
-                        <a href="#statements" class="nav-link">
+                        <a href="#statements" class="nav-link" data-section="statements">
                             <i class="fas fa-file-invoice-dollar"></i>
                             <span>Account Statements</span>
                         </a>
                     </li>
                     <li>
-                        <a href="#tax" class="nav-link">
+                        <a href="#tax" class="nav-link" data-section="tax">
                             <i class="fas fa-percentage"></i>
                             <span>Tax Information</span>
                         </a>
                     </li>
                     <li>
-                        <a href="#communication" class="nav-link">
+                        <a href="#communication" class="nav-link" data-section="communication">
                             <i class="fas fa-comments"></i>
                             <span>Communication Center</span>
                         </a>
                     </li>
                     <li>
-                        <a href="#support" class="nav-link">
+                        <a href="#support" class="nav-link" data-section="support">
                             <i class="fas fa-headset"></i>
                             <span>Support & Help</span>
                         </a>
@@ -313,10 +242,10 @@ function setupLogout() {
                     <i class="fas fa-shield-check"></i>
                     <div>
                         <p><strong>Session Secure</strong></p>
-                        <small>Logged in from Mumbai, IN</small>
+                        <small id="sessionTimer">Session active</small>
                     </div>
                 </div>
-                <button class="btn-logout">
+                <button class="btn-logout" id="sidebarLogoutBtn">
                     <i class="fas fa-sign-out-alt"></i> Sign Out
                 </button>
             </div>
@@ -341,8 +270,8 @@ function setupLogout() {
                 <!-- Welcome Banner -->
                 <div class="welcome-banner">
                     <div class="banner-content">
-                        <h2>Welcome back, Rajesh! 👋</h2>
-                        <p>Your investment journey at a glance. Last updated: April 15, 2025 14:30 IST</p>
+                        <h2 id="welcomeMessage">Welcome back, Investor! 👋</h2>
+                        <p>Your investment journey at a glance. Last updated: <span id="currentDateTime">Loading...</span></p>
                     </div>
                     <div class="banner-actions">
                         <button class="btn btn-light">
@@ -358,7 +287,7 @@ function setupLogout() {
                             <i class="fas fa-rupee-sign"></i>
                         </div>
                         <div class="stat-content">
-                            <h3>₹10,00,000</h3>
+                            <h3 id="totalInvestment">₹10,00,000</h3>
                             <p>Total Investment</p>
                             <div class="stat-trend positive">
                                 <i class="fas fa-arrow-up"></i>
@@ -372,7 +301,7 @@ function setupLogout() {
                             <i class="fas fa-money-bill-wave"></i>
                         </div>
                         <div class="stat-content">
-                            <h3>₹2,25,000</h3>
+                            <h3 id="interestEarned">₹2,25,000</h3>
                             <p>Interest Earned (YTD)</p>
                             <div class="stat-trend positive">
                                 <i class="fas fa-arrow-up"></i>
@@ -386,10 +315,10 @@ function setupLogout() {
                             <i class="fas fa-calendar-alt"></i>
                         </div>
                         <div class="stat-content">
-                            <h3>187 Days</h3>
+                            <h3 id="timeElapsed">187 Days</h3>
                             <p>Time Elapsed</p>
                             <div class="stat-trend">
-                                <span>Started: Oct 15, 2024</span>
+                                <span id="startDate">Started: Oct 15, 2024</span>
                             </div>
                         </div>
                     </div>
@@ -399,10 +328,10 @@ function setupLogout() {
                             <i class="fas fa-percentage"></i>
                         </div>
                         <div class="stat-content">
-                            <h3>2.7% Monthly</h3>
+                            <h3 id="interestRate">2.7% Monthly</h3>
                             <p>Current Rate</p>
                             <div class="stat-trend">
-                                <span>Growth Tier Rate</span>
+                                <span id="tierName">Growth Tier Rate</span>
                             </div>
                         </div>
                     </div>
@@ -586,7 +515,7 @@ function setupLogout() {
                         <div class="detail-grid">
                             <div class="detail-item">
                                 <span class="label">Investor ID</span>
-                                <span class="value">OE-INV-12345</span>
+                                <span class="value" id="detailInvestorId">OE-INV-1001</span>
                             </div>
                             <div class="detail-item">
                                 <span class="label">Agreement Date</span>
@@ -594,15 +523,15 @@ function setupLogout() {
                             </div>
                             <div class="detail-item">
                                 <span class="label">Investment Tier</span>
-                                <span class="value badge-tier">Growth Tier</span>
+                                <span class="value badge-tier" id="detailTier">Growth Tier</span>
                             </div>
                             <div class="detail-item">
                                 <span class="label">Principal Amount</span>
-                                <span class="value">₹10,00,000</span>
+                                <span class="value" id="detailPrincipal">₹10,00,000</span>
                             </div>
                             <div class="detail-item">
                                 <span class="label">Interest Rate</span>
-                                <span class="value">2.7% Monthly (32.4% Annual)</span>
+                                <span class="value" id="detailRate">2.7% Monthly (32.4% Annual)</span>
                             </div>
                             <div class="detail-item">
                                 <span class="label">Investment Term</span>
@@ -1384,11 +1313,115 @@ function setupLogout() {
     <script src="js/investor-portal.js"></script>
     <script src="js/dashboard.js"></script>
     
+    <!-- DASHBOARD FUNCTIONALITY SCRIPT -->
     <script>
+    // Dashboard functionality
+    document.addEventListener('DOMContentLoaded', function() {
+        console.log("Dashboard functionality loaded");
+        
+        // Load user data
+        loadUserData();
+        
+        // Initialize charts
+        initCharts();
+        
+        // Setup navigation
+        setupNavigation();
+        
+        // Setup logout functionality
+        setupLogout();
+        
+        // Setup sidebar toggle
+        setupSidebar();
+        
+        // Setup session timer
+        startSessionTimer();
+        
+        // Initialize calculators
+        initCalculators();
+        
+        // Update date/time
+        updateDateTime();
+    });
+    
+    function loadUserData() {
+        try {
+            const session = localStorage.getItem('oe_investor_session');
+            if (!session) {
+                console.error("No user session found");
+                return;
+            }
+            
+            const userData = JSON.parse(session);
+            console.log("Loading user data:", userData);
+            
+            // Update user info in navbar
+            const userNameElements = document.querySelectorAll('.user-name');
+            userNameElements.forEach(el => {
+                el.textContent = userData.name || 'Investor';
+            });
+            
+            // Update profile dropdown
+            document.getElementById('profileName').textContent = userData.name || 'Investor';
+            document.getElementById('profileId').textContent = `Investor ID: ${userData.id || 'OE-INV-XXXX'}`;
+            document.getElementById('profileEmail').textContent = userData.email || `${userData.id?.toLowerCase()}@omkarenterprises.in`;
+            
+            // Update sidebar
+            document.getElementById('sidebarInvestorId').textContent = userData.id || 'OE-INV-XXXX';
+            document.getElementById('sidebarTier').textContent = userData.tier || 'Growth Tier';
+            
+            // Update welcome message
+            document.getElementById('welcomeMessage').textContent = `Welcome back, ${userData.name || 'Investor'}! 👋`;
+            
+            // Update investment details based on user
+            updateInvestmentDetails(userData);
+            
+        } catch (error) {
+            console.error("Error loading user data:", error);
+        }
+    }
+    
+    function updateInvestmentDetails(userData) {
+        // Set portfolio amount based on user
+        let portfolioAmount = userData.portfolio || 1000000;
+        let tierName = userData.tier || 'Growth';
+        let interestRate = 2.7; // Default rate
+        
+        // Adjust based on tier
+        if (userData.id === 'OE-INV-1002') {
+            portfolioAmount = 5000000;
+            tierName = 'Premium';
+            interestRate = 2.8;
+        } else if (userData.id === 'OE-INV-1003') {
+            portfolioAmount = 250000;
+            tierName = 'Emerging';
+            interestRate = 2.5;
+        }
+        
+        // Update investment amounts
+        document.getElementById('totalInvestment').textContent = formatCurrency(portfolioAmount);
+        document.getElementById('detailPrincipal').textContent = formatCurrency(portfolioAmount);
+        document.getElementById('detailInvestorId').textContent = userData.id || 'OE-INV-XXXX';
+        document.getElementById('detailTier').textContent = tierName + ' Tier';
+        document.getElementById('detailRate').textContent = `${interestRate}% Monthly (${(interestRate * 12).toFixed(1)}% Annual)`;
+        document.getElementById('tierName').textContent = tierName + ' Tier Rate';
+        document.getElementById('interestRate').textContent = `${interestRate}% Monthly`;
+        
+        // Update calculator default values
+        document.getElementById('calcPrincipal').value = portfolioAmount;
+        document.getElementById('calcRate').value = interestRate;
+        updateCalculator();
+    }
+    
+    function formatCurrency(amount) {
+        return '₹' + amount.toLocaleString('en-IN');
+    }
+    
+    function initCharts() {
         // Initialize Performance Chart
-        document.addEventListener('DOMContentLoaded', function() {
-            const ctx = document.getElementById('performanceChart').getContext('2d');
-            const performanceChart = new Chart(ctx, {
+        const ctx = document.getElementById('performanceChart');
+        if (ctx) {
+            new Chart(ctx.getContext('2d'), {
                 type: 'line',
                 data: {
                     labels: ['Oct', 'Nov', 'Dec', 'Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov'],
@@ -1400,25 +1433,13 @@ function setupLogout() {
                         borderWidth: 3,
                         fill: true,
                         tension: 0.4
-                    }, {
-                        label: 'Monthly Interest',
-                        data: [0, 25000, 25000, 25000, 25000, 25000, 25000, 25000, 25000, 25000, 25000, 25000, 25000, 25000],
-                        borderColor: '#007bff',
-                        backgroundColor: 'rgba(0, 123, 255, 0.1)',
-                        borderWidth: 2,
-                        borderDash: [5, 5],
-                        fill: false
                     }]
                 },
                 options: {
                     responsive: true,
                     plugins: {
-                        legend: {
-                            position: 'top',
-                        },
+                        legend: { position: 'top' },
                         tooltip: {
-                            mode: 'index',
-                            intersect: false,
                             callbacks: {
                                 label: function(context) {
                                     return context.dataset.label + ': ₹' + context.parsed.y.toLocaleString('en-IN');
@@ -1438,47 +1459,215 @@ function setupLogout() {
                     }
                 }
             });
-            
-            // Update calculator on input change
-            function updateCalculator() {
-                const principal = parseFloat(document.getElementById('calcPrincipal').value);
-                const rate = parseFloat(document.getElementById('calcRate').value);
-                const period = parseInt(document.getElementById('calcPeriod').value);
+        }
+    }
+    
+    function setupNavigation() {
+        // Handle sidebar navigation
+        const navLinks = document.querySelectorAll('.nav-link');
+        const sections = document.querySelectorAll('.dashboard-section');
+        
+        navLinks.forEach(link => {
+            link.addEventListener('click', function(e) {
+                e.preventDefault();
                 
-                const monthlyInterest = (principal * rate / 100);
-                const totalInterest = monthlyInterest * period;
-                const maturityAmount = principal + totalInterest;
-                const annualReturn = (rate * 12);
+                // Get target section
+                const targetId = this.getAttribute('data-section') || this.getAttribute('href').substring(1);
+                const targetSection = document.getElementById(targetId);
                 
-                document.getElementById('monthlyInterest').textContent = '₹' + monthlyInterest.toLocaleString('en-IN', {maximumFractionDigits: 0});
-                document.getElementById('totalInterest').textContent = '₹' + totalInterest.toLocaleString('en-IN', {maximumFractionDigits: 0});
-                document.getElementById('maturityAmount').textContent = '₹' + maturityAmount.toLocaleString('en-IN', {maximumFractionDigits: 0});
-                document.getElementById('annualReturn').textContent = annualReturn.toFixed(1) + '%';
+                if (targetSection) {
+                    // Update active nav link
+                    navLinks.forEach(l => l.classList.remove('active'));
+                    this.classList.add('active');
+                    
+                    // Show target section
+                    sections.forEach(s => s.classList.remove('active'));
+                    targetSection.classList.add('active');
+                    
+                    // Close sidebar on mobile
+                    if (window.innerWidth <= 768) {
+                        document.getElementById('dashboardSidebar').classList.remove('open');
+                        document.getElementById('sidebarOverlay')?.classList.remove('open');
+                    }
+                }
+            });
+        });
+        
+        // Handle document category tabs
+        const catButtons = document.querySelectorAll('.cat-btn');
+        const docCategories = document.querySelectorAll('.document-category');
+        
+        catButtons.forEach(btn => {
+            btn.addEventListener('click', function() {
+                const category = this.getAttribute('data-category');
+                
+                // Update active button
+                catButtons.forEach(b => b.classList.remove('active'));
+                this.classList.add('active');
+                
+                // Show target category
+                docCategories.forEach(cat => cat.classList.remove('active'));
+                document.getElementById(category)?.classList.add('active');
+            });
+        });
+    }
+    
+    function setupLogout() {
+        const logoutButtons = document.querySelectorAll('#topLogoutBtn, #sidebarLogoutBtn, .logout-btn');
+        
+        logoutButtons.forEach(btn => {
+            btn.addEventListener('click', function(e) {
+                e.preventDefault();
+                
+                if (confirm('Are you sure you want to log out?')) {
+                    // Clear session
+                    localStorage.removeItem('oe_investor_session');
+                    
+                    // Show logout message
+                    alert('You have been logged out successfully.');
+                    
+                    // Redirect to login page
+                    window.location.href = 'investor-login.html?logout=success';
+                }
+            });
+        });
+    }
+    
+    function setupSidebar() {
+        const sidebarToggle = document.getElementById('sidebarToggle');
+        const sidebar = document.getElementById('dashboardSidebar');
+        
+        if (sidebarToggle && sidebar) {
+            sidebarToggle.addEventListener('click', function() {
+                sidebar.classList.toggle('open');
+                
+                // Create overlay if it doesn't exist
+                let overlay = document.getElementById('sidebarOverlay');
+                if (!overlay) {
+                    overlay = document.createElement('div');
+                    overlay.id = 'sidebarOverlay';
+                    overlay.className = 'sidebar-overlay';
+                    overlay.addEventListener('click', function() {
+                        sidebar.classList.remove('open');
+                        overlay.classList.remove('open');
+                    });
+                    document.body.appendChild(overlay);
+                }
+                
+                overlay.classList.toggle('open');
+            });
+        }
+        
+        // Handle window resize
+        window.addEventListener('resize', function() {
+            if (window.innerWidth > 768) {
+                sidebar?.classList.remove('open');
+                document.getElementById('sidebarOverlay')?.classList.remove('open');
             }
+        });
+    }
+    
+    function startSessionTimer() {
+        let minutesLeft = 30;
+        const timerElement = document.getElementById('sessionTimer');
+        
+        if (!timerElement) return;
+        
+        const timer = setInterval(() => {
+            minutesLeft--;
             
-            document.getElementById('updateCalc').addEventListener('click', updateCalculator);
-            
-            // Initialize calculator
-            updateCalculator();
-            
-            // Update withdrawal simulation
-            const withdrawalSlider = document.getElementById('withdrawalMonths');
-            const monthsValue = document.getElementById('monthsValue');
-            
+            if (minutesLeft <= 0) {
+                clearInterval(timer);
+                timerElement.textContent = 'Session expired';
+                
+                // Auto logout after 30 minutes
+                setTimeout(() => {
+                    if (confirm('Your session has expired. Log out?')) {
+                        localStorage.removeItem('oe_investor_session');
+                        window.location.href = 'investor-login.html?session=expired';
+                    }
+                }, 1000);
+            } else {
+                timerElement.textContent = `${minutesLeft}:00 remaining`;
+            }
+        }, 60000); // Update every minute
+    }
+    
+    function initCalculators() {
+        // Returns Calculator
+        document.getElementById('updateCalc')?.addEventListener('click', updateCalculator);
+        
+        // Withdrawal Calculator
+        const withdrawalSlider = document.getElementById('withdrawalMonths');
+        const monthsValue = document.getElementById('monthsValue');
+        
+        if (withdrawalSlider && monthsValue) {
             withdrawalSlider.addEventListener('input', function() {
                 const months = parseInt(this.value);
                 monthsValue.textContent = months + ' Months';
-                
-                // Update simulation values (simplified)
-                const principal = 1000000;
-                const remainingMonths = 13 - months;
-                const normalInterest = 27000 * remainingMonths;
-                const penaltyInterest = 15000 * remainingMonths;
-                const penaltyAmount = normalInterest - penaltyInterest;
-                
-                // Update UI elements would go here
             });
-        });
+        }
+        
+        // Initialize calculator
+        updateCalculator();
+    }
+    
+    function updateCalculator() {
+        const principal = parseFloat(document.getElementById('calcPrincipal').value) || 1000000;
+        const rate = parseFloat(document.getElementById('calcRate').value) || 2.7;
+        const period = parseInt(document.getElementById('calcPeriod').value) || 13;
+        
+        const monthlyInterest = (principal * rate / 100);
+        const totalInterest = monthlyInterest * period;
+        const maturityAmount = principal + totalInterest;
+        const annualReturn = (rate * 12);
+        
+        document.getElementById('monthlyInterest').textContent = formatCurrency(monthlyInterest);
+        document.getElementById('totalInterest').textContent = formatCurrency(totalInterest);
+        document.getElementById('maturityAmount').textContent = formatCurrency(maturityAmount);
+        document.getElementById('annualReturn').textContent = annualReturn.toFixed(1) + '%';
+    }
+    
+    function updateDateTime() {
+        const now = new Date();
+        const options = { 
+            year: 'numeric', 
+            month: 'long', 
+            day: 'numeric',
+            hour: '2-digit',
+            minute: '2-digit',
+            hour12: false
+        };
+        
+        const dateTimeStr = now.toLocaleDateString('en-IN', options) + ' IST';
+        document.getElementById('currentDateTime').textContent = dateTimeStr;
+    }
+    
+    // Auto logout on inactivity
+    let inactivityTimer;
+    function resetInactivityTimer() {
+        clearTimeout(inactivityTimer);
+        inactivityTimer = setTimeout(() => {
+            if (confirm('You have been inactive for 30 minutes. Do you want to stay logged in?')) {
+                resetInactivityTimer();
+            } else {
+                localStorage.removeItem('oe_investor_session');
+                window.location.href = 'investor-login.html?session=inactive';
+            }
+        }, 30 * 60 * 1000); // 30 minutes
+    }
+    
+    // Reset on user activity
+    ['click', 'keypress', 'mousemove', 'scroll'].forEach(event => {
+        document.addEventListener(event, resetInactivityTimer);
+    });
+    
+    // Start inactivity timer
+    resetInactivityTimer();
+    
+    // Demo credentials reminder
+    console.log("Dashboard ready. Current user:", window.currentUser);
+    console.log("Demo users available: OE-INV-1001, OE-INV-1002, OE-INV-1003");
     </script>
     
     <!-- Dashboard Styles -->
@@ -3139,46 +3328,23 @@ function setupLogout() {
             margin-bottom: 5px;
         }
         
-        .dashboard-footer {
-            background: white;
-            padding: 20px 0;
-            border-top: 1px solid #e9ecef;
+        /* Mobile sidebar overlay */
+        .sidebar-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0,0,0,0.5);
+            z-index: 1001;
+            display: none;
         }
         
-        .footer-content {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
+        .sidebar-overlay.open {
+            display: block;
         }
         
-        .footer-info {
-            font-size: 0.85rem;
-            color: #666;
-        }
-        
-        .footer-info p {
-            margin: 5px 0;
-        }
-        
-        .footer-info i {
-            margin-right: 8px;
-            color: var(--gold);
-        }
-        
-        .footer-links {
-            display: flex;
-            gap: 20px;
-        }
-        
-        .footer-links a {
-            color: #666;
-            text-decoration: none;
-            font-size: 0.85rem;
-            display: flex;
-            align-items: center;
-            gap: 5px;
-        }
-        
+        /* Mobile responsiveness */
         @media (max-width: 1024px) {
             .quick-stats,
             .metrics-grid,
@@ -3207,21 +3373,6 @@ function setupLogout() {
                 transform: translateX(0);
             }
             
-            .sidebar-overlay {
-                position: fixed;
-                top: 0;
-                left: 0;
-                right: 0;
-                bottom: 0;
-                background: rgba(0,0,0,0.5);
-                z-index: 1001;
-                display: none;
-            }
-            
-            .sidebar-overlay.open {
-                display: block;
-            }
-            
             .quick-stats,
             .metrics-grid,
             .transaction-summary,
@@ -3248,20 +3399,14 @@ function setupLogout() {
                 gap: 20px;
             }
             
-            .features-grid {
-                grid-template-columns: repeat(2, 1fr);
-            }
-            
             .dashboard-messages {
                 width: calc(100% - 40px);
+                right: 20px;
+                left: 20px;
             }
         }
         
         @media (max-width: 480px) {
-            .features-grid {
-                grid-template-columns: 1fr;
-            }
-            
             .nav-right {
                 gap: 10px;
             }
@@ -3281,34 +3426,5 @@ function setupLogout() {
             }
         }
     </style>
-<script>
-// Sample data for demo
-const sampleData = {
-    investor: {
-        name: "Rajesh Kumar",
-        id: "OE-INV-12345",
-        tier: "Growth",
-        email: "rajesh.kumar@example.com",
-        phone: "+91 9876543210",
-        address: "Mumbai, Maharashtra"
-    },
-    investment: {
-        principal: 1000000,
-        rate: 2.7,
-        startDate: "2024-10-15",
-        endDate: "2025-11-15",
-        status: "active"
-    },
-    transactions: [
-        { date: "2025-04-01", type: "interest", amount: 25000 },
-        { date: "2025-03-01", type: "interest", amount: 25000 },
-        // ... more transactions
-    ]
-};
-</script>
 </body>
-
 </html>
-
-
-
