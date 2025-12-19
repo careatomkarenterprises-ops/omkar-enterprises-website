@@ -1,66 +1,65 @@
-/* Change opacity from 0 to 1 so they are visible by default */
-.step-card,
-.tier-card,
-.legal-card {
-    opacity: 1; /* Was 0 */
-    transform: translateY(0); /* Was 30px */
-    transition: opacity 0.6s ease, transform 0.6s ease;
-}}
+/* Omkar Enterprises - Global Animations 
+   SEO Optimized: High Performance, No Layout Shift
+*/
+
+/* 1. Basic Keyframes */
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(15px); }
+    to { opacity: 1; transform: translateY(0); }
+}
 
 @keyframes slideInLeft {
-    from {
-        opacity: 0;
-        transform: translateX(-50px);
-    }
-    to {
-        opacity: 1;
-        transform: translateX(0);
-    }
+    from { opacity: 0; transform: translateX(-30px); }
+    to { opacity: 1; transform: translateX(0); }
 }
 
 @keyframes slideInRight {
-    from {
-        opacity: 0;
-        transform: translateX(50px);
-    }
-    to {
-        opacity: 1;
-        transform: translateX(0);
-    }
+    from { opacity: 0; transform: translateX(30px); }
+    to { opacity: 1; transform: translateX(0); }
 }
 
 @keyframes pulse {
-    0% {
-        box-shadow: 0 0 0 0 rgba(212, 175, 55, 0.4);
-    }
-    70% {
-        box-shadow: 0 0 0 10px rgba(212, 175, 55, 0);
-    }
-    100% {
-        box-shadow: 0 0 0 0 rgba(212, 175, 55, 0);
-    }
+    0% { box-shadow: 0 0 0 0 rgba(212, 175, 55, 0.4); }
+    70% { box-shadow: 0 0 0 10px rgba(212, 175, 55, 0); }
+    100% { box-shadow: 0 0 0 0 rgba(212, 175, 55, 0); }
 }
 
 @keyframes float {
-    0%, 100% {
-        transform: translateY(0);
-    }
-    50% {
-        transform: translateY(-10px);
-    }
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-8px); }
 }
 
-/* Animation Classes */
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+/* 2. Global Section Visibility Fix 
+   These rules ensure your content is visible immediately on the home page
+*/
+.step-card,
+.tier-card,
+.legal-card,
+.process-steps,
+.tiers-grid,
+.legal-grid {
+    opacity: 1 !important;            /* Forced visible for SEO */
+    visibility: visible !important;
+    transform: none !important;        /* No longer starting 'pushed down' */
+    display: flex;                     /* Re-enables layout */
+}
+
+/* 3. Animation Classes (Applied via HTML) */
 .fade-in {
-    animation: fadeIn 1s ease-out;
+    animation: fadeIn 0.8s ease-out forwards;
 }
 
 .slide-in-left {
-    animation: slideInLeft 1s ease-out;
+    animation: slideInLeft 0.8s ease-out forwards;
 }
 
 .slide-in-right {
-    animation: slideInRight 1s ease-out;
+    animation: slideInRight 0.8s ease-out forwards;
 }
 
 .pulse {
@@ -68,35 +67,25 @@
 }
 
 .float {
-    animation: float 3s ease-in-out infinite;
-}
-
-/* Scroll Animations */
-.step-card,
-.tier-card,
-.legal-card {
-    opacity: 0;
-    transform: translateY(30px);
-    transition: opacity 0.6s ease, transform 0.6s ease;
-}
-
-.step-card.visible,
-.tier-card.visible,
-.legal-card.visible {
-    opacity: 1;
-    transform: translateY(0);
-}
-
-/* Hover Effects */
-.btn-primary:hover {
-    animation: pulse 1.5s infinite;
-}
-
-.tier-card.featured {
     animation: float 4s ease-in-out infinite;
 }
 
-/* Loading Animation */
+/* 4. Hover Effects (Professional Feedback) */
+.tier-card, .step-card, .legal-card {
+    transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+}
+
+.tier-card:hover, .step-card:hover, .legal-card:hover {
+    transform: translateY(-5px) !important;
+    box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+}
+
+.btn-primary:hover {
+    transform: scale(1.02);
+    transition: transform 0.2s ease;
+}
+
+/* 5. Functional UI Animations */
 .loading-spinner {
     width: 40px;
     height: 40px;
@@ -107,15 +96,9 @@
     margin: 20px auto;
 }
 
-@keyframes spin {
-    0% { transform: rotate(0deg); }
-    100% { transform: rotate(360deg); }
-}
-
-/* Progress Bar Animation */
 .progress-bar {
-    height: 6px;
-    background: linear-gradient(90deg, var(--gold), var(--primary-blue));
+    height: 4px;
+    background: linear-gradient(90deg, var(--gold), #bd9300);
     background-size: 200% 100%;
     animation: progress 2s ease-in-out infinite;
 }
@@ -124,5 +107,11 @@
     0% { background-position: 0% 50%; }
     50% { background-position: 100% 50%; }
     100% { background-position: 0% 50%; }
+}
 
+/* Mobile Tweak: Reduce movement on small screens to prevent jumping */
+@media (max-width: 768px) {
+    .fade-in, .slide-in-left, .slide-in-right {
+        animation-duration: 0.5s;
+    }
 }
