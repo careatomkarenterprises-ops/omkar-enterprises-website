@@ -446,11 +446,11 @@ input[type="range"]::-webkit-slider-thumb {
 }
 
 .section-light {
-    background: var(--light-gray);
+    background-color: #F8F9FA;
 }
 
 .section-dark {
-    background: var(--primary-blue);
+    background-color: #001F3F; color: white;(--primary-blue);
     color: var(--white);
 }
 
