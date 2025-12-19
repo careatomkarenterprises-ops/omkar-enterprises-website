@@ -1,4 +1,4 @@
-/* Responsive Design */
+/* responsive.css - FIXED VERSION */
 @media (max-width: 1200px) {
     .hero-title {
         font-size: 3rem;
@@ -31,7 +31,7 @@
         grid-template-columns: repeat(2, 1fr);
     }
     
-    .footer-grid {
+    .footer-container {
         grid-template-columns: repeat(2, 1fr);
     }
     
@@ -41,10 +41,10 @@
 }
 
 @media (max-width: 768px) {
-    .menu-toggle {
-        display: block;
-    }
+    /* REMOVE or COMMENT OUT the mobile menu styles here */
+    /* They're already in style.css and conflicting */
     
+    /*
     .nav-menu {
         position: fixed;
         top: 70px;
@@ -73,6 +73,7 @@
         padding: 15px 0;
         width: 100%;
     }
+    */
     
     .hero {
         padding: 120px 0 60px;
@@ -151,7 +152,59 @@
         padding: 20px;
     }
     
-    .footer-grid {
+    .footer-container {
         grid-template-columns: 1fr;
+    }
+}
+
+/* Print Styles */
+@media print {
+    .navbar,
+    .hero-cta,
+    .cta-section,
+    .footer,
+    .calculator-link {
+        display: none !important;
+    }
+    
+    body {
+        color: #000 !important;
+        background: #fff !important;
+        font-size: 12pt !important;
+    }
+    
+    .container {
+        max-width: 100% !important;
+        padding: 0 !important;
+        margin: 0 !important;
+    }
+    
+    .section {
+        padding: 10px 0 !important;
+        page-break-inside: avoid;
+    }
+    
+    a[href]:after {
+        content: " (" attr(href) ")";
+        font-size: 0.9em;
+        font-weight: normal;
+    }
+    
+    .btn {
+        border: 1px solid #000 !important;
+        background: none !important;
+        color: #000 !important;
+    }
+    
+    /* Ensure calculator and other important content prints */
+    .calculator-card {
+        box-shadow: none !important;
+        border: 1px solid #000 !important;
+    }
+    
+    /* Fix for "see details amortization schedule" */
+    .calculator-link {
+        color: #000 !important;
+        text-decoration: underline !important;
     }
 }
