@@ -1,0 +1,375 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Omkar Enterprises | Structured Private Lending</title>
+    <style>
+        /* ========== RESET & BASE ========== */
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        :root {
+            --primary-blue: #001F3F;
+            --gold: #D4AF37;
+            --charcoal: #333;
+            --light-gray: #F8F9FA;
+            --white: #FFFFFF;
+        }
+        body {
+            font-family: 'Inter', sans-serif;
+            line-height: 1.6;
+            color: var(--charcoal);
+        }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        
+        /* ========== FIXED NAVBAR ========== */
+        .navbar {
+            background: var(--primary-blue);
+            padding: 1rem 0;
+            position: fixed;
+            top: 0;
+            width: 100%;
+            z-index: 1000;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        .nav-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .logo a {
+            color: white;
+            text-decoration: none;
+            font-size: 1.5rem;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .nav-menu {
+            display: flex;
+            list-style: none;
+            gap: 1.5rem;
+            align-items: center;
+        }
+        .nav-menu li a {
+            color: white;
+            text-decoration: none;
+            padding: 0.5rem 1rem;
+            border-radius: 4px;
+            transition: background 0.3s;
+        }
+        .nav-menu li a:hover {
+            background: rgba(255,255,255,0.1);
+        }
+        .nav-cta {
+            background: var(--gold);
+            color: var(--primary-blue) !important;
+            padding: 0.75rem 1.5rem !important;
+            border-radius: 5px;
+            font-weight: bold;
+        }
+        
+        /* ========== HAMBURGER MENU ========== */
+        .hamburger {
+            display: none;
+            flex-direction: column;
+            cursor: pointer;
+            background: none;
+            border: none;
+            padding: 10px;
+        }
+        .hamburger span {
+            width: 25px;
+            height: 3px;
+            background: white;
+            margin: 3px 0;
+            transition: 0.3s;
+        }
+        
+        /* ========== HERO SECTION ========== */
+        .hero {
+            background: linear-gradient(135deg, var(--primary-blue), #003366);
+            color: var(--white);
+            padding: 150px 0 100px;
+            margin-top: 70px;
+        }
+        .hero-content {
+            text-align: center;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        .hero-title {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+        }
+        .hero-subtitle {
+            font-size: 1.2rem;
+            margin-bottom: 2rem;
+            opacity: 0.9;
+        }
+        .btn {
+            display: inline-block;
+            padding: 12px 30px;
+            background: var(--gold);
+            color: var(--primary-blue);
+            text-decoration: none;
+            border-radius: 5px;
+            font-weight: 600;
+            margin: 10px;
+            border: none;
+            cursor: pointer;
+        }
+        .btn-secondary {
+            background: transparent;
+            border: 2px solid var(--white);
+            color: var(--white);
+        }
+        
+        /* ========== MOBILE STYLES ========== */
+        @media (max-width: 768px) {
+            .hamburger {
+                display: flex;
+            }
+            .nav-menu {
+                position: fixed;
+                left: -100%;
+                top: 70px;
+                flex-direction: column;
+                background: var(--primary-blue);
+                width: 100%;
+                height: calc(100vh - 70px);
+                padding: 20px;
+                transition: 0.3s;
+                gap: 0;
+                overflow-y: auto;
+            }
+            .nav-menu.active {
+                left: 0;
+            }
+            .nav-menu li {
+                width: 100%;
+                margin: 5px 0;
+            }
+            .nav-menu li a {
+                display: block;
+                padding: 15px;
+                border-bottom: 1px solid rgba(255,255,255,0.1);
+            }
+            .hamburger.active span:nth-child(1) {
+                transform: rotate(45deg) translate(5px, 5px);
+            }
+            .hamburger.active span:nth-child(2) {
+                opacity: 0;
+            }
+            .hamburger.active span:nth-child(3) {
+                transform: rotate(-45deg) translate(7px, -6px);
+            }
+            .hero-title {
+                font-size: 2rem;
+            }
+        }
+        
+        /* ========== CALCULATOR ========== */
+        .calculator {
+            background: white;
+            border-radius: 15px;
+            padding: 30px;
+            margin: 40px auto;
+            max-width: 500px;
+            color: var(--charcoal);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+        }
+        .calculator h3 {
+            color: var(--primary-blue);
+            margin-bottom: 20px;
+        }
+        input[type="range"] {
+            width: 100%;
+            margin: 20px 0;
+        }
+        .calculator-results {
+            margin-top: 20px;
+            padding-top: 20px;
+            border-top: 1px solid #eee;
+        }
+        .result-item {
+            display: flex;
+            justify-content: space-between;
+            margin: 10px 0;
+        }
+        .calculator-link {
+            display: block;
+            text-align: center;
+            color: var(--primary-blue);
+            text-decoration: none;
+            margin-top: 20px;
+            padding: 10px;
+            background: #f8f9fa;
+            border-radius: 5px;
+        }
+        
+        /* ========== FOOTER ========== */
+        .footer {
+            background: var(--primary-blue);
+            color: white;
+            padding: 3rem 0 1rem;
+            margin-top: 4rem;
+        }
+        .footer-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+        }
+        
+        /* ========== PRINT FIX ========== */
+        @media print {
+            .navbar, .footer, .calculator-link {
+                display: none !important;
+            }
+        }
+    </style>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="container nav-container">
+            <div class="logo">
+                <a href="#">
+                    <i class="fas fa-chart-line" style="font-size: 1.5rem;"></i>
+                    <span>Omkar Enterprises</span>
+                </a>
+            </div>
+            
+            <button class="hamburger" id="hamburger">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+            
+            <ul class="nav-menu" id="navMenu">
+                <li><a href="#home">Home</a></li>
+                <li><a href="#how">How It Works</a></li>
+                <li><a href="#tiers">Investment Tiers</a></li>
+                <li><a href="#legal">Legal</a></li>
+                <li><a href="#faq">FAQ</a></li>
+                <li><a href="#contact" class="nav-cta">Contact</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero" id="home">
+        <div class="container">
+            <div class="hero-content">
+                <h1 class="hero-title">Structured Private Lending with 2.5% Monthly Returns</h1>
+                <p class="hero-subtitle">
+                    Partner with Omkar Enterprises. Fixed monthly returns, contractual security, and principal protection.
+                </p>
+                <div class="hero-cta">
+                    <a href="#contact" class="btn">Book Consultation</a>
+                    <a href="#calculator" class="btn btn-secondary">Calculate Returns</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Calculator -->
+    <section class="container" id="calculator">
+        <div class="calculator">
+            <h3>Calculate Your Returns</h3>
+            <input type="range" id="investmentAmount" min="25000" max="2500000" value="100000" step="25000">
+            <div style="text-align: center; margin: 10px 0;">
+                <span id="currentAmount">₹1,00,000</span>
+            </div>
+            
+            <div class="calculator-results">
+                <div class="result-item">
+                    <span>Monthly Return (2.5%)</span>
+                    <span id="monthlyReturn">₹2,500</span>
+                </div>
+                <div class="result-item">
+                    <span>Annual Return</span>
+                    <span id="annualReturn">₹30,000</span>
+                </div>
+                <a href="#" class="calculator-link" onclick="window.print()">
+                    <i class="fas fa-print"></i> Print Amortization Schedule
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container footer-container">
+            <div>
+                <h3>Omkar Enterprises</h3>
+                <p>Structured Private Lending Partnerships</p>
+            </div>
+            <div>
+                <h3>Contact</h3>
+                <p>Email: info@omkarenterprises.in</p>
+            </div>
+        </div>
+        <div class="container" style="text-align: center; margin-top: 2rem; padding-top: 1rem; border-top: 1px solid rgba(255,255,255,0.1);">
+            <p>&copy; 2024 Omkar Enterprises. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <!-- ALL JAVASCRIPT IN ONE PLACE -->
+    <script>
+        // Mobile Menu - SIMPLE AND GUARANTEED TO WORK
+        document.addEventListener('DOMContentLoaded', function() {
+            const hamburger = document.getElementById('hamburger');
+            const navMenu = document.getElementById('navMenu');
+            
+            // Menu Toggle
+            if (hamburger) {
+                hamburger.addEventListener('click', function() {
+                    hamburger.classList.toggle('active');
+                    navMenu.classList.toggle('active');
+                });
+            }
+            
+            // Close menu when clicking links
+            document.querySelectorAll('.nav-menu a').forEach(link => {
+                link.addEventListener('click', function() {
+                    hamburger.classList.remove('active');
+                    navMenu.classList.remove('active');
+                });
+            });
+            
+            // Calculator
+            const amountInput = document.getElementById('investmentAmount');
+            const currentAmount = document.getElementById('currentAmount');
+            const monthlyReturn = document.getElementById('monthlyReturn');
+            const annualReturn = document.getElementById('annualReturn');
+            
+            if (amountInput) {
+                function updateCalculator() {
+                    const amount = parseInt(amountInput.value);
+                    const monthly = amount * 0.025;
+                    const annual = monthly * 12;
+                    
+                    currentAmount.textContent = '₹' + amount.toLocaleString('en-IN');
+                    monthlyReturn.textContent = '₹' + monthly.toLocaleString('en-IN');
+                    annualReturn.textContent = '₹' + annual.toLocaleString('en-IN');
+                }
+                
+                amountInput.addEventListener('input', updateCalculator);
+                updateCalculator();
+            }
+            
+            // Fix for print link
+            document.querySelector('.calculator-link').addEventListener('click', function(e) {
+                e.preventDefault();
+                window.print();
+            });
+        });
+    </script>
+</body>
+</html>
