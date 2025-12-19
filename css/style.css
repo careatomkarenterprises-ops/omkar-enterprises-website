@@ -923,3 +923,26 @@ input[type="range"]::-webkit-slider-thumb {
         break-inside: avoid;
     }
 }
+
+/* Ensure the sections are visible and structured */
+.process-steps, .tiers-grid, .legal-grid {
+    display: grid;
+    gap: 30px;
+    margin-top: 40px;
+}
+
+/* 3 columns for desktop */
+.process-steps, .tiers-grid {
+    grid-template-columns: repeat(3, 1fr);
+}
+
+/* 4 columns for legal */
+.legal-grid {
+    grid-template-columns: repeat(2, 1fr);
+}
+
+@media (max-width: 768px) {
+    .process-steps, .tiers-grid, .legal-grid {
+        grid-template-columns: 1fr; /* 1 column for mobile */
+    }
+}
