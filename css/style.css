@@ -946,3 +946,45 @@ input[type="range"]::-webkit-slider-thumb {
         grid-template-columns: 1fr; /* 1 column for mobile */
     }
 }
+/* Sync Navbar Styles Across All Pages */
+.nav-content {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+}
+
+.nav-menu {
+    display: flex;
+    align-items: center;
+    list-style: none;
+    gap: 25px;
+}
+
+/* Style for the Investor Portal Button in the Menu */
+.nav-cta .btn-sm {
+    padding: 8px 15px;
+    font-size: 0.9rem;
+    border: 1px solid var(--gold);
+    color: var(--gold);
+    border-radius: 4px;
+    transition: all 0.3s ease;
+}
+
+.nav-cta .btn-sm:hover {
+    background: var(--gold);
+    color: var(--primary-blue);
+}
+
+/* Mobile Menu Fix */
+@media (max-width: 768px) {
+    .nav-menu {
+        flex-direction: column;
+        padding: 80px 20px;
+    }
+    .nav-cta {
+        margin-top: 20px;
+        width: 100%;
+        text-align: center;
+    }
+}
