@@ -1,3 +1,47 @@
+// Investor Portal Authentication Logic
+const VALID_CREDENTIALS = [
+    { id: "OE-INV-12345", password: "investor123", name: "Rajesh Kumar", tier: "Growth" },
+    { id: "OE-INV-67890", password: "demo2025", name: "Priya Sharma", tier: "Foundation" }
+];
+
+function handleLogin(investorId, password) {
+    const investor = VALID_CREDENTIALS.find(
+        cred => cred.id === investorId && cred.password === password
+    );
+    
+    if (investor) {
+        // IMPORTANT: Using 'oe_investor_session' to match what your dashboard expects
+        localStorage.setItem('oe_investor_session', JSON.stringify({
+            id: investor.id,
+            name: investor.name,
+            tier: investor.tier,
+            loggedIn: true,
+            loginTime: new Date().toISOString()
+        }));
+        return { success: true };
+    }
+    return { success: false, error: "Invalid credentials" };
+}
+
+// Add this at the bottom to handle the Login Button on the login page
+document.addEventListener('DOMContentLoaded', function() {
+    const loginForm = document.getElementById('loginForm');
+    if (loginForm) {
+        loginForm.addEventListener('submit', function(e) {
+            e.preventDefault();
+            const id = document.getElementById('investorId').value;
+            const pass = document.getElementById('password').value;
+            const result = handleLogin(id, pass);
+            
+            if (result.success) {
+                window.location.href = 'investor-dashboard.html';
+            } else {
+                alert("Invalid Login ID or Password");
+            }
+        });
+    }
+});
+
 // Simple static credentials for testing
 const VALID_CREDENTIALS = [
     { id: "OE-INV-12345", password: "investor123", name: "Rajesh Kumar", tier: "Growth" },
@@ -539,4 +583,5 @@ if (window.location.search.includes('demo=true')) {
             demoBanner.remove();
         });
     });
+
 }
