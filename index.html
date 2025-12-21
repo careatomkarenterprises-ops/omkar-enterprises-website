@@ -37,49 +37,30 @@
     <link rel="stylesheet" href="css/responsive.css">
     <link rel="stylesheet" href="css/animations.css">
 </head>
-
-    <body>
-       <nav class="navbar">
-    <div class="container">
-        <div class="nav-content">
-            <a href="index.html" class="logo">
-                <span class="logo-text">Omkar <span class="gold-text">Enterprises</span></span>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="container">
+            <a href="/" class="logo">
+                <span class="logo-icon">OE</span>
+                <span class="logo-text">Omkar Enterprises</span>
             </a>
-            <div class="hamburger" id="hamburger">
-                <span></span>
-                <span></span>
-                <span></span>
-            </div>
-            <ul class="nav-menu" id="navMenu">
-                <li><a href="index.html" class="active">Home</a></li>
-                <li><a href="how-it-works.html">How It Works</a></li>
-                <li><a href="investment-tiers.html">Tiers</a></li>
-                <li><a href="legal-framework.html">Legal</a></li>
-                <li><a href="about.html">About</a></li>
-                <li><a href="contact.html">Contact</a></li>
-                <li class="nav-cta"><a href="investor-login.html" class="btn btn-outline btn-sm"><i class="fas fa-user-lock"></i> Investor Portal</a></li>
-            </ul>
-        </div>
-    </div>
-</nav>     
-            <ul class="nav-menu" id="navMenu">
-                <li><a href="index.html">Home</a></li>
-                <li><a href="how-it-works.html">How It Works</a></li>
-                <li><a href="investment-tiers.html">Investment Tiers</a></li>
-                <li><a href="legal-framework.html">Legal Framework</a></li>
-                <li><a href="about.html">About</a></li>
-                <li><a href="faq.html">FAQ</a></li>
-                <li class="nav-cta"><a href="investor-login.html" class="nav-login">
-                    <i class="fas fa-lock"></i> Investor Login
-                </a></li>
-            </ul>
-            
-            <!-- CHANGE 1: Fixed Mobile Menu Button -->
-            <button class="hamburger" id="hamburger" aria-label="Menu">
-                <span></span>
-                <span></span>
-                <span></span>
+            <button class="menu-toggle" id="menuToggle">
+                <i class="fas fa-bars"></i>
             </button>
+          <!-- In your existing nav-menu in ALL .html files -->
+<ul class="nav-menu" id="navMenu">
+    <li><a href="index.html">Home</a></li>
+    <li><a href="how-it-works.html">How It Works</a></li>
+    <li><a href="investment-tiers.html">Investment Tiers</a></li>
+    <li><a href="legal-framework.html">Legal Framework</a></li>
+    <li><a href="about.html">About</a></li>
+    <li><a href="faq.html">FAQ</a></li>
+    <li><a href="investor-login.html" class="nav-cta nav-login">
+        <i class="fas fa-lock"></i> Investor Login
+    </a></li>
+    <!-- Book Consultation might need to be moved/redesigned -->
+</ul>
         </div>
     </nav>
 
@@ -150,10 +131,9 @@
                             <span class="result-value">Variable</span>
                         </div>
                     </div>
-                    <!-- CHANGE 2: Fixed Print Button -->
-                    <button id="viewSchedule" class="btn btn-secondary w-100 mt-20" style="width: 100%; margin-top: 20px;">
-                        <i class="fas fa-print"></i> Print Amortization Schedule
-                    </button>
+                    <a href="investment-tiers.html#amortization" class="calculator-link">
+                        <i class="fas fa-calendar-alt"></i> See Detailed Amortization Schedule
+                    </a>
                 </div>
             </div>
         </div>
@@ -374,48 +354,77 @@
 
     <!-- Footer -->
     <footer class="footer">
-        <div class="footer-container">
-            <div class="footer-section">
-                <div class="footer-logo">
-                   <img src="assets/icons/logo.svg" alt="Omkar Enterprises Logo" class="logo-icon" style="height: 40px;">
-                    <span class="logo-text">Omkar Enterprises</span>
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-col">
+                    <div class="footer-logo">
+                        <span class="logo-icon">OE</span>
+                        <span class="logo-text">Omkar Enterprises</span>
+                    </div>
+                    <p class="footer-description">
+                        Structured Private Lending Partnerships<br>
+                        Transparency Through Contractual Certainty
+                    </p>
+                    <div class="footer-address">
+                        <p><i class="fas fa-map-marker-alt"></i> BK 673, Sai Baba Colony, Opp. Rajram Furniturewala, Ulhasnagar 421003, Thane, Maharashtra</p>
+                    </div>
                 </div>
-                <p class="footer-description">
-                    Structured Private Lending Partnerships<br>
-                    Transparency Through Contractual Certainty
-                </p>
-                <div class="footer-address">
-                    <p><i class="fas fa-map-marker-alt"></i> BK 673, Sai Baba Colony, Opp. Rajram Furniturewala, Ulhasnagar 421003, Thane, Maharashtra</p>
+                <div class="footer-col">
+                    <h4>Important Links</h4>
+                    <ul class="footer-links">
+                        <li><a href="assets/documents/sample-agreement.pdf">Sample Agreement</a></li>
+                        <li><a href="investment-tiers.html">Investment Tiers</a></li>
+                        <li><a href="legal-framework.html">Legal Framework</a></li>
+                        <li><a href="faq.html">FAQ</a></li>
+                        <li><a href="about.html">About Founder</a></li>
+                        <li><a href="onboarding.html">Onboarding Process</a></li>
+                    </ul>
+                </div>
+                <div class="footer-col">
+                    <h4>Legal</h4>
+                    <ul class="footer-links">
+                        <li><a href="legal/privacy-policy.html">Privacy Policy</a></li>
+                        <li><a href="legal/terms.html">Terms of Use</a></li>
+                        <li><a href="legal/disclaimer.html">Risk Disclaimer</a></li>
+                        <li><a href="legal-framework.html#dispute">Dispute Resolution</a></li>
+                        <li><a href="legal-framework.html#compliance">Compliance Statement</a></li>
+                    </ul>
+                </div>
+                <div class="footer-col">
+                    <h4>Contact</h4>
+                    <div class="footer-contact">
+                        <p><strong>For New Inquiries:</strong><br>
+                        Consultation Form Only</p>
+                        <p><strong>For Existing Partners:</strong><br>
+                        Email: partners@omkarenterprises.in</p>
+                        <p><strong>Consultation Hours:</strong><br>
+                        Mon-Fri: 10AM - 5PM IST<br>
+                        Sat: 10AM - 1PM IST</p>
+                    </div>
                 </div>
             </div>
-            
-            <div class="footer-section">
-                <h3>Important Links</h3>
-                <ul class="footer-links">
-                    <li><a href="assets/documents/sample-agreement.pdf">Sample Agreement</a></li>
-                    <li><a href="investment-tiers.html">Investment Tiers</a></li>
-                    <li><a href="legal-framework.html">Legal Framework</a></li>
-                    <li><a href="faq.html">FAQ</a></li>
-                    <li><a href="about.html">About Founder</a></li>
-                    <li><a href="onboarding.html">Onboarding Process</a></li>
-                </ul>
+            <div class="footer-bottom">
+                <div class="footer-disclaimer">
+                    <p>⚠️ <strong>IMPORTANT DISCLAIMER:</strong> Omkar Enterprises enters into private loan agreements with individuals. This is NOT a bank deposit, NOT insured, NOT regulated by RBI/SEBI as a deposit-taking entity, and NOT a guaranteed return scheme. Capital is at risk. Returns depend on business performance. Past returns don't indicate future results. Consult your financial and legal advisors before proceeding.</p>
+                </div>
+                <div class="footer-copyright">
+                    <p>© <span id="currentYear">2025</span> Omkar Enterprises. All rights reserved.</p>
+                </div>
             </div>
-            
-            <!-- CHANGE 3: Fixed Legal Links -->
-            <div class="footer-section">
-                <h3>Legal</h3>
-                <ul class="footer-links">
-                    <li><a href="privacy-policy.html">Privacy Policy</a></li>
-                    <li><a href="terms.html">Terms of Use</a></li>
-                    <li><a href="disclaimer.html">Risk Disclaimer</a></li>
-                </ul>
-            </div>
-        </div>
-        <div class="footer-bottom">
-            <p>&copy; 2024 Omkar Enterprises. All rights reserved. | This is a private lending partnership and not a SEBI/RBI regulated investment product.</p>
         </div>
     </footer>
-        <script src="js/main.js"></script>
+
+    <!-- Scripts -->
+    <script src="js/main.js"></script>
     <script src="js/calculator.js"></script>
+    
+    <!-- Google Analytics (Add your Measurement ID) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-XXXXXXXXXX"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'G-XXXXXXXXXX');
+    </script>
 </body>
 </html>
