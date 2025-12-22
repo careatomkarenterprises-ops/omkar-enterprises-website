@@ -1768,7 +1768,7 @@ input[type="range"]::-webkit-slider-thumb {
 }
 
 .section-header h1 {
-    color: var(--charcoal);
+    color: var(--golden);
     display: flex;
     align-items: center;
     gap: 15px;
@@ -2345,5 +2345,6 @@ input[type="range"]::-webkit-slider-thumb {
         border: 2px solid #000;
     }
 }
+
 
 @import url('dashboard.css');
