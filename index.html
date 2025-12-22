@@ -426,5 +426,84 @@
         gtag('js', new Date());
         gtag('config', 'G-XXXXXXXXXX');
     </script>
+<script>
+    // Mobile Menu Toggle
+    document.addEventListener('DOMContentLoaded', function() {
+        const hamburger = document.getElementById('hamburger');
+        const navMenu = document.getElementById('navMenu');
+        
+        if (hamburger && navMenu) {
+            // Toggle menu when hamburger is clicked
+            hamburger.addEventListener('click', function() {
+                hamburger.classList.toggle('active');
+                navMenu.classList.toggle('active');
+                
+                // Prevent body scroll when menu is open
+                if (navMenu.classList.contains('active')) {
+                    document.body.style.overflow = 'hidden';
+                } else {
+                    document.body.style.overflow = '';
+                }
+            });
+            
+            // Close menu when clicking on a link
+            document.querySelectorAll('.nav-menu a').forEach(link => {
+                link.addEventListener('click', function() {
+                    hamburger.classList.remove('active');
+                    navMenu.classList.remove('active');
+                    document.body.style.overflow = '';
+                });
+            });
+            
+            // Close menu when clicking outside
+            document.addEventListener('click', function(event) {
+                if (!navMenu.contains(event.target) && !hamburger.contains(event.target)) {
+                    hamburger.classList.remove('active');
+                    navMenu.classList.remove('active');
+                    document.body.style.overflow = '';
+                }
+            });
+        }
+        
+        // FAQ Toggle functionality
+        document.querySelectorAll('.faq-question').forEach(question => {
+            question.addEventListener('click', function() {
+                const faqItem = this.parentElement;
+                faqItem.classList.toggle('active');
+            });
+        });
+        
+        // Calculator functionality
+        const investmentAmount = document.getElementById('investmentAmount');
+        const currentAmount = document.getElementById('currentAmount');
+        const monthlyReturn = document.getElementById('monthlyReturn');
+        const annualReturn = document.getElementById('annualReturn');
+        const totalReturn = document.getElementById('totalReturn');
+        
+        if (investmentAmount && currentAmount) {
+            function updateCalculator() {
+                const amount = parseInt(investmentAmount.value);
+                const monthly = amount * 0.025; // 2.5%
+                const annual = monthly * 12;
+                
+                currentAmount.textContent = '₹' + amount.toLocaleString('en-IN');
+                monthlyReturn.textContent = '₹' + monthly.toLocaleString('en-IN');
+                annualReturn.textContent = '₹' + annual.toLocaleString('en-IN');
+                totalReturn.textContent = '₹' + annual.toLocaleString('en-IN');
+            }
+            
+            investmentAmount.addEventListener('input', updateCalculator);
+            updateCalculator(); // Initialize
+        }
+        
+        // Print button functionality
+        const printButton = document.getElementById('viewSchedule');
+        if (printButton) {
+            printButton.addEventListener('click', function() {
+                window.print();
+            });
+        }
+    });
+</script>
 </body>
 </html>
