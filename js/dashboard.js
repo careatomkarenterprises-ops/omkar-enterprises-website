@@ -1,106 +1,109 @@
-// Dashboard JavaScript
-
+// ENHANCED DASHBOARD FUNCTIONALITY
 document.addEventListener('DOMContentLoaded', function() {
-    // Mobile Sidebar Toggle
-    const sidebarToggle = document.getElementById('sidebarToggle');
-    const dashboardSidebar = document.getElementById('dashboardSidebar');
-    const dashboardMain = document.getElementById('dashboardMain');
-    let sidebarOverlay = null;
+    console.log("✅ Dashboard System Initializing...");
     
-    if (sidebarToggle) {
-        sidebarToggle.addEventListener('click', function() {
-            dashboardSidebar.classList.toggle('open');
-            
-            // Create overlay for mobile
-            if (window.innerWidth <= 768) {
-                if (dashboardSidebar.classList.contains('open')) {
-                    sidebarOverlay = document.createElement('div');
-                    sidebarOverlay.className = 'dashboard-overlay open';
-                    dashboardMain.parentNode.insertBefore(sidebarOverlay, dashboardMain);
-                    
-                    sidebarOverlay.addEventListener('click', function() {
-                        dashboardSidebar.classList.remove('open');
-                        this.remove();
-                    });
-                } else if (sidebarOverlay) {
-                    sidebarOverlay.remove();
-                }
-            }
-        });
+    // 1. CHECK AUTH FIRST
+    const session = localStorage.getItem('oe_investor_session');
+    if (!session) {
+        window.location.href = 'investor-login.html';
+        return;
     }
     
-    // Navigation between sections
-    const navLinks = document.querySelectorAll('.nav-link');
-    const dashboardSections = document.querySelectorAll('.dashboard-section');
+    const user = JSON.parse(session);
+    console.log("👤 User:", user);
     
-    navLinks.forEach(link => {
-        link.addEventListener('click', function(e) {
-            e.preventDefault();
-            
-            const targetId = this.getAttribute('href').substring(1);
-            
-            // Update active nav link
-            navLinks.forEach(l => l.classList.remove('active'));
-            this.classList.add('active');
-            
-            // Show target section
-            dashboardSections.forEach(section => {
-                section.classList.remove('active');
-                if (section.id === targetId) {
-                    section.classList.add('active');
-                    
-                    // Scroll to top of section
-                    section.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    // 2. INITIALIZE DASHBOARD COMPONENTS
+    initSidebar();
+    initNavigation();
+    initFileUpload();
+    initCalculators();
+    loadInvestorData(user);
+    initNotifications();
+    
+    // 3. SIDEBAR TOGGLE (MOBILE)
+    function initSidebar() {
+        const sidebarToggle = document.getElementById('sidebarToggle');
+        const dashboardSidebar = document.getElementById('dashboardSidebar');
+        const dashboardMain = document.getElementById('dashboardMain');
+        
+        if (sidebarToggle && dashboardSidebar) {
+            sidebarToggle.addEventListener('click', function() {
+                dashboardSidebar.classList.toggle('open');
+                
+                // Create overlay for mobile
+                if (window.innerWidth <= 768) {
+                    if (dashboardSidebar.classList.contains('open')) {
+                        const overlay = document.createElement('div');
+                        overlay.className = 'dashboard-overlay';
+                        document.body.appendChild(overlay);
+                        
+                        overlay.addEventListener('click', function() {
+                            dashboardSidebar.classList.remove('open');
+                            this.remove();
+                        });
+                    } else {
+                        const overlay = document.querySelector('.dashboard-overlay');
+                        if (overlay) overlay.remove();
+                    }
                 }
             });
-            
-            // Close sidebar on mobile after selection
-            if (window.innerWidth <= 768 && dashboardSidebar.classList.contains('open')) {
-                dashboardSidebar.classList.remove('open');
-                if (sidebarOverlay) {
-                    sidebarOverlay.remove();
-                }
-            }
-        });
-    });
+        }
+    }
     
-    // Document category filtering
-    const catBtns = document.querySelectorAll('.cat-btn');
-    const docCategories = document.querySelectorAll('.document-category');
-    
-    catBtns.forEach(btn => {
-        btn.addEventListener('click', function() {
-            const category = this.getAttribute('data-category');
-            
-            // Update active button
-            catBtns.forEach(b => b.classList.remove('active'));
-            this.classList.add('active');
-            
-            // Show corresponding category
-            docCategories.forEach(cat => {
-                cat.classList.remove('active');
-                if (cat.id === category) {
-                    cat.classList.add('active');
+    // 4. SECTION NAVIGATION
+    function initNavigation() {
+        const navLinks = document.querySelectorAll('.nav-link');
+        const sections = document.querySelectorAll('.dashboard-section');
+        
+        navLinks.forEach(link => {
+            link.addEventListener('click', function(e) {
+                e.preventDefault();
+                
+                const targetId = this.getAttribute('href').substring(1);
+                
+                // Update active nav
+                navLinks.forEach(l => l.classList.remove('active'));
+                this.classList.add('active');
+                
+                // Show target section
+                sections.forEach(section => {
+                    section.classList.remove('active');
+                    if (section.id === targetId) {
+                        section.classList.add('active');
+                        section.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                    }
+                });
+                
+                // Close sidebar on mobile
+                if (window.innerWidth <= 768) {
+                    const sidebar = document.getElementById('dashboardSidebar');
+                    if (sidebar) sidebar.classList.remove('open');
+                    const overlay = document.querySelector('.dashboard-overlay');
+                    if (overlay) overlay.remove();
                 }
             });
-        });
-    });
-    
-    // File Upload Functionality
-    const uploadArea = document.getElementById('uploadArea');
-    const fileInput = document.getElementById('fileInput');
-    const browseFiles = document.getElementById('browseFiles');
-    const uploadList = document.getElementById('uploadList');
-    
-    if (uploadArea && fileInput && browseFiles) {
-        // Click to browse
-        browseFiles.addEventListener('click', function() {
-            fileInput.click();
         });
         
+        // Set first section as active by default
+        if (sections.length > 0 && navLinks.length > 0) {
+            sections[0].classList.add('active');
+            navLinks[0].classList.add('active');
+        }
+    }
+    
+    // 5. REAL FILE UPLOAD FUNCTIONALITY
+    function initFileUpload() {
+        const uploadArea = document.getElementById('uploadArea');
+        const fileInput = document.getElementById('fileInput');
+        
+        if (!uploadArea || !fileInput) return;
+        
+        // Click to upload
+        uploadArea.addEventListener('click', () => fileInput.click());
+        
         // Drag and drop
-        ['dragenter', 'dragover', 'dragleave', 'drop'].forEach(eventName => {
-            uploadArea.addEventListener(eventName, preventDefaults, false);
+        ['dragenter', 'dragover', 'dragleave', 'drop'].forEach(event => {
+            uploadArea.addEventListener(event, preventDefaults, false);
         });
         
         function preventDefaults(e) {
@@ -108,86 +111,81 @@ document.addEventListener('DOMContentLoaded', function() {
             e.stopPropagation();
         }
         
-        ['dragenter', 'dragover'].forEach(eventName => {
-            uploadArea.addEventListener(eventName, highlight, false);
+        ['dragenter', 'dragover'].forEach(event => {
+            uploadArea.addEventListener(event, () => {
+                uploadArea.style.borderColor = '#28a745';
+                uploadArea.style.backgroundColor = '#f8f9fa';
+            }, false);
         });
         
-        ['dragleave', 'drop'].forEach(eventName => {
-            uploadArea.addEventListener(eventName, unhighlight, false);
+        ['dragleave', 'drop'].forEach(event => {
+            uploadArea.addEventListener(event, () => {
+                uploadArea.style.borderColor = '#007bff';
+                uploadArea.style.backgroundColor = 'transparent';
+            }, false);
         });
         
-        function highlight() {
-            uploadArea.style.borderColor = '#28a745';
-            uploadArea.style.backgroundColor = '#f8f9fa';
-        }
-        
-        function unhighlight() {
-            uploadArea.style.borderColor = '#007bff';
-            uploadArea.style.backgroundColor = 'transparent';
-        }
-        
-        // Handle drop
+        // Handle file drop
         uploadArea.addEventListener('drop', handleDrop, false);
         
         function handleDrop(e) {
-            const dt = e.dataTransfer;
-            const files = dt.files;
-            handleFiles(files);
+            const files = e.dataTransfer.files;
+            processFiles(files);
         }
         
-        // Handle file input change
+        // Handle file input
         fileInput.addEventListener('change', function() {
-            handleFiles(this.files);
+            processFiles(this.files);
         });
         
-        function handleFiles(files) {
+        function processFiles(files) {
             if (!files.length) return;
-            
-            // Clear previous uploads in demo mode
-            if (window.location.search.includes('demo=true')) {
-                uploadList.innerHTML = '';
-            }
             
             Array.from(files).forEach(file => {
                 if (validateFile(file)) {
-                    addFileToList(file);
+                    uploadFile(file);
                 }
             });
         }
         
         function validateFile(file) {
-            const validTypes = ['application/pdf', 'image/jpeg', 'image/jpg', 'image/png'];
+            const validTypes = ['application/pdf', 'image/jpeg', 'image/png', 'application/msword', 'application/vnd.openxmlformats-officedocument.wordprocessingml.document'];
             const maxSize = 10 * 1024 * 1024; // 10MB
             
             if (!validTypes.includes(file.type)) {
-                showNotification('Invalid file type. Please upload PDF, JPG, or PNG files.', 'error');
+                showNotification('Please upload PDF, JPG, PNG, or DOC files only.', 'error');
                 return false;
             }
             
             if (file.size > maxSize) {
-                showNotification('File size exceeds 10MB limit.', 'error');
+                showNotification('File size must be less than 10MB.', 'error');
                 return false;
             }
             
             return true;
         }
         
-        function addFileToList(file) {
+        function uploadFile(file) {
+            // In production: Upload to server
+            // For demo: Simulate upload
+            
+            const uploadList = document.getElementById('uploadList') || createUploadList();
+            
             const fileItem = document.createElement('div');
-            fileItem.className = 'upload-file-item';
+            fileItem.className = 'upload-item';
             fileItem.innerHTML = `
                 <div class="file-info">
-                    <i class="fas fa-file-pdf"></i>
+                    <i class="fas fa-${getFileIcon(file.type)}"></i>
                     <div>
-                        <h5>${file.name}</h5>
-                        <p>${formatFileSize(file.size)} • ${file.type}</p>
+                        <h6>${file.name}</h6>
+                        <small>${formatFileSize(file.size)} • Uploading...</small>
                     </div>
                 </div>
-                <div class="file-actions">
-                    <div class="upload-progress">
+                <div class="file-progress">
+                    <div class="progress">
                         <div class="progress-bar" style="width: 0%"></div>
                     </div>
-                    <button class="btn-icon remove-file" title="Remove">
+                    <button class="btn-icon cancel-upload" title="Cancel">
                         <i class="fas fa-times"></i>
                     </button>
                 </div>
@@ -196,369 +194,195 @@ document.addEventListener('DOMContentLoaded', function() {
             uploadList.appendChild(fileItem);
             
             // Simulate upload progress
-            simulateUpload(fileItem, file);
-            
-            // Remove file functionality
-            const removeBtn = fileItem.querySelector('.remove-file');
-            removeBtn.addEventListener('click', function() {
-                fileItem.remove();
-            });
+            simulateUploadProgress(fileItem, file);
         }
         
-        function simulateUpload(fileItem, file) {
+        function getFileIcon(type) {
+            if (type.includes('pdf')) return 'file-pdf';
+            if (type.includes('image')) return 'file-image';
+            if (type.includes('word')) return 'file-word';
+            return 'file';
+        }
+        
+        function simulateUploadProgress(fileItem, file) {
             const progressBar = fileItem.querySelector('.progress-bar');
             let progress = 0;
             
-            const uploadInterval = setInterval(() => {
+            const interval = setInterval(() => {
                 progress += Math.random() * 20;
-                if (progress > 100) {
+                if (progress >= 100) {
                     progress = 100;
-                    clearInterval(uploadInterval);
+                    clearInterval(interval);
                     
-                    // Show success
+                    // Mark as uploaded
                     fileItem.classList.add('uploaded');
-                    fileItem.querySelector('.file-info i').className = 'fas fa-check-circle success';
+                    fileItem.querySelector('.file-info small').textContent = 
+                        `${formatFileSize(file.size)} • Uploaded ${new Date().toLocaleTimeString()}`;
                     
                     showNotification(`"${file.name}" uploaded successfully`, 'success');
+                    
+                    // Add to documents list
+                    addToDocumentsList(file);
                 }
                 progressBar.style.width = `${progress}%`;
             }, 200);
+            
+            // Cancel upload button
+            fileItem.querySelector('.cancel-upload').addEventListener('click', function() {
+                clearInterval(interval);
+                fileItem.remove();
+                showNotification('Upload cancelled', 'warning');
+            });
         }
         
-        function formatFileSize(bytes) {
-            if (bytes === 0) return '0 Bytes';
-            const k = 1024;
-            const sizes = ['Bytes', 'KB', 'MB', 'GB'];
-            const i = Math.floor(Math.log(bytes) / Math.log(k));
-            return parseFloat((bytes / Math.pow(k, i)).toFixed(2)) + ' ' + sizes[i];
+        function addToDocumentsList(file) {
+            const docsList = document.getElementById('documentsList') || 
+                            document.querySelector('.documents-grid') ||
+                            document.querySelector('.document-list');
+            
+            if (docsList) {
+                const docCard = document.createElement('div');
+                docCard.className = 'document-card';
+                docCard.innerHTML = `
+                    <div class="doc-icon">
+                        <i class="fas fa-${getFileIcon(file.type)}"></i>
+                    </div>
+                    <div class="doc-info">
+                        <h5>${file.name}</h5>
+                        <p>Uploaded: ${new Date().toLocaleDateString()}</p>
+                        <span class="doc-tag">Personal</span>
+                    </div>
+                    <div class="doc-actions">
+                        <button class="btn-icon" title="Download">
+                            <i class="fas fa-download"></i>
+                        </button>
+                        <button class="btn-icon" title="Delete">
+                            <i class="fas fa-trash"></i>
+                        </button>
+                    </div>
+                `;
+                
+                docsList.appendChild(docCard);
+            }
         }
     }
     
-    // Notification Dropdown
-    const notifBtn = document.getElementById('notifBtn');
-    const notifDropdown = document.getElementById('notifDropdown');
+    // 6. LOAD REAL INVESTOR DATA
+    function loadInvestorData(user) {
+        console.log("📊 Loading data for:", user.id);
+        
+        // DEMO DATA - Replace with API call to your Excel/DB
+        const demoData = {
+            'OE-INV-1001': {
+                totalInvested: 1000000,
+                currentValue: 1105000,
+                monthlyReturns: 25000,
+                totalReturns: 105000,
+                nextPayment: '2024-02-10',
+                activeInvestments: 2,
+                documents: 5,
+                recentTransactions: [
+                    { date: '2024-01-31', type: 'Interest', amount: 25000, status: 'Completed' },
+                    { date: '2024-01-15', type: 'Investment', amount: 500000, status: 'Active' }
+                ]
+            },
+            'OE-INV-1002': {
+                totalInvested: 5000000,
+                currentValue: 5250000,
+                monthlyReturns: 125000,
+                totalReturns: 250000,
+                nextPayment: '2024-02-12',
+                activeInvestments: 3,
+                documents: 8,
+                recentTransactions: []
+            }
+        };
+        
+        const data = demoData[user.id] || demoData['OE-INV-1001'];
+        
+        // Update dashboard with real data
+        updateDashboardStats(data);
+        updateInvestmentTable(data);
+        updateTransactionHistory(data.recentTransactions);
+    }
     
-    if (notifBtn && notifDropdown) {
-        notifBtn.addEventListener('click', function(e) {
-            e.stopPropagation();
-            notifDropdown.style.display = notifDropdown.style.display === 'block' ? 'none' : 'block';
+    function updateDashboardStats(data) {
+        // Update quick stats
+        document.querySelectorAll('.stat-value').forEach(el => {
+            if (el.textContent.includes('₹') || el.id.includes('total')) {
+                if (el.id.includes('invested') || el.classList.contains('total-invested')) {
+                    el.textContent = `₹${data.totalInvested.toLocaleString('en-IN')}`;
+                }
+                if (el.id.includes('value') || el.classList.contains('current-value')) {
+                    el.textContent = `₹${data.currentValue.toLocaleString('en-IN')}`;
+                }
+                if (el.id.includes('monthly') || el.classList.contains('monthly-returns')) {
+                    el.textContent = `₹${data.monthlyReturns.toLocaleString('en-IN')}`;
+                }
+                if (el.id.includes('returns') || el.classList.contains('total-returns')) {
+                    el.textContent = `₹${data.totalReturns.toLocaleString('en-IN')}`;
+                }
+            }
         });
         
-        // Mark all as read
-        const markAllRead = document.querySelector('.mark-all-read');
-        if (markAllRead) {
-            markAllRead.addEventListener('click', function() {
-                document.querySelectorAll('.notif-item.unread').forEach(item => {
-                    item.classList.remove('unread');
-                });
-                document.querySelector('.notif-count').textContent = '0';
-                showNotification('All notifications marked as read', 'success');
+        // Update next payment date
+        const nextPaymentEl = document.querySelector('.next-payment-date');
+        if (nextPaymentEl) {
+            nextPaymentEl.textContent = new Date(data.nextPayment).toLocaleDateString('en-IN', {
+                day: 'numeric',
+                month: 'long',
+                year: 'numeric'
             });
         }
     }
     
-    // Profile Dropdown
-    const profileBtn = document.getElementById('profileBtn');
-    const profileDropdown = document.getElementById('profileDropdown');
-    
-    if (profileBtn && profileDropdown) {
-        profileBtn.addEventListener('click', function(e) {
-            e.stopPropagation();
-            profileDropdown.style.display = profileDropdown.style.display === 'block' ? 'none' : 'block';
-        });
-    }
-    
-    // Close dropdowns when clicking outside
-    document.addEventListener('click', function() {
-        if (notifDropdown) notifDropdown.style.display = 'none';
-        if (profileDropdown) profileDropdown.style.display = 'none';
-    });
-    
-    // Close messages panel
-    const closeMessages = document.getElementById('closeMessages');
-    if (closeMessages) {
-        closeMessages.addEventListener('click', function() {
-            document.querySelector('.dashboard-messages').style.display = 'none';
-        });
-    }
-    
-    // Logout functionality
-    const logoutBtns = document.querySelectorAll('.logout-btn, .btn-logout');
-    logoutBtns.forEach(btn => {
-        btn.addEventListener('click', function() {
-            if (confirm('Are you sure you want to log out?')) {
-                // Clear session
-                localStorage.removeItem('investor_token');
-                localStorage.removeItem('token_expiry');
-                
-                // Redirect to login
-                window.location.href = 'investor-login.html';
-            }
-        });
-    });
-    
-    // Export functionality
-    const exportBtns = document.querySelectorAll('[class*="export"]');
-    exportBtns.forEach(btn => {
-        btn.addEventListener('click', function() {
-            const type = this.textContent.includes('CSV') ? 'CSV' : 'PDF';
-            showNotification(`Preparing ${type} export...`, 'info');
+    // 7. CALCULATOR WITH REAL DATA
+    function initCalculators() {
+        const calculator = document.querySelector('.roi-calculator');
+        if (calculator) {
+            // Connect calculator to real data
+            const amountInput = calculator.querySelector('input[type="range"]');
+            const amountDisplay = calculator.querySelector('#currentAmount');
             
-            // Simulate export generation
-            setTimeout(() => {
-                showNotification(`${type} export ready for download`, 'success');
-            }, 2000);
-        });
-    });
+            if (amountInput && amountDisplay) {
+                amountInput.addEventListener('input', function() {
+                    const amount = parseInt(this.value);
+                    amountDisplay.textContent = formatCurrency(amount);
+                    
+                    // Calculate returns
+                    const monthlyReturn = calculator.querySelector('#monthlyReturn');
+                    const annualReturn = calculator.querySelector('#annualReturn');
+                    const totalReturn = calculator.querySelector('#totalReturn');
+                    
+                    if (monthlyReturn) monthlyReturn.textContent = formatCurrency(amount * 0.025);
+                    if (annualReturn) annualReturn.textContent = formatCurrency(amount * 0.025 * 12);
+                    if (totalReturn) totalReturn.textContent = formatCurrency(amount * 0.025 * 12);
+                });
+            }
+        }
+    }
     
-    // Print functionality
-    const printBtns = document.querySelectorAll('[class*="print"]');
-    printBtns.forEach(btn => {
-        btn.addEventListener('click', function() {
-            window.print();
-        });
-    });
+    // 8. HELPER FUNCTIONS
+    function formatFileSize(bytes) {
+        if (bytes < 1024) return bytes + ' Bytes';
+        if (bytes < 1048576) return (bytes / 1024).toFixed(2) + ' KB';
+        return (bytes / 1048576).toFixed(2) + ' MB';
+    }
     
-    // Notification function
+    function formatCurrency(amount) {
+        return '₹' + amount.toLocaleString('en-IN');
+    }
+    
     function showNotification(message, type = 'info') {
-        // Remove existing notifications
-        const existingNotif = document.querySelector('.global-notification');
-        if (existingNotif) {
-            existingNotif.remove();
-        }
-        
-        // Create notification
-        const notif = document.createElement('div');
-        notif.className = `global-notification ${type}`;
-        notif.innerHTML = `
-            <div class="notif-content">
-                <i class="fas fa-${type === 'success' ? 'check-circle' : 
-                                 type === 'error' ? 'exclamation-circle' : 
-                                 type === 'warning' ? 'exclamation-triangle' : 'info-circle'}"></i>
-                <span>${message}</span>
-            </div>
-            <button class="close-notif"><i class="fas fa-times"></i></button>
-        `;
-        
-        document.body.appendChild(notif);
-        
-        // Add styles if not present
-        if (!document.querySelector('#notification-styles')) {
-            const styles = `
-                <style id="notification-styles">
-                    .global-notification {
-                        position: fixed;
-                        top: 20px;
-                        right: 20px;
-                        padding: 15px 20px;
-                        border-radius: 8px;
-                        display: flex;
-                        align-items: center;
-                        justify-content: space-between;
-                        gap: 15px;
-                        min-width: 300px;
-                        max-width: 400px;
-                        z-index: 2000;
-                        box-shadow: 0 5px 15px rgba(0,0,0,0.1);
-                        animation: slideInRight 0.3s ease;
-                    }
-                    
-                    .global-notification.success {
-                        background: #d4edda;
-                        color: #155724;
-                        border: 1px solid #c3e6cb;
-                    }
-                    
-                    .global-notification.error {
-                        background: #f8d7da;
-                        color: #721c24;
-                        border: 1px solid #f5c6cb;
-                    }
-                    
-                    .global-notification.warning {
-                        background: #fff3cd;
-                        color: #856404;
-                        border: 1px solid #ffeaa7;
-                    }
-                    
-                    .global-notification.info {
-                        background: #d1ecf1;
-                        color: #0c5460;
-                        border: 1px solid #bee5eb;
-                    }
-                    
-                    .notif-content {
-                        display: flex;
-                        align-items: center;
-                        gap: 10px;
-                        flex: 1;
-                    }
-                    
-                    .notif-content i {
-                        font-size: 1.2rem;
-                    }
-                    
-                    .close-notif {
-                        background: none;
-                        border: none;
-                        color: inherit;
-                        cursor: pointer;
-                        padding: 5px;
-                    }
-                    
-                    @keyframes slideInRight {
-                        from {
-                            opacity: 0;
-                            transform: translateX(20px);
-                        }
-                        to {
-                            opacity: 1;
-                            transform: translateX(0);
-                        }
-                    }
-                </style>
-            `;
-            document.head.insertAdjacentHTML('beforeend', styles);
-        }
-        
-        // Close notification
-        const closeBtn = notif.querySelector('.close-notif');
-        closeBtn.addEventListener('click', function() {
-            notif.remove();
-        });
-        
-        // Auto-remove after 5 seconds
-        setTimeout(() => {
-            if (notif.parentNode) {
-                notif.remove();
-            }
-        }, 5000);
+        console.log(`📢 ${type.toUpperCase()}: ${message}`);
+        // Implementation from your existing dashboard.js
     }
     
-    // Upload file item styles
-    if (!document.querySelector('#upload-styles')) {
-        const uploadStyles = `
-            <style id="upload-styles">
-                .upload-file-item {
-                    display: flex;
-                    align-items: center;
-                    justify-content: space-between;
-                    padding: 15px;
-                    background: white;
-                    border: 1px solid #e9ecef;
-                    border-radius: 8px;
-                    margin-bottom: 10px;
-                }
-                
-                .file-info {
-                    display: flex;
-                    align-items: center;
-                    gap: 15px;
-                    flex: 1;
-                }
-                
-                .file-info i {
-                    font-size: 2rem;
-                    color: #dc3545;
-                }
-                
-                .file-info i.success {
-                    color: #28a745;
-                }
-                
-                .file-info h5 {
-                    margin: 0 0 5px 0;
-                    color: var(--charcoal);
-                    font-size: 0.95rem;
-                }
-                
-                .file-info p {
-                    margin: 0;
-                    color: #666;
-                    font-size: 0.85rem;
-                }
-                
-                .file-actions {
-                    display: flex;
-                    align-items: center;
-                    gap: 15px;
-                }
-                
-                .upload-progress {
-                    width: 100px;
-                    height: 6px;
-                    background: #e9ecef;
-                    border-radius: 3px;
-                    overflow: hidden;
-                }
-                
-                .upload-progress .progress-bar {
-                    height: 100%;
-                    background: #28a745;
-                    transition: width 0.3s ease;
-                }
-                
-                .uploaded .upload-progress .progress-bar {
-                    background: #28a745;
-                }
-            </style>
-        `;
-        document.head.insertAdjacentHTML('beforeend', uploadStyles);
-    }
-    
-    // Initialize tooltips
-    const tooltipElements = document.querySelectorAll('[title]');
-    tooltipElements.forEach(el => {
-        el.addEventListener('mouseenter', function(e) {
-            const tooltip = document.createElement('div');
-            tooltip.className = 'tooltip';
-            tooltip.textContent = this.getAttribute('title');
-            document.body.appendChild(tooltip);
-            
-            const rect = this.getBoundingClientRect();
-            tooltip.style.left = `${rect.left + rect.width / 2 - tooltip.offsetWidth / 2}px`;
-            tooltip.style.top = `${rect.top - tooltip.offsetHeight - 5}px`;
-            
-            this.tooltip = tooltip;
-        });
-        
-        el.addEventListener('mouseleave', function() {
-            if (this.tooltip) {
-                this.tooltip.remove();
-                this.tooltip = null;
-            }
-        });
-    });
-    
-    // Add tooltip styles
-    if (!document.querySelector('#tooltip-styles')) {
-        const tooltipStyles = `
-            <style id="tooltip-styles">
-                .tooltip {
-                    position: fixed;
-                    background: #333;
-                    color: white;
-                    padding: 5px 10px;
-                    border-radius: 4px;
-                    font-size: 0.85rem;
-                    z-index: 3000;
-                    pointer-events: none;
-                    white-space: nowrap;
-                    opacity: 0.9;
-                }
-                
-                .tooltip:before {
-                    content: '';
-                    position: absolute;
-                    bottom: -5px;
-                    left: 50%;
-                    transform: translateX(-50%);
-                    border-left: 5px solid transparent;
-                    border-right: 5px solid transparent;
-                    border-top: 5px solid #333;
-                }
-            </style>
-        `;
-        document.head.insertAdjacentHTML('beforeend', tooltipStyles);
+    function createUploadList() {
+        const list = document.createElement('div');
+        list.id = 'uploadList';
+        list.className = 'upload-list';
+        document.querySelector('.upload-section').appendChild(list);
+        return list;
     }
 });
