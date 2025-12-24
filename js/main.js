@@ -1,5 +1,201 @@
 // Main JavaScript for Omkar Enterprises Website
 
+// MOBILE NAVIGATION FIX - Add to main.js or create mobile.js
+
+document.addEventListener('DOMContentLoaded', function() {
+    console.log("📱 Mobile optimization loaded");
+    
+    // 1. Fix Hamburger Menu
+    const hamburger = document.querySelector('.hamburger');
+    const navMenu = document.querySelector('.nav-menu');
+    const body = document.body;
+    
+    if (hamburger && navMenu) {
+        hamburger.addEventListener('click', function() {
+            // Toggle menu
+            navMenu.classList.toggle('active');
+            hamburger.classList.toggle('active');
+            
+            // Toggle body scroll
+            if (navMenu.classList.contains('active')) {
+                body.style.overflow = 'hidden';
+                // Add overlay
+                addMobileOverlay();
+            } else {
+                body.style.overflow = '';
+                removeMobileOverlay();
+            }
+        });
+        
+        // Close menu when clicking links
+        document.querySelectorAll('.nav-menu a').forEach(link => {
+            link.addEventListener('click', function() {
+                navMenu.classList.remove('active');
+                hamburger.classList.remove('active');
+                body.style.overflow = '';
+                removeMobileOverlay();
+            });
+        });
+    }
+    
+    // 2. Fix Dashboard Mobile Menu
+    const sidebarToggle = document.getElementById('sidebarToggle');
+    const dashboardSidebar = document.getElementById('dashboardSidebar');
+    
+    if (sidebarToggle && dashboardSidebar) {
+        sidebarToggle.addEventListener('click', function() {
+            dashboardSidebar.classList.toggle('open');
+            this.classList.toggle('active');
+            
+            // Add/remove overlay
+            if (dashboardSidebar.classList.contains('open')) {
+                addDashboardOverlay();
+                document.body.style.overflow = 'hidden';
+            } else {
+                removeDashboardOverlay();
+                document.body.style.overflow = '';
+            }
+        });
+        
+        // Close sidebar when clicking links (mobile)
+        document.querySelectorAll('.nav-link').forEach(link => {
+            link.addEventListener('click', function() {
+                if (window.innerWidth <= 768) {
+                    dashboardSidebar.classList.remove('open');
+                    sidebarToggle.classList.remove('active');
+                    removeDashboardOverlay();
+                    document.body.style.overflow = '';
+                }
+            });
+        });
+    }
+    
+    // 3. Fix Form Inputs for Mobile
+    fixMobileForms();
+    
+    // 4. Fix Touch Events
+    fixTouchEvents();
+    
+    // 5. Prevent Zoom on Input Focus
+    preventInputZoom();
+    
+    // HELPER FUNCTIONS
+    function addMobileOverlay() {
+        let overlay = document.querySelector('.mobile-overlay');
+        if (!overlay) {
+            overlay = document.createElement('div');
+            overlay.className = 'mobile-overlay';
+            overlay.style.cssText = `
+                position: fixed;
+                top: 0;
+                left: 0;
+                right: 0;
+                bottom: 0;
+                background: rgba(0,0,0,0.5);
+                z-index: 998;
+                display: block;
+            `;
+            overlay.addEventListener('click', function() {
+                navMenu.classList.remove('active');
+                hamburger.classList.remove('active');
+                body.style.overflow = '';
+                this.remove();
+            });
+            document.body.appendChild(overlay);
+        }
+    }
+    
+    function removeMobileOverlay() {
+        const overlay = document.querySelector('.mobile-overlay');
+        if (overlay) overlay.remove();
+    }
+    
+    function addDashboardOverlay() {
+        let overlay = document.querySelector('.sidebar-overlay');
+        if (!overlay) {
+            overlay = document.createElement('div');
+            overlay.className = 'sidebar-overlay active';
+            overlay.addEventListener('click', function() {
+                dashboardSidebar.classList.remove('open');
+                sidebarToggle.classList.remove('active');
+                document.body.style.overflow = '';
+                this.remove();
+            });
+            document.body.appendChild(overlay);
+        }
+    }
+    
+    function removeDashboardOverlay() {
+        const overlay = document.querySelector('.sidebar-overlay');
+        if (overlay) overlay.remove();
+    }
+    
+    function fixMobileForms() {
+        // Increase tap targets
+        document.querySelectorAll('input, select, textarea, button').forEach(el => {
+            if (el.offsetHeight < 44 || el.offsetWidth < 44) {
+                el.style.minHeight = '44px';
+                el.style.minWidth = '44px';
+            }
+        });
+        
+        // Date inputs - show native picker on mobile
+        document.querySelectorAll('input[type="date"]').forEach(input => {
+            if ('ontouchstart' in window) {
+                input.type = 'date';
+            }
+        });
+    }
+    
+    function fixTouchEvents() {
+        // Prevent double-tap zoom
+        let lastTouchEnd = 0;
+        document.addEventListener('touchend', function(event) {
+            const now = Date.now();
+            if (now - lastTouchEnd <= 300) {
+                event.preventDefault();
+            }
+            lastTouchEnd = now;
+        }, false);
+        
+        // Better touch feedback
+        document.querySelectorAll('.btn, .nav-link, .card').forEach(el => {
+            el.addEventListener('touchstart', function() {
+                this.style.opacity = '0.8';
+            });
+            
+            el.addEventListener('touchend', function() {
+                this.style.opacity = '';
+            });
+        });
+    }
+    
+    function preventInputZoom() {
+        // iOS zoom fix
+        document.addEventListener('focus', function(e) {
+            if (e.target.matches('input, select, textarea')) {
+                document.body.style.fontSize = '16px';
+            }
+        }, true);
+        
+        document.addEventListener('blur', function(e) {
+            if (e.target.matches('input, select, textarea')) {
+                document.body.style.fontSize = '';
+            }
+        }, true);
+    }
+    
+    // 6. Viewport height fix for mobile browsers
+    function setVH() {
+        let vh = window.innerHeight * 0.01;
+        document.documentElement.style.setProperty('--vh', `${vh}px`);
+    }
+    
+    setVH();
+    window.addEventListener('resize', setVH);
+    window.addEventListener('orientationchange', setVH);
+});
+
 // DOM Elements
 const menuToggle = document.getElementById('menuToggle');
 const navMenu = document.getElementById('navMenu');
