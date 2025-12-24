@@ -1,3 +1,305 @@
+/* ===========================================
+   MOBILE DASHBOARD - COMPLETE FIX
+   =========================================== */
+
+/* Base mobile styles */
+@media (max-width: 768px) {
+    /* Fix body overflow */
+    body {
+        overflow-x: hidden;
+        -webkit-text-size-adjust: 100%;
+        -webkit-tap-highlight-color: transparent;
+    }
+    
+    /* Dashboard container */
+    .dashboard-container {
+        flex-direction: column;
+        min-height: 100vh;
+    }
+    
+    /* Sidebar - Fixed position */
+    .dashboard-sidebar {
+        position: fixed;
+        left: -280px;
+        top: 0;
+        width: 280px;
+        height: 100vh;
+        z-index: 1050;
+        transition: left 0.3s ease-in-out;
+        overflow-y: auto;
+        -webkit-overflow-scrolling: touch;
+        box-shadow: 5px 0 15px rgba(0,0,0,0.1);
+    }
+    
+    .dashboard-sidebar.open {
+        left: 0;
+    }
+    
+    /* Mobile sidebar overlay */
+    .sidebar-overlay {
+        display: none;
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: rgba(0,0,0,0.5);
+        z-index: 1049;
+    }
+    
+    .sidebar-overlay.active {
+        display: block;
+    }
+    
+    /* Main content area */
+    .dashboard-main {
+        width: 100%;
+        margin-left: 0;
+        padding: 70px 15px 20px;
+        min-height: 100vh;
+    }
+    
+    /* Mobile header */
+    .dashboard-header {
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        height: 60px;
+        z-index: 1040;
+        padding: 0 15px;
+        background: var(--primary-blue);
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+    }
+    
+    /* Hamburger menu button */
+    .sidebar-toggle {
+        display: flex !important;
+        flex-direction: column;
+        justify-content: space-between;
+        width: 30px;
+        height: 24px;
+        background: transparent;
+        border: none;
+        cursor: pointer;
+        padding: 0;
+    }
+    
+    .sidebar-toggle span {
+        width: 100%;
+        height: 3px;
+        background: white;
+        border-radius: 3px;
+        transition: all 0.3s ease;
+    }
+    
+    .sidebar-toggle.active span:nth-child(1) {
+        transform: rotate(45deg) translate(5px, 5px);
+    }
+    
+    .sidebar-toggle.active span:nth-child(2) {
+        opacity: 0;
+    }
+    
+    .sidebar-toggle.active span:nth-child(3) {
+        transform: rotate(-45deg) translate(7px, -6px);
+    }
+    
+    /* Cards and grids */
+    .quick-stats {
+        grid-template-columns: repeat(2, 1fr) !important;
+        gap: 15px;
+    }
+    
+    .stat-card {
+        padding: 15px;
+        min-height: 120px;
+    }
+    
+    .stat-value {
+        font-size: 1.5rem;
+        margin: 10px 0;
+    }
+    
+    /* Tables - Make scrollable */
+    .table-container {
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch;
+        margin: 0 -15px;
+        padding: 0 15px;
+    }
+    
+    .table-container table {
+        min-width: 600px;
+    }
+    
+    /* Forms - Better touch targets */
+    .form-group input,
+    .form-group select,
+    .form-group textarea {
+        font-size: 16px !important; /* Prevents iOS zoom */
+        padding: 15px !important;
+        height: 50px !important;
+    }
+    
+    /* Buttons - Larger touch targets */
+    .btn {
+        min-height: 50px;
+        padding: 14px 25px;
+        font-size: 16px;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        touch-action: manipulation;
+    }
+    
+    /* Charts container */
+    .chart-container {
+        width: 100%;
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch;
+    }
+    
+    /* Document cards */
+    .document-card {
+        flex-direction: column;
+        padding: 15px;
+    }
+    
+    .doc-info {
+        margin: 15px 0;
+    }
+    
+    /* Investment cards */
+    .investment-card {
+        padding: 15px;
+        margin-bottom: 15px;
+    }
+    
+    /* Modal windows */
+    .modal-content {
+        width: 95%;
+        margin: 10vh auto;
+        max-height: 80vh;
+        overflow-y: auto;
+        -webkit-overflow-scrolling: touch;
+    }
+    
+    /* Calculator */
+    .calculator-card {
+        padding: 20px 15px;
+    }
+    
+    input[type="range"] {
+        height: 40px;
+    }
+    
+    input[type="range"]::-webkit-slider-thumb {
+        width: 28px;
+        height: 28px;
+    }
+    
+    /* Hide non-essential elements */
+    .desktop-only {
+        display: none !important;
+    }
+}
+
+/* Small phones */
+@media (max-width: 480px) {
+    .quick-stats {
+        grid-template-columns: 1fr !important;
+    }
+    
+    .features-grid {
+        grid-template-columns: 1fr !important;
+    }
+    
+    .stat-card {
+        padding: 15px 10px;
+    }
+    
+    .dashboard-section {
+        padding: 15px 10px;
+    }
+    
+    .section-header {
+        flex-direction: column;
+        gap: 15px;
+        align-items: stretch;
+    }
+    
+    .header-actions {
+        flex-direction: column;
+        gap: 10px;
+    }
+    
+    .header-actions .btn {
+        width: 100%;
+    }
+    
+    /* Investment details */
+    .investment-details {
+        grid-template-columns: 1fr !important;
+        gap: 15px;
+    }
+    
+    /* Transaction summary */
+    .transaction-summary {
+        grid-template-columns: repeat(2, 1fr) !important;
+        gap: 10px;
+    }
+    
+    /* Charts */
+    canvas {
+        max-width: 100%;
+        height: auto !important;
+    }
+    
+    /* Login page */
+    .login-box {
+        width: 95%;
+        padding: 25px 15px;
+    }
+    
+    /* Navigation items */
+    .nav-item {
+        width: 100%;
+    }
+    
+    .nav-link {
+        padding: 15px 20px;
+        font-size: 16px;
+    }
+    
+    /* Footer */
+    .footer-container {
+        grid-template-columns: 1fr;
+        text-align: center;
+        gap: 30px;
+    }
+    
+    .footer-section {
+        padding: 0 15px;
+    }
+}
+
+/* Tablet specific */
+@media (min-width: 481px) and (max-width: 768px) {
+    .quick-stats {
+        grid-template-columns: repeat(2, 1fr) !important;
+    }
+    
+    .features-grid {
+        grid-template-columns: repeat(2, 1fr) !important;
+    }
+    
+    .dashboard-section {
+        padding: 20px;
+    }
+}
 
 /* Dashboard Specific Styles */
 
