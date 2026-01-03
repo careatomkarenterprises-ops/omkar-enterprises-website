@@ -3,302 +3,480 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Book Consultation | Omkar Enterprises</title>
-    <meta name="description" content="Schedule a confidential consultation with Omkar Enterprises to discuss private lending partnership opportunities with fixed monthly returns.">
+    <title>Contact Us - Omkar Enterprises</title>
     
-    <!-- Open Graph / Facebook -->
-    <meta property="og:type" content="website">
-    <meta property="og:url" content="https://omkarenterprises.in/contact.html">
-    <meta property="og:title" content="Book Consultation | Omkar Enterprises">
-    <meta property="og:description" content="Schedule a confidential consultation for private lending partnership with fixed monthly returns.">
-    <meta property="og:image" content="https://omkarenterprises.in/assets/images/og-image.jpg">
-    
-    <!-- Twitter -->
-    <meta property="twitter:card" content="summary_large_image">
-    <meta property="twitter:url" content="https://omkarenterprises.in/contact.html">
-    <meta property="twitter:title" content="Book Consultation | Omkar Enterprises">
-    <meta property="twitter:description" content="Schedule a confidential consultation for private lending partnership with fixed monthly returns.">
-    <meta property="twitter:image" content="https://omkarenterprises.in/assets/images/og-image.jpg">
-    
-    <!-- Favicon -->
-    <link rel="icon" type="image/x-icon" href="assets/icons/favicon.ico">
-    <link rel="apple-touch-icon" href="assets/icons/apple-touch-icon.png">
-    
-    <!-- Google Fonts -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-    
-    <!-- Font Awesome -->
+    <!-- CRITICAL: Make sure these links are correct -->
+    <link rel="stylesheet" href="style.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:wght@700;800&display=swap" rel="stylesheet">
     
-    <!-- Styles -->
-    <link rel="stylesheet" href="css/style.css">
-    <link rel="stylesheet" href="css/responsive.css">
-    <link rel="stylesheet" href="css/animations.css">
+    <style>
+        /* Quick debug - remove after confirming CSS loads */
+        * { outline: none !important; }
+    </style>
 </head>
 <body>
+    <!-- System Status Bar -->
+    <div class="system-status">
+        <div class="container">
+            <div class="status-indicator active"></div>
+            <div class="status-text">System Status: <strong>All Services Operational</strong> • Last Updated: Just Now</div>
+        </div>
+    </div>
+
     <!-- Navigation -->
     <nav class="navbar">
-        <div class="container">
+        <div class="container nav-container">
             <a href="index.html" class="logo">
-               <img src="assets/icons/logo.svg" alt="Omkar Enterprises Logo" class="logo-icon" style="height: 40px;">
-                <span class="logo-text">Omkar Enterprises</span>
+                <div class="logo-icon">OE</div>
+                <div class="logo-text">OMKAR ENTERPRISES</div>
             </a>
-            <button class="menu-toggle" id="menuToggle">
-                <i class="fas fa-bars"></i>
+            
+            <button class="hamburger">
+                <span></span>
+                <span></span>
+                <span></span>
             </button>
-            <ul class="nav-menu" id="navMenu">
-                <li><a href="index.html">Home</a></li>
-                <li><a href="how-it-works.html">How It Works</a></li>
-                <li><a href="investment-tiers.html">Investment Tiers</a></li>
-                <li><a href="legal-framework.html">Legal Framework</a></li>
-                <li><a href="about.html">About</a></li>
-                <li><a href="contact.html" class="nav-cta">Book Consultation</a></li>
+            
+            <ul class="nav-menu">
+                <li><a href="index.html"><i class="fas fa-home"></i> Home</a></li>
+                <li><a href="about.html"><i class="fas fa-user-tie"></i> Founder</a></li>
+                <li><a href="slabs.html"><i class="fas fa-layer-group"></i> Investment Slabs</a></li>
+                <li><a href="testimonials.html"><i class="fas fa-star"></i> Testimonials</a></li>
+                <li><a href="legal.html"><i class="fas fa-balance-scale"></i> Legal Framework</a></li>
+                <li><a href="contact.html" class="active"><i class="fas fa-phone"></i> Contact</a></li>
+                <li><a href="portal.html" class="btn-nav-login"><i class="fas fa-lock"></i> Partner Portal</a></li>
             </ul>
         </div>
     </nav>
 
-    <!-- Contact Header -->
-    <section class="section section-light" style="padding-top: 150px;">
+    <!-- Contact Hero Section -->
+    <section class="contact-hero">
         <div class="container">
-            <div class="contact-header">
-                <h1>Begin Your Partnership Inquiry</h1>
-                <p>Schedule a confidential consultation to discuss our private lending partnership</p>
-            </div>
+            <h1>Get in Touch</h1>
+            <p class="section-subtitle">Reach out to our dedicated team for personalized investment guidance and support.</p>
+        </div>
+    </section>
+
+    <!-- Contact Grid Section -->
+    <section class="contact-grid-section">
+        <div class="container">
+            <h2 class="section-title">Contact Information</h2>
+            <p class="section-subtitle">Multiple ways to connect with our investment specialists</p>
             
             <div class="contact-grid">
-                <div class="contact-info">
-                    <h2>Consultation Process</h2>
-                    <div class="process-step">
-                        <div class="step-number">1</div>
-                        <div class="step-content">
-                            <h3>Initial Discussion</h3>
-                            <p>30-60 minute video/phone call to understand your goals and explain our structure.</p>
-                        </div>
+                <!-- Office Address Card -->
+                <div class="contact-card">
+                    <div class="contact-icon">
+                        <i class="fas fa-building"></i>
                     </div>
-                    <div class="process-step">
-                        <div class="step-number">2</div>
-                        <div class="step-content">
-                            <h3>Document Review</h3>
-                            <p>We'll email the sample agreement for your review with legal/financial advisors.</p>
-                        </div>
-                    </div>
-                    <div class="process-step">
-                        <div class="step-number">3</div>
-                        <div class="step-content">
-                            <h3>Formal Onboarding</h3>
-                            <p>If proceeding, we execute the agreement and begin the funding process.</p>
-                        </div>
+                    <h3>Registered Office</h3>
+                    
+                    <div class="office-address">
+                        <p>Omkar Enterprises</p>
+                        <p>Shop No. 12, Shreeji Complex</p>
+                        <p>Near SBI Bank, Panvel</p>
+                        <p>Navi Mumbai, Maharashtra - 410206</p>
                     </div>
                     
-                    <div class="contact-details">
-                        <h3>Important Notes</h3>
+                    <div class="landmarks">
+                        <h4><i class="fas fa-map-marker-alt"></i> Nearby Landmarks:</h4>
                         <ul>
-                            <li><i class="fas fa-check-circle"></i> All consultations are confidential</li>
-                            <li><i class="fas fa-check-circle"></i> No obligation from initial discussion</li>
-                            <li><i class="fas fa-check-circle"></i> We encourage independent legal review</li>
-                            <li><i class="fas fa-check-circle"></i> Minimum investment: ₹25,000</li>
-                            <li><i class="fas fa-check-circle"></i> For Indian residents only</li>
+                            <li><i class="fas fa-bank"></i> SBI Bank (50m)</li>
+                            <li><i class="fas fa-train"></i> Panvel Railway Station (1.2km)</li>
+                            <li><i class="fas fa-hospital"></i> Panvel Municipal Hospital (800m)</li>
+                            <li><i class="fas fa-shopping-cart"></i> City Mall Panvel (1.5km)</li>
                         </ul>
                     </div>
                 </div>
-                
-                <div class="contact-form">
-                    <form id="contactForm" action="https://formspree.io/f/YOUR_FORM_ID" method="POST">
-                        <div class="form-group">
-                            <label for="name">Full Name *</label>
-                            <input type="text" id="name" name="name" required>
-                        </div>
-                        
-                        <div class="form-row">
-                            <div class="form-group">
-                                <label for="phone">Contact Number *</label>
-                                <input type="tel" id="phone" name="phone" required>
+
+                <!-- Contact Methods Card -->
+                <div class="contact-card">
+                    <div class="contact-icon">
+                        <i class="fas fa-headset"></i>
+                    </div>
+                    <h3>Direct Contact</h3>
+                    
+                    <div class="contact-methods">
+                        <a href="tel:+918169302861" class="contact-method">
+                            <div class="method-icon">
+                                <i class="fas fa-phone"></i>
                             </div>
-                            <div class="form-group">
-                                <label for="email">Email Address *</label>
-                                <input type="email" id="email" name="email" required>
+                            <div class="method-details">
+                                <span class="method-label">Primary Contact</span>
+                                <span class="method-value">+91 81693 02861</span>
                             </div>
-                        </div>
+                        </a>
                         
-                        <div class="form-group">
-                            <label for="city">City of Residence *</label>
-                            <input type="text" id="city" name="city" required>
-                        </div>
-                        
-                        <div class="form-group">
-                            <label>Interested Investment Amount *</label>
-                            <div class="investment-options">
-                                <label class="option">
-                                    <input type="radio" name="investment" value="25k-99k" required>
-                                    <span class="option-content">
-                                        <strong>Emerging</strong>
-                                        <span>₹25,000 - ₹99,999</span>
-                                    </span>
-                                </label>
-                                <label class="option">
-                                    <input type="radio" name="investment" value="1l-5l">
-                                    <span class="option-content">
-                                        <strong>Growth</strong>
-                                        <span>₹1,00,000 - ₹4,99,999</span>
-                                    </span>
-                                </label>
-                                <label class="option">
-                                    <input type="radio" name="investment" value="5l-10l">
-                                    <span class="option-content">
-                                        <strong>Premium</strong>
-                                        <span>₹5,00,000 - ₹9,99,999</span>
-                                    </span>
-                                </label>
-                                <label class="option">
-                                    <input type="radio" name="investment" value="10l-25l">
-                                    <span class="option-content">
-                                        <strong>Elite</strong>
-                                        <span>₹10,00,000 - ₹25,00,000</span>
-                                    </span>
-                                </label>
+                        <a href="https://wa.me/917066393830" class="contact-method" target="_blank">
+                            <div class="method-icon">
+                                <i class="fab fa-whatsapp"></i>
                             </div>
-                        </div>
-                        
-                        <div class="form-group">
-                            <label for="preferredTime">Preferred Consultation Time *</label>
-                            <select id="preferredTime" name="preferredTime" required>
-                                <option value="">Select preferred time</option>
-                                <option value="weekday-morning">Weekday Morning (10AM - 1PM)</option>
-                                <option value="weekday-afternoon">Weekday Afternoon (2PM - 5PM)</option>
-                                <option value="saturday">Saturday (10AM - 1PM)</option>
-                            </select>
-                        </div>
-                        
-                        <div class="form-group">
-                            <label>Have you reviewed the sample agreement? *</label>
-                            <div class="radio-group">
-                                <label>
-                                    <input type="radio" name="agreementReview" value="yes-questions" required>
-                                    Yes, I have questions on specific clauses
-                                </label>
-                                <label>
-                                    <input type="radio" name="agreementReview" value="yes-clear">
-                                    Yes, it looks clear
-                                </label>
-                                <label>
-                                    <input type="radio" name="agreementReview" value="not-yet">
-                                    Not yet, but I will before our call
-                                </label>
+                            <div class="method-details">
+                                <span class="method-label">WhatsApp Business</span>
+                                <span class="method-value">+91 70663 93830</span>
                             </div>
+                        </a>
+                        
+                        <a href="mailto:contact@omkarenterprises.in" class="contact-method">
+                            <div class="method-icon">
+                                <i class="fas fa-envelope"></i>
+                            </div>
+                            <div class="method-details">
+                                <span class="method-label">Email</span>
+                                <span class="method-value">contact@omkarenterprises.in</span>
+                            </div>
+                        </a>
+                    </div>
+                    
+                    <div class="emergency-note">
+                        <i class="fas fa-exclamation-triangle"></i>
+                        <span>For urgent matters, WhatsApp is the fastest way to reach us</span>
+                    </div>
+                </div>
+
+                <!-- Business Hours Card -->
+                <div class="contact-card">
+                    <div class="contact-icon">
+                        <i class="fas fa-clock"></i>
+                    </div>
+                    <h3>Business Hours</h3>
+                    
+                    <div class="hours-schedule">
+                        <div class="hour-row">
+                            <span class="day">Monday - Friday</span>
+                            <span class="time">10:00 AM - 7:00 PM</span>
                         </div>
-                        
-                        <div class="form-group">
-                            <label for="questions">Additional Questions or Notes</label>
-                            <textarea id="questions" name="questions" rows="4" placeholder="Any specific areas you'd like to discuss during our consultation..."></textarea>
+                        <div class="hour-row">
+                            <span class="day">Saturday</span>
+                            <span class="time">10:00 AM - 5:00 PM</span>
                         </div>
-                        
-                        <div class="form-group checkbox-group">
-                            <label>
-                                <input type="checkbox" name="disclaimer" required>
-                                I acknowledge that I have read and understood the <a href="legal/disclaimer.html" target="_blank">Risk Disclaimer</a> and understand this is a private lending inquiry.
-                            </label>
+                        <div class="hour-row">
+                            <span class="day">Sunday</span>
+                            <span class="time">Appointment Only</span>
                         </div>
-                        
-                        <button type="submit" class="btn btn-primary btn-block">
-                            <i class="fas fa-paper-plane"></i> Submit Consultation Request
-                        </button>
-                        
-                        <p class="form-note">
-                            <small>We'll contact you within 24 hours to schedule your consultation. All information is kept strictly confidential.</small>
-                        </p>
-                    </form>
+                        <div class="hour-row">
+                            <span class="day">Public Holidays</span>
+                            <span class="time">Closed</span>
+                        </div>
+                    </div>
+                    
+                    <div class="appointment-note">
+                        <p><i class="fas fa-calendar-check"></i> Appointment Required</p>
+                        <p>Please schedule appointments in advance for personalized consultations</p>
+                    </div>
+                    
+                    <a href="#schedule-form" class="btn-primary">
+                        <i class="fas fa-calendar-alt"></i> Schedule Appointment
+                    </a>
                 </div>
             </div>
         </div>
     </section>
+
+    <!-- Map Section -->
+    <section class="map-section">
+        <div class="container">
+            <h2 class="section-title">Visit Our Office</h2>
+            <p class="section-subtitle">Conveniently located in the heart of Panvel's business district</p>
+            
+            <div class="map-container">
+                <div class="map-wrapper">
+                    <!-- Google Maps Embed -->
+                    <iframe 
+                        src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3770.888596843226!2d73.107749!3d19.043713!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zMTnCsDAyJzM3LjQiTiA3M8KwMDYnMjcuOSJF!5e0!3m2!1sen!2sin!4v1690000000000!5m2!1sen!2sin" 
+                        width="100%" 
+                        height="450" 
+                        style="border:0;" 
+                        allowfullscreen="" 
+                        loading="lazy" 
+                        referrerpolicy="no-referrer-when-downgrade">
+                    </iframe>
+                </div>
+                
+                <div class="map-actions">
+                    <a href="https://maps.google.com/?q=19.043713,73.107749" class="btn-primary" target="_blank">
+                        <i class="fas fa-directions"></i> Get Directions
+                    </a>
+                    <a href="https://wa.me/917066393830?text=I'm%20planning%20to%20visit%20your%20office.%20Can%20you%20confirm%20the%20exact%20location?" class="btn-secondary" target="_blank">
+                        <i class="fab fa-whatsapp"></i> Confirm Location
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Schedule Appointment Section -->
+    <section class="schedule-section" id="schedule-form">
+        <div class="container schedule-container">
+            <div class="schedule-content">
+                <h2>Schedule a Personal Consultation</h2>
+                <p>Meet with our investment specialists for a detailed discussion about your financial goals and investment options.</p>
+                
+                <div class="schedule-features">
+                    <div class="feature">
+                        <i class="fas fa-check-circle gold-text"></i>
+                        <span>One-on-one personalized session</span>
+                    </div>
+                    <div class="feature">
+                        <i class="fas fa-check-circle gold-text"></i>
+                        <span>Portfolio analysis and planning</span>
+                    </div>
+                    <div class="feature">
+                        <i class="fas fa-check-circle gold-text"></i>
+                        <span>Detailed investment proposal</span>
+                    </div>
+                    <div class="feature">
+                        <i class="fas fa-check-circle gold-text"></i>
+                        <span>No-obligation consultation</span>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="schedule-form">
+                <h3>Request Appointment</h3>
+                <form id="appointmentForm">
+                    <div class="form-group">
+                        <label for="appointmentName"><i class="fas fa-user"></i> Full Name</label>
+                        <input type="text" id="appointmentName" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="appointmentMobile"><i class="fas fa-phone"></i> WhatsApp Number</label>
+                        <input type="tel" id="appointmentMobile" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="appointmentDate"><i class="fas fa-calendar"></i> Preferred Date</label>
+                        <input type="date" id="appointmentDate" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="appointmentTime"><i class="fas fa-clock"></i> Preferred Time</label>
+                        <select id="appointmentTime" required>
+                            <option value="">Select Time</option>
+                            <option value="10:00">10:00 AM</option>
+                            <option value="11:00">11:00 AM</option>
+                            <option value="12:00">12:00 PM</option>
+                            <option value="14:00">2:00 PM</option>
+                            <option value="15:00">3:00 PM</option>
+                            <option value="16:00">4:00 PM</option>
+                            <option value="17:00">5:00 PM</option>
+                        </select>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="appointmentPurpose"><i class="fas fa-comment"></i> Purpose of Visit</label>
+                        <textarea id="appointmentPurpose" placeholder="Briefly describe what you'd like to discuss..."></textarea>
+                    </div>
+                    
+                    <div class="checkbox-group">
+                        <input type="checkbox" id="appointmentConsent" required>
+                        <label for="appointmentConsent">
+                            I agree to receive communication from Omkar Enterprises regarding this appointment and understand that my data will be handled as per the Privacy Policy.
+                        </label>
+                    </div>
+                    
+                    <button type="submit" class="btn-primary">
+                        <i class="fas fa-paper-plane"></i> Submit Request
+                    </button>
+                    
+                    <div class="form-note">
+                        <i class="fas fa-info-circle"></i>
+                        You'll receive a confirmation call/WhatsApp within 2 hours
+                    </div>
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <!-- Visiting Tips -->
+    <section class="visiting-tips">
+        <div class="container">
+            <h2 class="section-title">Visiting Our Office</h2>
+            <p class="section-subtitle">Helpful information for your visit</p>
+            
+            <div class="tips-grid">
+                <div class="tip-card">
+                    <div class="tip-icon">
+                        <i class="fas fa-id-card"></i>
+                    </div>
+                    <h3>Bring Documents</h3>
+                    <p>Carry a government ID and PAN card for verification</p>
+                </div>
+                
+                <div class="tip-card">
+                    <div class="tip-icon">
+                        <i class="fas fa-parking"></i>
+                    </div>
+                    <h3>Parking Available</h3>
+                    <p>Dedicated parking space available for visitors</p>
+                </div>
+                
+                <div class="tip-card">
+                    <div class="tip-icon">
+                        <i class="fas fa-clock"></i>
+                    </div>
+                    <h3>Arrive 10 Minutes Early</h3>
+                    <p>Allows time for security and registration process</p>
+                </div>
+                
+                <div class="tip-card">
+                    <div class="tip-icon">
+                        <i class="fas fa-file-contract"></i>
+                    </div>
+                    <h3>Prepare Questions</h3>
+                    <p>List down your queries for efficient discussion</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Quick Contact -->
+    <section class="quick-contact">
+        <div class="container">
+            <div class="quick-contact-card">
+                <h2>Need Immediate Assistance?</h2>
+                <p>Our team is ready to help you with any questions about investments, returns, or account management.</p>
+                
+                <div class="contact-buttons">
+                    <a href="https://wa.me/917066393830" class="btn-primary" target="_blank">
+                        <i class="fab fa-whatsapp"></i> WhatsApp Now
+                    </a>
+                    <a href="tel:+918169302861" class="btn-secondary">
+                        <i class="fas fa-phone"></i> Call Now
+                    </a>
+                </div>
+                
+                <div class="response-time">
+                    <i class="fas fa-bolt"></i>
+                    Average Response Time: Under 15 minutes
+                </div>
+                
+                <div class="footer-address">
+                    <i class="fas fa-map-marker-alt"></i>
+                    <span>Shop No. 12, Shreeji Complex, Near SBI Bank, Panvel, Navi Mumbai - 410206</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
     <footer class="footer">
         <div class="container">
             <div class="footer-grid">
-                    <div class="footer-col">
-            <div class="footer-logo">
-                <img src="assets/icons/logo.svg" alt="Omkar Enterprises Logo" class="logo-icon" style="height: 40px;">
-                <span class="logo-text">Omkar Enterprises</span>
-            </div>
+                <div class="footer-col">
+                    <div class="footer-logo">
+                        <div class="logo-icon">OE</div>
+                        <div class="logo-text">OMKAR ENTERPRISES</div>
+                    </div>
                     <p class="footer-description">
-                        Structured Private Lending Partnerships<br>
-                        Transparency Through Contractual Certainty
+                        Premium investment solutions with guaranteed returns. Trusted by 500+ partners since 2015.
                     </p>
-                    <div class="footer-address">
-                        <p><i class="fas fa-map-marker-alt"></i> BK 673, Sai Baba Colony, Opp. Rajram Furniturewala, Ulhasnagar 421003, Thane, Maharashtra</p>
+                    
+                    <div class="footer-contact">
+                        <p><i class="fas fa-phone"></i> +91 81693 02861</p>
+                        <p><i class="fas fa-envelope"></i> contact@omkarenterprises.in</p>
+                        <p><i class="fas fa-map-marker-alt"></i> Panvel, Navi Mumbai</p>
                     </div>
                 </div>
+                
                 <div class="footer-col">
-                    <h4>Important Links</h4>
+                    <h4>Quick Links</h4>
                     <ul class="footer-links">
-                        <li><a href="assets/documents/sample-agreement.pdf">Sample Agreement</a></li>
-                        <li><a href="investment-tiers.html">Investment Tiers</a></li>
-                        <li><a href="legal-framework.html">Legal Framework</a></li>
-                        <li><a href="faq.html">FAQ</a></li>
-                        <li><a href="about.html">About Founder</a></li>
-                        <li><a href="onboarding.html">Onboarding Process</a></li>
+                        <li><a href="index.html"><i class="fas fa-chevron-right"></i> Home</a></li>
+                        <li><a href="about.html"><i class="fas fa-chevron-right"></i> Founder</a></li>
+                        <li><a href="slabs.html"><i class="fas fa-chevron-right"></i> Investment Slabs</a></li>
+                        <li><a href="testimonials.html"><i class="fas fa-chevron-right"></i> Testimonials</a></li>
+                        <li><a href="legal.html"><i class="fas fa-chevron-right"></i> Legal Framework</a></li>
                     </ul>
                 </div>
+                
                 <div class="footer-col">
-                    <h4>Legal</h4>
-                    <ul class="footer-links">
-                        <li><a href="legal/privacy-policy.html">Privacy Policy</a></li>
-                        <li><a href="legal/terms.html">Terms of Use</a></li>
-                        <li><a href="legal/disclaimer.html">Risk Disclaimer</a></li>
-                        <li><a href="legal-framework.html#dispute">Dispute Resolution</a></li>
-                        <li><a href="legal-framework.html#compliance">Compliance Statement</a></li>
-                    </ul>
-                </div>
-                <div class="footer-col">
-                    <h4>Contact</h4>
-                    <div class="footer-contact">
-                        <p><strong>For New Inquiries:</strong><br>
-                        Consultation Form Only</p>
-                        <p><strong>For Existing Partners:</strong><br>
-                        Email: care@omkarservices.in</p>
-                     <p><strong>Contact @ +91 922 639 3837; +91 816 930 2861:</strong><br>
-                         <p><strong>Whatsapp +91 706 639 3830:</strong><br>
-                        <p><strong>Consultation Hours:</strong><br>
-                        Mon-Fri: 10AM - 5PM IST<br>
-                        Sat: 10AM - 1PM IST</p>
+                    <h4>Connect With Us</h4>
+                    <div class="social-links">
+                        <a href="https://wa.me/917066393830" class="social-link whatsapp" target="_blank">
+                            <i class="fab fa-whatsapp"></i>
+                            <span>WhatsApp Business</span>
+                        </a>
+                        <a href="mailto:contact@omkarenterprises.in" class="social-link email">
+                            <i class="fas fa-envelope"></i>
+                            <span>Email Support</span>
+                        </a>
+                    </div>
+                    
+                    <div class="newsletter-form">
+                        <input type="email" placeholder="Your email">
+                        <button type="submit"><i class="fas fa-paper-plane"></i></button>
                     </div>
                 </div>
             </div>
+            
+            <div class="footer-disclaimer">
+                <h4><i class="fas fa-exclamation-triangle"></i> Important Disclaimer</h4>
+                <p>
+                    Investments are subject to market risks. Past performance is not indicative of future results. 
+                    Please read all related documents carefully before investing. Returns mentioned are projected 
+                    and not guaranteed. Omkar Enterprises (CIN: U70200MH2023PTC407336) is a registered partnership 
+                    firm. <a href="legal.html">View complete disclaimer</a>.
+                </p>
+            </div>
+            
             <div class="footer-bottom">
-                <div class="footer-disclaimer">
-                    <p>⚠️ <strong>IMPORTANT DISCLAIMER:</strong> Omkar Enterprises enters into private loan agreements with individuals. This is NOT a bank deposit, NOT insured, NOT regulated by RBI/SEBI as a deposit-taking entity, and NOT a guaranteed return scheme. Capital is at risk. Returns depend on business performance. Past returns don't indicate future results. Consult your financial and legal advisors before proceeding.</p>
-                </div>
-                <div class="footer-copyright">
-                    <p>© <span id="currentYear">2025</span> Omkar Enterprises. All rights reserved.</p>
-                </div>
+                <p>&copy; 2015-2024 Omkar Enterprises. All rights reserved.</p>
+                <p class="footer-regulatory">
+                    <i class="fas fa-shield-alt"></i>
+                    Registered with Ministry of Corporate Affairs • GSTIN: 27AAAFO0000A1Z5
+                </p>
             </div>
         </div>
     </footer>
 
+    <!-- Floating WhatsApp -->
+    <a href="https://wa.me/917066393830" class="float-whatsapp" target="_blank">
+        <i class="fab fa-whatsapp"></i>
+        <span>Chat with Us</span>
+    </a>
 
-    <!-- Scripts -->
-    <script src="js/main.js"></script>
+    <!-- JavaScript -->
+    <script src="script.js"></script>
     
-    <!-- Google Analytics (Add your Measurement ID) -->
-    <script async src="https://www.googletagmanager.com/gtag/js?id=G-XXXXXXXXXX"></script>
+    <!-- Appointment Form Handler -->
     <script>
-        window.dataLayer = window.dataLayer || [];
-        function gtag(){dataLayer.push(arguments);}
-        gtag('js', new Date());
-        gtag('config', 'G-XXXXXXXXXX');
+        document.getElementById('appointmentForm')?.addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            // Get form data
+            const formData = {
+                name: document.getElementById('appointmentName').value,
+                mobile: document.getElementById('appointmentMobile').value,
+                date: document.getElementById('appointmentDate').value,
+                time: document.getElementById('appointmentTime').value,
+                purpose: document.getElementById('appointmentPurpose').value
+            };
+            
+            // Simple validation
+            if (!formData.name || !formData.mobile || !formData.date || !formData.time) {
+                alert('Please fill in all required fields.');
+                return;
+            }
+            
+            // WhatsApp message
+            const message = `New Appointment Request:%0A%0AName: ${formData.name}%0APhone: ${formData.mobile}%0ADate: ${formData.date}%0ATime: ${formData.time}%0APurpose: ${formData.purpose}`;
+            
+            // Open WhatsApp
+            window.open(`https://wa.me/917066393830?text=${message}`, '_blank');
+            
+            // Reset form
+            this.reset();
+            
+            // Show success message
+            alert('Appointment request sent! We will confirm via WhatsApp.');
+        });
+        
+        // Set minimum date to today
+        const today = new Date().toISOString().split('T')[0];
+        document.getElementById('appointmentDate').min = today;
     </script>
 </body>
-
 </html>
-
-
-
-
-
-
-
-
-
-
-
